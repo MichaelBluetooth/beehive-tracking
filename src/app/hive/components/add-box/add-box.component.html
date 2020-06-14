@@ -1,0 +1,35 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Add New Hive</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Label</ion-label>
+    <ion-input #labelField placeholder="Enter label" (ionChange)="labelChange($event.target.value)"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Type</ion-label>
+    <ion-select placeholder="Select One" (ionChange)="typeChange($event.target.value)">
+      <ion-select-option value="Hive Body">Hive Body</ion-select-option>
+      <ion-select-option value="Super">Super</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Frames</ion-label>
+    <ion-input type="number" placeholder="Enter number of frames" (ionChange)="numChange($event.target.value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addBox()" [disabled]="isInvalid()">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

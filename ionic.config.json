@@ -1,0 +1,8 @@
+{
+  "name": "my-hive",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

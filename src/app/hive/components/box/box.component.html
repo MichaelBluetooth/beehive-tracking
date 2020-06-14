@@ -1,0 +1,51 @@
+<ion-app>
+  <div class="ion-page" id="main-box-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{hive.label}} > {{box.label}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-list-header>
+          Frames
+        </ion-list-header>
+        <ion-item button detail *ngFor="let frame of box.frames" (click)="navigateToFrame(frame)">
+          <!-- <ion-thumbnail slot="start">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+            </ion-thumbnail> -->
+          <ion-label>
+            <h3>{{frame.label}}</h3>
+            <!-- <p>{{part.type}}</p> -->
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          Notes
+        </ion-list-header>
+        <ion-item button *ngFor="let note of box.notes">
+          <!-- <ion-thumbnail slot="start">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+            </ion-thumbnail> -->
+          <ion-label>
+            <h3>{{note.date | date:'medium'}}</h3>
+            <p>{{note.details}}</p>
+            <p *ngIf="note.pests && note.pests.length > 0">Pests: {{note.pests | join}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="presentMenu()">
+          <ion-icon name="settings-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+    </ion-content>
+  </div>
