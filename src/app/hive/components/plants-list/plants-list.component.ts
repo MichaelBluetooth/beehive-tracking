@@ -16,6 +16,10 @@ export class PlantsListComponent implements OnInit {
   constructor(private modal: ModalController) {}
 
   ngOnInit() {
+    if (!this.selectedPlants) {
+      this.selectedPlants = [];
+    }
+
     this.plants = ALL_PLANTS.map((plant) => {
       return {
         label: plant,

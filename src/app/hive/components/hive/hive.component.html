@@ -11,7 +11,7 @@
 
     <ion-content>
       <ion-img *ngIf="hive.photo" src="{{ hive.photo.base64 ? hive.photo.base64 : hive.photo.webviewPath }}"></ion-img>
-      <ion-item *ngIf="hive.plants">
+      <ion-item *ngIf="hive.plants && hive.plants.length > 0">
         <ion-label text-wrap>
           <h3>Nearby Plants</h3>
           <p>
