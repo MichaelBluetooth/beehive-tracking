@@ -25,6 +25,12 @@
   </ion-item>
 
   <ion-item>
+    <ion-label>Queen Spotted</ion-label>
+    <ion-toggle [(ngModel)]="note.queenSpotted">      
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item>
     <ion-label position="stacked">Notes</ion-label>
     <ion-textarea [(ngModel)]="note.details"></ion-textarea>
   </ion-item>

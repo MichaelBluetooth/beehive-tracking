@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Hive } from "src/app/models/hive";
 import { AddHiveComponent } from "../add-hive/add-hive.component";
 import { HiveService } from '../../services/hive.service';
+import { HiveTabsService } from '../../services/hive-tabs.service';
 
 @Component({
   selector: "app-hive-list",
@@ -16,10 +17,12 @@ export class HiveListComponent implements OnInit {
   constructor(
     public modalController: ModalController,
     private router: Router,
-    private hiveService: HiveService
+    private hiveService: HiveService,
+    private hiveTabs: HiveTabsService
   ) {}
 
   ngOnInit() {
+    this.hiveTabs.clearState();
     this.hiveService.hives$.subscribe(hives => {
       this.hives = hives;
     });

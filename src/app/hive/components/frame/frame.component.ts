@@ -12,6 +12,7 @@ import { BoxComponent } from "../box/box.component";
 import { HiveBody } from "src/app/models/hive-body";
 import { Frame } from "src/app/models/frame";
 import { AddNoteComponent } from "../add-note/add-note.component";
+import { HiveTabsService } from '../../services/hive-tabs.service';
 
 @Component({
   selector: "app-frame",
@@ -29,7 +30,8 @@ export class FrameComponent implements OnInit {
     private router: Router,
     private alert: AlertController,
     private modal: ModalController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private hiveTabs: HiveTabsService
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class FrameComponent implements OnInit {
         this.hive = hive;
         this.box = hive.parts.find((p) => p.id === +routeParams.boxId);
         this.frame = this.box.frames.find((f) => f.id === +routeParams.frameId);
+        this.hiveTabs.setFrameState(this.frame, this.box, this.hive);
       });
     });
   }
@@ -77,8 +80,14 @@ export class FrameComponent implements OnInit {
 
     modal.onDidDismiss().then((modalResponse) => {
       if (modalResponse.data) {
-        this.hiveService.addFrameNote(this.hive.id, this.box.id, this.frame.id, modalResponse.data)
-          .subscribe(updatedFrame => {
+        this.hiveService
+          .addFrameNote(
+            this.hive.id,
+            this.box.id,
+            this.frame.id,
+            modalResponse.data
+          )
+          .subscribe((updatedFrame) => {
             this.frame = updatedFrame;
           });
       }
@@ -93,33 +102,43 @@ export class FrameComponent implements OnInit {
       buttons: [
         {
           text: "Delete",
-          role: 'destructive',
-          icon: 'trash',
+          role: "destructive",
+          icon: "trash",
           handler: () => {
             this.confirmDelete();
           },
         },
         {
-          text: "Record Note",
-          icon: 'newspaper-outline',
+          text: "New Note",
+          icon: "newspaper-outline",
           handler: () => {
             this.addNote();
           },
         },
         {
           text: "Take Photo",
-          icon: 'camera-outline',
-          handler: () => {},
+          icon: "camera-outline",
+          handler: () => {
+            this.addFramePhoto();
+          },
         },
         {
           text: "Cancel",
-          icon: 'close',
-          role: 'cancel',
+          icon: "close",
+          role: "cancel",
           handler: () => {},
         },
       ],
     });
 
     await actionSheet.present();
+  }
+
+  addFramePhoto(){
+    this.hiveService.addFramePhoto(
+      this.hive.id,
+      this.box.id,
+      this.frame.id
+    );
   }
 }

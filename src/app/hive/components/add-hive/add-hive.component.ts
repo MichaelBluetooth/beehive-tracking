@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
 import { HiveService } from "src/app/hive/services/hive.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ModalController } from "@ionic/angular";
+import { ModalController, IonInput } from "@ionic/angular";
 
 @Component({
   selector: "app-add-hive",
@@ -9,6 +9,8 @@ import { ModalController } from "@ionic/angular";
   styleUrls: ["./add-hive.component.scss"],
 })
 export class AddHiveComponent implements OnInit {
+  @ViewChild('labelField') myInput: IonInput;
+
   hive = new FormGroup({
     label: new FormControl("", Validators.required),
   });
@@ -19,6 +21,12 @@ export class AddHiveComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  ionViewLoaded(){
+    setTimeout(() => {
+      this.myInput.setFocus();
+    }, 150);
+  }
 
   addHive(): void {
     this.hiveService.addHive(this.hive.value).subscribe((added) => {

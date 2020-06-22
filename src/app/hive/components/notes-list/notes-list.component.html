@@ -1,0 +1,11 @@
+<ion-list>
+  <ion-list-header>
+    Notes
+  </ion-list-header>
+  <ion-item button *ngFor="let note of notes">
+    <!-- <ion-thumbnail slot="start">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-thumbnail> -->
+    <app-note [note]="note"></app-note>
+  </ion-item>
+</ion-list>

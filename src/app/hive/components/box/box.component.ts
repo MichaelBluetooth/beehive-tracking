@@ -10,6 +10,7 @@ import {
   ActionSheetController,
 } from "@ionic/angular";
 import { AddNoteComponent } from "../add-note/add-note.component";
+import { HiveTabsService } from '../../services/hive-tabs.service';
 
 @Component({
   selector: "app-box",
@@ -27,7 +28,8 @@ export class BoxComponent implements OnInit {
     private alert: AlertController,
     private menu: MenuController,
     private modal: ModalController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private hiveTabs: HiveTabsService
   ) {}
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class BoxComponent implements OnInit {
       this.hiveService.getHive(+routeParams.id).subscribe((hive) => {
         this.hive = hive;
         this.box = hive.parts.find((p) => p.id === +routeParams.boxId);
+        this.hiveTabs.setBoxState(this.box, this.hive);
       });
     });
   }
@@ -106,7 +109,7 @@ export class BoxComponent implements OnInit {
           },
         },
         {
-          text: "Record Note",
+          text: "New Note",
           icon: 'newspaper-outline',
           handler: () => {
             this.addNote();

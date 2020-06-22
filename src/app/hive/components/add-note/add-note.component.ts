@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ModalController } from '@ionic/angular';
+import { Note } from '../../../models/note';
 
 @Component({
   selector: "app-add-note",
@@ -11,6 +12,7 @@ export class AddNoteComponent implements OnInit {
   note: Note = {
     date: new Date().toISOString(),
     details: '',
+    queenSpotted: false,
     pests: []
   };
 

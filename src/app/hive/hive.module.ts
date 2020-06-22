@@ -12,6 +12,9 @@ import { AddBoxComponent } from './components/add-box/add-box.component';
 import { JoinPipe } from './pipes/join.pipe';
 import { BoxComponent } from './components/box/box.component';
 import { FrameComponent } from './components/frame/frame.component';
+import { NoteComponent } from './components/note/note.component';
+import { NotesListComponent } from './components/notes-list/notes-list.component';
+import { PlantsListComponent } from './components/plants-list/plants-list.component';
 
 
 @NgModule({
@@ -24,7 +27,10 @@ import { FrameComponent } from './components/frame/frame.component';
     AddBoxComponent,
     JoinPipe,
     BoxComponent,
-    FrameComponent
+    FrameComponent,
+    NoteComponent,
+    NotesListComponent,
+    PlantsListComponent
   ],
   imports: [
     IonicModule,

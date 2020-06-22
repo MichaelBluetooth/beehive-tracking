@@ -1,4 +1,3 @@
-<ion-app>
   <div class="ion-page" id="main-frame-content">
     <ion-header>
       <ion-toolbar>
@@ -10,27 +9,25 @@
     </ion-header>
 
     <ion-content>
-      <ion-list>
-        <ion-list-header>
-          Notes
-        </ion-list-header>
-        <ion-item button *ngFor="let note of frame.notes">
-          <!-- <ion-thumbnail slot="start">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-            </ion-thumbnail> -->
-          <ion-label>
-            <h3>{{note.date | date:'medium'}}</h3>
-            <p>{{note.details}}</p>
-            <p *ngIf="note.pests && note.pests.length > 0">Pests: {{note.pests | join}}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="presentMenu()">
-          <ion-icon name="settings-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-
+      <app-notes-list *ngIf="frame" [notes]="frame.notes"></app-notes-list>
     </ion-content>
+
+    <!-- <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="tab1" (click)="presentMenu()">
+          <ion-icon name="settings-outline"></ion-icon>
+          <ion-label>Options</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="tab2" (click)="this.addFramePhoto()">
+          <ion-icon name="camera"></ion-icon>
+          <ion-label>Take Picture</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="tab3" (click)="addNote()">
+          <ion-icon name="eye-outline"></ion-icon>
+          <ion-label>Observation</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>      
+    </ion-tabs> -->
   </div>

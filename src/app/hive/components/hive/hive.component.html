@@ -11,7 +11,27 @@
 
     <ion-content>
       <ion-img *ngIf="hive.photo" src="{{ hive.photo.base64 ? hive.photo.base64 : hive.photo.webviewPath }}"></ion-img>
-
+      <ion-item *ngIf="hive.plants">
+        <ion-label text-wrap>
+          <h3>Nearby Plants</h3>
+          <p>
+            {{hive.plants | join}}
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label text-wrap>
+          <h3>Queen Last Spotted</h3>
+          <p>
+            <ng-container *ngIf="!hive.queenLastSpotted">
+              N/A
+            </ng-container>
+            <ng-container *ngIf="hive.queenLastSpotted">
+              {{hive.queenLastSpotted | date}}
+            </ng-container>
+          </p>
+        </ion-label>
+      </ion-item>
       <ion-list>
         <ion-list-header>
           Parts
@@ -27,27 +47,7 @@
         </ion-item>
       </ion-list>
 
-      <ion-list>
-        <ion-list-header>
-          Notes
-        </ion-list-header>
-        <ion-item button *ngFor="let note of hive.notes">
-          <!-- <ion-thumbnail slot="start">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-            </ion-thumbnail> -->
-          <ion-label>
-            <h3>{{note.date | date:'medium'}}</h3>
-            <p>{{note.details}}</p>
-            <p *ngIf="note.pests && note.pests.length > 0">Pests: {{note.pests | join}}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="presentMenu()">
-          <ion-icon name="settings-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
+      <app-notes-list *ngIf="hive" [notes]="hive.notes"></app-notes-list>
 
     </ion-content>
   </div>

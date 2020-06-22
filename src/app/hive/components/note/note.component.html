@@ -1,0 +1,9 @@
+<ion-label>
+  <h3>{{note.date | date:'medium'}}</h3>
+  <p>{{note.details}}</p>
+  <p *ngIf="note.queenSpotted">Queen Spotted</p>
+  <p *ngIf="note.pests && note.pests.length > 0">Pests: {{note.pests | join}}</p>
+  <p>
+    <ion-img *ngIf="note.photo" src="{{ note.photo.base64 ? note.photo.base64 : note.photo.webviewPath }}"></ion-img>
+  </p>
+</ion-label>
