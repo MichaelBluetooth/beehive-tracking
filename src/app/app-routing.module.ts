@@ -8,7 +8,7 @@ const routes: Routes = [
   // },
   {
     path: '',
-    loadChildren: () => import('./hive/hive.module').then(m => m.HiveModule)
+    loadChildren: () => import('./hive-old/hive.module').then(m => m.HiveModule)
   }
 ];
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
-import { HiveService } from "src/app/hive/services/hive.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ModalController, IonInput } from "@ionic/angular";
+import { HiveService } from '../../services/hive.service';
 
 @Component({
   selector: "app-add-hive",

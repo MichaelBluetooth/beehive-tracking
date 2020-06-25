@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Hive } from "src/app/models/hive";
-import { HiveService } from "src/app/hive/services/hive.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   MenuController,
@@ -12,6 +11,7 @@ import { AddBoxComponent } from "../add-box/add-box.component";
 import { PhotoService } from "../../services/photo.service";
 import { AddNoteComponent } from "../add-note/add-note.component";
 import { HiveTabsService } from "../../services/hive-tabs.service";
+import { HiveService } from '../../services/hive.service';
 
 @Component({
   selector: "app-hive",
