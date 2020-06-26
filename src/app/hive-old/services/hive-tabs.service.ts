@@ -160,7 +160,7 @@ export class HiveTabsService {
         },
       },
       {
-        text: "New Observation",
+        text: "New Inspection",
         icon: "eye-outline",
         handler: () => {
           this.addNote();

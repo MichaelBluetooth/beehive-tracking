@@ -33,12 +33,12 @@ export class BoxComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((routeParams) => {
-      this.hiveService.getHive(+routeParams.id).subscribe((hive) => {
-        this.hive = hive;
-        this.box = hive.parts.find((p) => p.id === +routeParams.boxId);
-        this.hiveTabs.setBoxState(this.box, this.hive);
-      });
+    const boxId = +this.route.snapshot.params.boxId;
+    const hiveId = +this.route.snapshot.parent.params.id;
+    this.hiveService.getHive(hiveId).subscribe((hive) => {
+      this.hive = hive;
+      this.box = hive.parts.find((p) => p.id === boxId);
+      this.hiveTabs.setBoxState(this.box, this.hive);
     });
   }
 
@@ -109,7 +109,7 @@ export class BoxComponent implements OnInit {
           },
         },
         {
-          text: "New Note",
+          text: "New Inspection",
           icon: 'newspaper-outline',
           handler: () => {
             this.addNote();

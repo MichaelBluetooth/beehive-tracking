@@ -22,6 +22,9 @@ export class HiveListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.hiveService.init().then(() => {
+    });
+
     this.hiveTabs.clearState();
     this.hiveService.hives$.subscribe(hives => {
       this.hives = hives;

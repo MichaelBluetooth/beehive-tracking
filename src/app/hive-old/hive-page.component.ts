@@ -5,6 +5,7 @@ import { HiveTabsService } from './services/hive-tabs.service';
 @Component({
   selector: "app-hive-page",
   template: `
+    TEST
     <ion-router-outlet></ion-router-outlet>
     <ion-tabs *ngIf="showTabs">
       <ion-tab-bar slot="bottom">
@@ -20,17 +21,17 @@ import { HiveTabsService } from './services/hive-tabs.service';
 
         <ion-tab-button (click)="addNode()">
           <ion-icon name="eye-outline"></ion-icon>
-          <ion-label>Observation</ion-label>
+          <ion-label>Inspection</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   `,
 })
 export class HivePageComponent implements OnInit {
-  loading = true;
+  loading = false;
 
   get showTabs(): boolean {
-    return this.hiveTabs.stateSet();
+    return true; // this.hiveTabs.stateSet();
   }
 
   constructor(
@@ -39,9 +40,6 @@ export class HivePageComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.hive.init().then(() => {
-      this.loading = false;
-    });
   }
 
   takePhoto(): void {
