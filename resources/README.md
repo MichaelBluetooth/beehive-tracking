@@ -1,8 +1,26 @@
-These are Cordova resources. You can replace icon.png and splash.png and run
-`ionic cordova resources` to generate custom icons and splash screens for your
-app. See `ionic cordova resources --help` for details.
+# Bee Keeping App
 
-Cordova reference documentation:
+Track your beehives with this simple and intuitive app.
 
-- Icons: https://cordova.apache.org/docs/en/latest/config_ref/images.html
-- Splash Screens: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-splashscreen/
+## Feature List
+- Take photos
+- Record inpsections 
+    - notes
+    - queen sightings
+    - pests
+- Document nearby plants
+
+## Pending Features List
+- Sync across multiple devices
+- Share photos
+- Export/Import data
+- More note details
+    - brood sighting
+    - honey sighting
+- Take photo for specific note
+- Upload photo from gallery while taking notes
+- Edit box/frame/hive details (e.g. lables)
+- Take photos of boxes
+- Ability to take more photos of hive
+- Ability to determine which photo should be the hive photo
+- Edit notes
