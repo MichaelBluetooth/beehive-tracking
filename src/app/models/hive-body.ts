@@ -5,6 +5,6 @@ import { Note } from './note';
 export interface HiveBody extends ModelBase {
     label?: string;
     frames?: Frame[];
-    type: 'Hive Body' | 'Super';
+    type?: 'Hive Body' | 'Super';
     notes?: Note[];
 }

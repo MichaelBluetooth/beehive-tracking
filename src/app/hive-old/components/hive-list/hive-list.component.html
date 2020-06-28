@@ -14,8 +14,16 @@
   </ion-header>
 
   <ion-item button detail *ngFor="let hive of hives" (click)="navigateToHive(hive)">
+    <ion-avatar *ngIf="hive.photo" slot="start">
+      <ion-img src="{{ hive.photo.base64 ? hive.photo.base64 : hive.photo.webviewPath }}"></ion-img>
+    </ion-avatar>
     <ion-label>
-      {{hive.label}}
+      <h2>
+        {{hive.label}}
+      </h2>
+      <p>
+        Last Inspected: {{hive | lastInspected | date}}
+      </p>
     </ion-label>
   </ion-item>
 
@@ -24,6 +32,6 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
+
 
 </ion-content>

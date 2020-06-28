@@ -1,3 +1,5 @@
+import { Photo } from './photo';
+
 export interface Note {
     date: any;
     details?: string;

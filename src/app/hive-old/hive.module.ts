@@ -15,6 +15,7 @@ import { FrameComponent } from './components/frame/frame.component';
 import { NoteComponent } from './components/note/note.component';
 import { NotesListComponent } from './components/notes-list/notes-list.component';
 import { PlantsListComponent } from './components/plants-list/plants-list.component';
+import { LastInspectedPipe } from './pipes/last-inspected.pipe';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { PlantsListComponent } from './components/plants-list/plants-list.compon
     FrameComponent,
     NoteComponent,
     NotesListComponent,
-    PlantsListComponent
+    PlantsListComponent,
+    LastInspectedPipe
   ],
   imports: [
     IonicModule,
