@@ -2,10 +2,25 @@
   <ion-list-header>
     Notes
   </ion-list-header>
-  <ion-item *ngFor="let note of notes">
-    <!-- <ion-thumbnail slot="start">
-        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-      </ion-thumbnail> -->
-    <app-note [note]="note"></app-note>
-  </ion-item>
+
+  <ng-container *ngFor="let note of notes; let idx = index">
+    <ion-item (click)="setSelected(idx)">
+      <!-- <ion-thumbnail slot="start">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        </ion-thumbnail> -->
+
+      <ion-grid>
+        <ion-row>
+          <app-note [note]="note"></app-note>
+        </ion-row>
+        <ion-row *ngIf="idx === selected && note.photo">
+          <ion-toolbar>
+            <ion-button class="share-btn" size="small" slot="end" shape="round" (click)="shareImage(note)">
+              <ion-icon slot="icon-only" name="share-social"></ion-icon>
+            </ion-button>
+          </ion-toolbar>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ng-container>
 </ion-list>

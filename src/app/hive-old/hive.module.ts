@@ -16,6 +16,7 @@ import { NoteComponent } from './components/note/note.component';
 import { NotesListComponent } from './components/notes-list/notes-list.component';
 import { PlantsListComponent } from './components/plants-list/plants-list.component';
 import { LastInspectedPipe } from './pipes/last-inspected.pipe';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 @NgModule({
@@ -40,6 +41,9 @@ import { LastInspectedPipe } from './pipes/last-inspected.pipe';
     FormsModule,
     ReactiveFormsModule,
     HiveRoutingModule
+  ],
+  providers: [
+    SocialSharing
   ]
 })
 export class HiveModule { }
