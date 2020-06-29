@@ -102,7 +102,10 @@ export class HiveTabsService {
         this.currentFrame.id
       );
     } else if (this.currentBox) {
-      // TODO: box photo
+      this.hiveService.addBoxPhoto(
+        this.currentHive.id,
+        this.currentBox.id
+      );
     } else {
       this.hiveService.setHivePhoto(this.currentHive.id);
     }

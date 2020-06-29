@@ -241,6 +241,33 @@ export class HiveService {
     return null;
   }
 
+  async addBoxPhoto(hiveId: any, boxId: any) {
+    const photo = await this.photo.takePhoto();
+
+    const idx = this.hives.findIndex((h) => h.id === hiveId);
+    if (idx > -1) {
+      const boxIdx = this.hives[idx].parts.findIndex((p) => p.id === boxId);
+      if (boxIdx > -1) {
+        const note: Note = {
+          date: new Date(),
+          details: "Box photograph taken",
+          photo: {
+            filepath: photo.filepath,
+            webviewPath: photo.webviewPath,
+          },
+        };
+
+        this.hives[idx].parts[boxIdx].notes = [note].concat(
+          this.hives[idx].parts[boxIdx].notes || []
+        );
+
+        this.save();
+        return of(this.hives[idx].parts[boxIdx]);
+      }
+    }
+    return of(null);
+  }
+
   async addFramePhoto(hiveId: any, boxId: any, frameId: any) {
     const photo = await this.photo.takePhoto();
 
