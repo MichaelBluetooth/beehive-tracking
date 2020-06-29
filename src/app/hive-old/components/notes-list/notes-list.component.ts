@@ -20,7 +20,7 @@ export class NotesListComponent implements OnInit {
       .share(
         "",
         "",
-        note.photo.base64 ? note.photo.base64 : note.photo.webviewPath
+        note.photo.filepath
       )
       .then(() => {
         // share was success
