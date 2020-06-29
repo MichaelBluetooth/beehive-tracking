@@ -9,10 +9,10 @@ Track your beehives with this simple and intuitive app.
     - queen sightings
     - pests
 - Document nearby plants
+- Share photos
 
 ## Pending Features List
 - Sync across multiple devices
-- Share photos
 - Export/Import data
 - More note details
     - brood sighting
