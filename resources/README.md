@@ -23,3 +23,4 @@ Track your beehives with this simple and intuitive app.
 - Ability to take more photos of hive
 - Ability to determine which photo should be the hive photo
 - Edit notes
+- Multi language support
