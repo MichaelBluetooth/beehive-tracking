@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { ModalController } from '@ionic/angular';
-import { Note } from '../../../models/note';
+import { ModalController, NavParams } from "@ionic/angular";
+import { Note } from "../../../models/note";
 
 @Component({
   selector: "app-add-note",
@@ -8,23 +8,29 @@ import { Note } from '../../../models/note';
   styleUrls: ["./add-note.component.scss"],
 })
 export class AddNoteComponent implements OnInit {
-
   note: Note = {
     date: new Date().toISOString(),
-    details: '',
+    details: "",
     queenSpotted: false,
-    pests: []
+    pests: [],
   };
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private navParams: NavParams
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.navParams && this.navParams.data && this.navParams.data.note) {
+      this.note = JSON.parse(JSON.stringify(this.navParams.data.note));
+    }
+  }
 
   dismiss() {
     this.modalCtrl.dismiss();
   }
 
-  addNote(){
+  addNote() {
     this.modalCtrl.dismiss(this.note);
   }
 }

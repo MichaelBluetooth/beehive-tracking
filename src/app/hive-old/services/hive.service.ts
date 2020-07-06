@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HIVES } from "../../models/MOCK_HIVES";
 import { Hive } from "../../models/hive";
-import { Observable, of, BehaviorSubject } from "rxjs";
+import { Observable, of, BehaviorSubject, observable } from "rxjs";
 import { HiveBody } from "src/app/models/hive-body";
 import { PhotoService } from "./photo.service";
 import { Storage } from "@ionic/storage";
@@ -22,6 +22,16 @@ export class HiveService {
 
   constructor(private photo: PhotoService, private storage: Storage) {}
 
+  newId() {
+    // TODO: use a well-maintained uuid module
+    // https://github.com/uuidjs/uuid
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0,
+        v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
   async init() {
     return this.storage.get("hives").then(async (hives) => {
       if (hives) {
@@ -37,12 +47,39 @@ export class HiveService {
             hive.photo.base64 = await this.photo.loadSaved(hive.photo);
           }
 
+          if (hive.notes) {
+            hive.notes.forEach(async (note) => {
+              if (!note.id) {
+                note.id = this.newId();
+              }
+
+              if (note.photo) {
+                note.photo.base64 = await this.photo.loadSaved(note.photo);
+              }
+            });
+          }
+
           if (hive.parts) {
             hive.parts.forEach(async (part) => {
+              if (part.notes) {
+                part.notes.forEach(async (note) => {
+                  if (!note.id) {
+                    note.id = this.newId();
+                  }
+
+                  if (note.photo) {
+                    note.photo.base64 = await this.photo.loadSaved(note.photo);
+                  }
+                });
+              }
+
               if (part.frames) {
                 part.frames.forEach(async (frame) => {
                   if (frame.notes) {
                     frame.notes.forEach(async (note) => {
+                      if (!note.id) {
+                        note.id = this.newId();
+                      }
                       if (note.photo) {
                         // const readNoteFile = await Filesystem.readFile({
                         //   path: hive.photo.filepath,
@@ -157,6 +194,34 @@ export class HiveService {
     return of(null);
   }
 
+  deleteNote(noteId: any): Observable<any> {
+    const checkNotes = (notes) => {
+      if (notes) {
+        const idx = notes.findIndex((n) => n.id === noteId);
+        if (idx > -1) {
+          notes.splice(idx, 1);
+          this.save();
+        }
+      }
+    };
+
+    this.hives.forEach((hive) => {
+      checkNotes(hive.notes);
+      if (hive.parts) {
+        hive.parts.forEach((part) => {
+          checkNotes(part.notes);
+
+          if (part.frames) {
+            part.frames.forEach((frame) => {
+              checkNotes(frame.notes);
+            });
+          }
+        });
+      }
+    });
+    return of(null);
+  }
+
   addBoxNote(hiveId: any, boxId: any, note: Note): Observable<any> {
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
@@ -193,6 +258,35 @@ export class HiveService {
       }
     }
     return of(null);
+  }
+
+  updateNote(note: Note) {
+    const checkNotes = (notes) => {
+      if (notes) {
+        const idx = notes.findIndex((n) => n.id === note.id);
+        if (idx > -1) {
+          notes[idx] = note;
+          this.save();
+        }
+      }
+    };
+
+    this.hives.forEach((hive) => {
+      checkNotes(hive.notes);
+      if (hive.parts) {
+        hive.parts.forEach((part) => {
+          checkNotes(part.notes);
+
+          if (part.frames) {
+            part.frames.forEach((frame) => {
+              checkNotes(frame.notes);
+            });
+          }
+        });
+      }
+    });
+
+    return of(note);
   }
 
   addFrameNote(
