@@ -37,6 +37,9 @@ export class HiveService {
       if (hives) {
         this.hives = JSON.parse(hives);
         this.hives.forEach(async (hive) => {
+          if(!hive.id){
+            hive.id = this.newId();
+          }
           if (hive.photo) {
             // const readFile = await Filesystem.readFile({
             //   path: hive.photo.filepath,
@@ -61,6 +64,9 @@ export class HiveService {
 
           if (hive.parts) {
             hive.parts.forEach(async (part) => {
+              if (!part.id) {
+                part.id = this.newId();
+              }
               if (part.notes) {
                 part.notes.forEach(async (note) => {
                   if (!note.id) {
@@ -75,6 +81,9 @@ export class HiveService {
 
               if (part.frames) {
                 part.frames.forEach(async (frame) => {
+                  if (!frame.id) {
+                    frame.id = this.newId();
+                  }
                   if (frame.notes) {
                     frame.notes.forEach(async (note) => {
                       if (!note.id) {
@@ -99,6 +108,7 @@ export class HiveService {
           }
         });
 
+        this.save();
         this.hivesSubject.next(this.hives);
       } else {
         this.hives = [];
