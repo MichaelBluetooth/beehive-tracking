@@ -37,7 +37,7 @@ export class BoxComponent implements OnInit {
     const hiveId = this.route.snapshot.parent.params.id;
     this.hiveService.getHive(hiveId).subscribe((hive) => {
       this.hive = hive;
-      this.box = hive.parts.find((p) => p.id === boxId);
+      this.box = hive.parts.find((p) => p.id == boxId);
       this.hiveTabs.setBoxState(this.box, this.hive);
     });
   }

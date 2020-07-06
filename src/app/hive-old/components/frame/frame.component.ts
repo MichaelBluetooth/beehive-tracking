@@ -40,8 +40,8 @@ export class FrameComponent implements OnInit {
     const hiveId = this.route.snapshot.parent.params.id;
     this.hiveService.getHive(hiveId).subscribe((hive) => {
       this.hive = hive;
-      this.box = hive.parts.find((p) => p.id === boxId);
-      this.frame = this.box.frames.find((f) => f.id === frameId);
+      this.box = hive.parts.find((p) => p.id == boxId);
+      this.frame = this.box.frames.find((f) => f.id == frameId);
       this.hiveTabs.setFrameState(this.frame, this.box, this.hive);
     });
   }
