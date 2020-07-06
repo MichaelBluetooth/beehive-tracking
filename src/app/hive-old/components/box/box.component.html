@@ -20,7 +20,9 @@
             </ion-thumbnail> -->
           <ion-label>
             <h3>{{frame.label}}</h3>
-            <!-- <p>{{part.type}}</p> -->
+            <p>
+              {{frame | frameLastInspected | date}}
+            </p>
           </ion-label>
         </ion-item>
       </ion-list>

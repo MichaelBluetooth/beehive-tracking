@@ -17,6 +17,7 @@ import { NotesListComponent } from './components/notes-list/notes-list.component
 import { PlantsListComponent } from './components/plants-list/plants-list.component';
 import { LastInspectedPipe } from './pipes/last-inspected.pipe';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { FrameLastInspectedPipe } from './pipes/frame-last-inspected.pipe';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     NoteComponent,
     NotesListComponent,
     PlantsListComponent,
-    LastInspectedPipe
+    LastInspectedPipe,
+    FrameLastInspectedPipe
   ],
   imports: [
     IonicModule,
