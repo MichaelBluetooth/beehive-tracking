@@ -3,7 +3,7 @@ import { Note } from "src/app/models/note";
 import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 import { PopoverController } from "@ionic/angular";
 import { NoteMenuComponent } from "../note-menu/note-menu.component";
-import { ThrowStmt } from '@angular/compiler';
+import { ThrowStmt } from "@angular/compiler";
 
 @Component({
   selector: "app-notes-list",
@@ -42,10 +42,12 @@ export class NotesListComponent implements OnInit {
       translucent: true,
     });
     popover.onDidDismiss().then((dismissEvt: any) => {
-      if (dismissEvt.data.deleted) {
-        this.selected = null;
-      } else if (dismissEvt.data.updated) {
-        
+      if (dismissEvt && dismissEvt.data) {
+        if (dismissEvt.data.deleted) {
+          this.selected = null;
+        } else if (dismissEvt.data.updated) {
+          // note was updated
+        }
       }
     });
     return await popover.present();

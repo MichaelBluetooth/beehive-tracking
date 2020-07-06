@@ -34,7 +34,7 @@ export class HiveComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((routeData) => {
-      this.hiveService.getHive(+routeData.id).subscribe((hive) => {
+      this.hiveService.getHive(routeData.id).subscribe((hive) => {
         this.hive = hive;
         this.hiveTabs.setHiveState(this.hive);
       });
