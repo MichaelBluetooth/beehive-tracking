@@ -33,8 +33,8 @@ export class BoxComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const boxId = +this.route.snapshot.params.boxId;
-    const hiveId = +this.route.snapshot.parent.params.id;
+    const boxId = this.route.snapshot.params.boxId;
+    const hiveId = this.route.snapshot.parent.params.id;
     this.hiveService.getHive(hiveId).subscribe((hive) => {
       this.hive = hive;
       this.box = hive.parts.find((p) => p.id === boxId);

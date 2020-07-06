@@ -35,9 +35,9 @@ export class FrameComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const frameId = +this.route.snapshot.params.frameId;
-    const boxId = +this.route.snapshot.params.boxId;
-    const hiveId = +this.route.snapshot.parent.params.id;
+    const frameId = this.route.snapshot.params.frameId;
+    const boxId = this.route.snapshot.params.boxId;
+    const hiveId = this.route.snapshot.parent.params.id;
     this.hiveService.getHive(hiveId).subscribe((hive) => {
       this.hive = hive;
       this.box = hive.parts.find((p) => p.id === boxId);
