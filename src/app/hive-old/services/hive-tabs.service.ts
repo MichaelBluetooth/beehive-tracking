@@ -107,7 +107,7 @@ export class HiveTabsService {
         this.currentBox.id
       );
     } else {
-      this.hiveService.setHivePhoto(this.currentHive.id);
+      this.hiveService.addHivePhoto(this.currentHive.id);
     }
   }
 
@@ -186,6 +186,13 @@ export class HiveTabsService {
 
     if (this.currentHive && !this.currentBox && !this.currentFrame) {
       options.push(
+        {
+          text: "Set Hive Photo",
+          icon: "image-outline",
+          handler: async () => {
+            this.hiveService.setHivePhoto(this.currentHive.id);
+          },
+        },
         {
           text: "Add Box",
           icon: "cube-outline",

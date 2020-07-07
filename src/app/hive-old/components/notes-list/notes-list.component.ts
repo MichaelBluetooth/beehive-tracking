@@ -3,7 +3,7 @@ import { Note } from "src/app/models/note";
 import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 import { PopoverController } from "@ionic/angular";
 import { NoteMenuComponent } from "../note-menu/note-menu.component";
-import { ThrowStmt } from "@angular/compiler";
+import { Hive } from "src/app/models/hive";
 
 @Component({
   selector: "app-notes-list",
@@ -11,6 +11,7 @@ import { ThrowStmt } from "@angular/compiler";
   styleUrls: ["./notes-list.component.scss"],
 })
 export class NotesListComponent implements OnInit {
+  @Input() hive: Hive;
   @Input() notes: Note[] = [];
   selected = null;
 
@@ -38,7 +39,7 @@ export class NotesListComponent implements OnInit {
   async showNoteMenu(currentNote: Note) {
     const popover = await this.popoverController.create({
       component: NoteMenuComponent,
-      componentProps: { note: currentNote },
+      componentProps: { note: currentNote, hive: this.hive },
       translucent: true,
     });
     popover.onDidDismiss().then((dismissEvt: any) => {

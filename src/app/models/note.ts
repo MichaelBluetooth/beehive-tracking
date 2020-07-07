@@ -13,5 +13,5 @@ export interface Note extends ModelBase {
     eggs?: boolean;
     larva?: boolean;
     brood?: boolean;
-    activityLevel: 'Low' | 'Medium' | 'High' | 'N/A';
+    activityLevel?: 'Low' | 'Medium' | 'High' | 'N/A';
 }

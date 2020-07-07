@@ -8,9 +8,13 @@
     <ion-icon slot="end" name="trash-outline"></ion-icon>
     Delete
   </ion-item>
-  <ion-item button *ngIf="note.photo">
+  <ion-item button *ngIf="note.photo" (click)="shareImage()">
     <ion-icon slot="end" name="share-social-outline"></ion-icon>
     Share
+  </ion-item>
+  <ion-item button *ngIf="note.photo" (click)="setHivePhoto()">
+    <ion-icon slot="end" name="image-outline"></ion-icon>
+    Set Hive Photo
   </ion-item>
   <ion-item lines="none" detail="false" button (click)="dismiss()">Cancel</ion-item>
 </ion-list>

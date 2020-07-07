@@ -9,7 +9,7 @@ import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 import { HiveService } from "../../services/hive.service";
 import { Note } from "src/app/models/note";
 import { AddNoteComponent } from "../add-note/add-note.component";
-import { ThrowStmt } from "@angular/compiler";
+import { Hive } from "src/app/models/hive";
 
 @Component({
   selector: "app-note-menu",
@@ -17,7 +17,10 @@ import { ThrowStmt } from "@angular/compiler";
   styleUrls: ["./note-menu.component.scss"],
 })
 export class NoteMenuComponent implements OnInit {
+  /* The note this menu belongs to */
   @Input() note: Note;
+  /* The hive this note belongs to */
+  @Input() hive: Hive;
 
   constructor(
     private hiveService: HiveService,
@@ -36,10 +39,19 @@ export class NoteMenuComponent implements OnInit {
     this.popOver.dismiss();
   }
 
-  shareImage(note: Note) {
-    this.share.share("", "", note.photo.filepath).then(() => {
-      // share was success
-    });
+  shareImage() {
+    if (this.note.photo) {
+      this.share.share("", "", this.note.photo.filepath).then(() => {
+        // share was success
+      });
+    }
+  }
+
+  setHivePhoto() {
+    if (this.note.photo) {
+      this.hiveService.setHivePhotoFromExisting(this.hive.id, this.note.photo);
+      this.dismiss();
+    }
   }
 
   async confirmDelete() {

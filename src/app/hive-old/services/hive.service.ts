@@ -7,6 +7,7 @@ import { PhotoService } from "./photo.service";
 import { Storage } from "@ionic/storage";
 import { Filesystem, FilesystemDirectory } from "@capacitor/core";
 import { Note } from "src/app/models/note";
+import { Photo } from "src/app/models/photo";
 
 @Injectable({
   providedIn: "root",
@@ -37,7 +38,7 @@ export class HiveService {
       if (hives) {
         this.hives = JSON.parse(hives);
         this.hives.forEach(async (hive) => {
-          if(!hive.id){
+          if (!hive.id) {
             hive.id = this.newId();
           }
           if (hive.photo) {
@@ -329,6 +330,21 @@ export class HiveService {
     return of(null);
   }
 
+  setHivePhotoFromExisting(hiveId: any, photo: Photo): Promise<Hive> {
+    const idx = this.hives.findIndex((h) => h.id === hiveId);
+    if (idx > -1) {
+      this.hives[idx].photo = {
+        filepath: photo.filepath,
+        webviewPath: photo.webviewPath,
+        base64: photo.base64,
+      };
+    }
+
+    this.save();
+
+    return null;
+  }
+
   async setHivePhoto(hiveId: any): Promise<Hive> {
     const photo = await this.photo.takePhoto();
 
@@ -343,6 +359,26 @@ export class HiveService {
     this.save();
 
     return null;
+  }
+
+  async addHivePhoto(hiveId: any) {
+    const photo = await this.photo.takePhoto();
+
+    const idx = this.hives.findIndex((h) => h.id === hiveId);
+    if (idx > -1) {
+      const note: Note = {
+        date: new Date(),
+        details: "Hive photograph taken",
+        photo: {
+          filepath: photo.filepath,
+          webviewPath: photo.webviewPath,
+        },
+      };
+      this.hives[idx].notes = [note].concat(this.hives[idx].notes || []);
+      this.save();
+      return of(this.hives[idx]);
+    }
+    return of(null);
   }
 
   async addBoxPhoto(hiveId: any, boxId: any) {
