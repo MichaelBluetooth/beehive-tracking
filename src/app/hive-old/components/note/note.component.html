@@ -1,7 +1,14 @@
 <ion-label>
   <h3>{{note.date | date:'medium'}}</h3>
   <p>{{note.details}}</p>
+  <p *ngIf="note.activityLevel && note.activityLevel != 'N/A'">Activity Level: {{note.activityLevel}}</p>
   <p *ngIf="note.queenSpotted">Queen Spotted</p>
+  <p *ngIf="note.brood">Brood Spotted</p>
+  <p *ngIf="note.larva">Larva Spotted</p>
+  <p *ngIf="note.eggs">Eggs Spotted</p>  
+  <p *ngIf="note.queenCells">Queen Cells Spotted</p>
+  <p *ngIf="note.swarmCells">Swarm Cells Spotted</p>
+  <p *ngIf="note.supersedureCells">Supersedure Cells Spotted</p>
   <p *ngIf="note.pests && note.pests.length > 0">Pests: {{note.pests | join}}</p>
   <p>
     <ion-img *ngIf="note.photo" src="{{ note.photo.base64 ? note.photo.base64 : note.photo.webviewPath }}"></ion-img>

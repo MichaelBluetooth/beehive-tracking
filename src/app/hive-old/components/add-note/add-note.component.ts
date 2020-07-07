@@ -12,6 +12,11 @@ export class AddNoteComponent implements OnInit {
     date: new Date().toISOString(),
     details: "",
     queenSpotted: false,
+    brood: false,
+    eggs: false,
+    queenCells: false,
+    swarmCells: false,
+    supersedureCells: false,
     pests: [],
   };
 

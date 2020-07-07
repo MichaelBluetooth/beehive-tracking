@@ -7,4 +7,11 @@ export interface Note extends ModelBase {
     pests?: string[];
     photo?: Photo;
     queenSpotted?: boolean;
+    swarmCells?: boolean;
+    queenCells?: boolean;
+    supersedureCells?: boolean;
+    eggs?: boolean;
+    larva?: boolean;
+    brood?: boolean;
+    activityLevel: 'Low' | 'Medium' | 'High' | 'N/A';
 }
