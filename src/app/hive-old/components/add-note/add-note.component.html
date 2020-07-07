@@ -15,16 +15,6 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Pests</ion-label>
-    <ion-select multiple="true" [(ngModel)]="note.pests">
-      <ion-select-option value="Mites">Mites</ion-select-option>
-      <ion-select-option value="Hive Beetles">Hive Beetles</ion-select-option>
-      <ion-select-option value="Wax Moths">Wax Moths</ion-select-option>
-      <ion-select-option value="Ants">Ants</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
     <ion-label>Queen</ion-label>
     <ion-toggle [(ngModel)]="note.queenSpotted">
     </ion-toggle>
@@ -76,6 +66,15 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Pests</ion-label>
+    <ion-select multiple="true" [(ngModel)]="note.pests">
+      <ion-select-option value="Mites">Mites</ion-select-option>
+      <ion-select-option value="Hive Beetles">Hive Beetles</ion-select-option>
+      <ion-select-option value="Wax Moths">Wax Moths</ion-select-option>
+      <ion-select-option value="Ants">Ants</ion-select-option>
+    </ion-select>
+  </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Notes</ion-label>
