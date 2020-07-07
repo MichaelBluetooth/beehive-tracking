@@ -21,12 +21,12 @@ export class PhotoService {
     this.platform = platform;
   }
 
-  public async takePhoto() {
+  public async takePhoto(prompt?: boolean) {
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
       correctOrientation: true,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
+      source: prompt ? CameraSource.Prompt : CameraSource.Camera,
       quality: 100,
     });
 

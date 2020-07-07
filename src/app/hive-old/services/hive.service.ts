@@ -361,8 +361,8 @@ export class HiveService {
     return null;
   }
 
-  async addHivePhoto(hiveId: any) {
-    const photo = await this.photo.takePhoto();
+  async addHivePhoto(hiveId: any, prompt?: boolean) {
+    const photo = await this.photo.takePhoto(prompt);
 
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
@@ -381,8 +381,8 @@ export class HiveService {
     return of(null);
   }
 
-  async addBoxPhoto(hiveId: any, boxId: any) {
-    const photo = await this.photo.takePhoto();
+  async addBoxPhoto(hiveId: any, boxId: any, prompt?: boolean) {
+    const photo = await this.photo.takePhoto(prompt);
 
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
@@ -408,8 +408,8 @@ export class HiveService {
     return of(null);
   }
 
-  async addFramePhoto(hiveId: any, boxId: any, frameId: any) {
-    const photo = await this.photo.takePhoto();
+  async addFramePhoto(hiveId: any, boxId: any, frameId: any, prompt?: boolean) {
+    const photo = await this.photo.takePhoto(prompt);
 
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {

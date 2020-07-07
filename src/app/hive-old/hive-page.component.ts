@@ -43,7 +43,7 @@ export class HivePageComponent implements OnInit {
   }
 
   takePhoto(): void {
-    this.hiveTabs.takePhoto();
+    this.hiveTabs.takePhoto(false);
   }
 
   addNode(): void {

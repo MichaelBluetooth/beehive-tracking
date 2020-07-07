@@ -13,12 +13,14 @@
       <ion-img *ngIf="hive.photo" src="{{ hive.photo.base64 ? hive.photo.base64 : hive.photo.webviewPath }}"></ion-img>
       <ion-item *ngIf="hive.plants && hive.plants.length > 0">
         <ion-label text-wrap>
-          <ion-label text-wrap>
-            <h3>Last Inspected</h3>
-            <p>
-              {{hive | lastInspected | date}}
-            </p>
-          </ion-label>
+          <h3>Last Inspected</h3>
+          <p>
+            {{hive | lastInspected | date}}
+          </p>
+        </ion-label>        
+      </ion-item>
+      <ion-item>
+        <ion-label text-wrap>
           <h3>Nearby Plants</h3>
           <p>
             {{hive.plants | join}}

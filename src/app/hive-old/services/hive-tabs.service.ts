@@ -94,20 +94,22 @@ export class HiveTabsService {
     return afterConfirm.asObservable();
   }
 
-  takePhoto(): void {
+  takePhoto(prompt?: boolean): void {
     if (this.currentFrame) {
       this.hiveService.addFramePhoto(
         this.currentHive.id,
         this.currentBox.id,
-        this.currentFrame.id
+        this.currentFrame.id,
+        prompt
       );
     } else if (this.currentBox) {
       this.hiveService.addBoxPhoto(
         this.currentHive.id,
-        this.currentBox.id
+        this.currentBox.id,
+        prompt
       );
     } else {
-      this.hiveService.addHivePhoto(this.currentHive.id);
+      this.hiveService.addHivePhoto(this.currentHive.id, prompt);
     }
   }
 
@@ -173,7 +175,7 @@ export class HiveTabsService {
         text: "Take Photo",
         icon: "camera-outline",
         handler: () => {
-          this.takePhoto();
+          this.takePhoto(true);
         },
       },
       {
