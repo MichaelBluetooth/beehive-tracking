@@ -19,6 +19,7 @@ import { LastInspectedPipe } from './pipes/last-inspected.pipe';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { FrameLastInspectedPipe } from './pipes/frame-last-inspected.pipe';
 import { NoteMenuComponent } from './components/note-menu/note-menu.component';
+import { OptionsComponent } from './components/options/options.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { NoteMenuComponent } from './components/note-menu/note-menu.component';
     PlantsListComponent,
     LastInspectedPipe,
     FrameLastInspectedPipe,
-    NoteMenuComponent
+    NoteMenuComponent,
+    // OptionsComponent
   ],
   imports: [
     IonicModule,

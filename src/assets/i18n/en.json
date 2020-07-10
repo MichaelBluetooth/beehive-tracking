@@ -1,0 +1,42 @@
+{
+  "MAIN": {
+    "cancel": "cancel",
+    "close": "Close"
+  },
+  "OPTIONS": {
+    "header": "Options",
+    "language": "Language",
+    "languageOptions": {
+      "english": "English",
+      "german": "German",
+      "french": "French",
+      "spanish": "Spanish"
+    }
+  },
+  "HIVE-PROPERTIES": {
+    "last-inspected": "Last Inspected",
+    "nearby-plants": "Nearby Plants",
+    "queen-last-seen": "Queen Last Seen"
+  },
+  "HIVE-LIST": {
+    "title": "Hives"
+  },
+  "ADD-HIVE": {
+    "title": "Add New Hive",
+    "label-field": "Hive Label"
+  },
+  "HIVE": {
+    "last-inspected": "Last Inspected",
+    "nearby-plants": "Nearby Plants",
+    "queen-last-seen": "Queen Last Seen",
+    "parts-header": "Parts",
+    "inspections-header": "Inspections"
+  },
+
+  "HIVE-PROPERTY-VALUES": {
+    "type": {
+      "super": "Super",
+      "hive-body": "Hive Body"
+    }
+  }
+}

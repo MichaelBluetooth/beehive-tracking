@@ -1,0 +1,20 @@
+<ion-content>
+  <ion-header translucent>
+    <ion-toolbar>
+      <ion-title>{{'OPTIONS.header' | translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()">{{ 'MAIN.close' | translate }}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-label>{{'OPTIONS.language' | translate}}</ion-label>
+    <ion-select multiple="false" [(ngModel)]="language" (ionChange)="setLanguage()">
+      <ion-select-option value="en">{{'OPTIONS.languageOptions.english' | translate}}</ion-select-option>
+      <ion-select-option value="de">{{'OPTIONS.languageOptions.german' | translate}}</ion-select-option>
+      <ion-select-option value="es">{{'OPTIONS.languageOptions.spanish' | translate}}</ion-select-option>
+      <ion-select-option value="fr">{{'OPTIONS.languageOptions.french' | translate}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>

@@ -179,12 +179,12 @@ export class HiveService {
   }
 
   getHive(id: any): Observable<Hive> {
-    const idx = this.hives.findIndex((h) => h.id === id);
+    const idx = this.hives.findIndex((h) => h.id == id);
     return idx > -1 ? of(this.hives[idx]) : of(null);
   }
 
   deleteHive(id: any): Observable<any> {
-    const idx = this.hives.findIndex((h) => h.id === id);
+    const idx = this.hives.findIndex((h) => h.id == id);
     if (idx > -1) {
       this.hives.splice(idx, 1);
       this.save();
@@ -193,7 +193,7 @@ export class HiveService {
   }
 
   deleteBox(hiveId: any, boxId: any): Observable<any> {
-    const idx = this.hives.findIndex((h) => h.id === hiveId);
+    const idx = this.hives.findIndex((h) => h.id == hiveId);
     if (idx > -1) {
       const boxIdx = this.hives[idx].parts.findIndex((p) => p.id === boxId);
       if (boxIdx > -1) {

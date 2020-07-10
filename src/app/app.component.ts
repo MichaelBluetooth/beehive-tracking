@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Platform, ModalController } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { OptionsComponent } from "./hive-old/components/options/options.component";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  selector: "app-root",
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
 })
 export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private modal: ModalController,
+    private translate: TranslateService
   ) {
+    const language = this.translate.getBrowserLang();
+    this.translate.setDefaultLang(language);
     this.initializeApp();
   }
 
@@ -23,5 +29,21 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  async showSettings() {
+    const modal = await this.modal.create({
+      component: OptionsComponent,
+      componentProps: {
+        
+      }
+    });
+
+    modal.onDidDismiss().then((modalResponse) => {
+      if (modalResponse.data) {
+      }
+    });
+
+    return await modal.present();
   }
 }
