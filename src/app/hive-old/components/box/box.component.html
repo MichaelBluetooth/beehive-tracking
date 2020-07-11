@@ -9,7 +9,7 @@
     <ion-content>
       <ion-list>
         <ion-list-header>
-          Frames
+          {{'BOX.frames-header'| translate}}
         </ion-list-header>
         <ion-item button detail *ngFor="let frame of box.frames" (click)="navigateToFrame(frame)">
           <!-- <ion-thumbnail slot="start">
@@ -18,13 +18,13 @@
           <ion-label>
             <h3>{{frame.label}}</h3>
             <p>
-              Last Inspected: {{frame | frameLastInspected | date}}
+              {{'BOX.last-inspected'| translate}}: {{frame | frameLastInspected | date}}
             </p>
           </ion-label>
         </ion-item>
       </ion-list>
 
-      
+
       <app-notes-list *ngIf="box" [notes]="box.notes" [hive]="hive"></app-notes-list>
 
     </ion-content>

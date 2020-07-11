@@ -10,10 +10,10 @@ import {
 import { Hive } from "src/app/models/hive";
 import { HiveBody } from "src/app/models/hive-body";
 import { Frame } from "src/app/models/frame";
-import { isNullOrUndefined } from "util";
 import { Router } from "@angular/router";
 import { AddBoxComponent } from "../components/add-box/add-box.component";
 import { PlantsListComponent } from '../components/plants-list/plants-list.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: "root",
@@ -28,7 +28,8 @@ export class HiveTabsService {
     private actionSheet: ActionSheetController,
     private alert: AlertController,
     private hiveService: HiveService,
-    private router: Router
+    private router: Router,
+    private translator: TranslateService
   ) {}
 
   delete(): void {
@@ -75,13 +76,14 @@ export class HiveTabsService {
   async confirmDelete(itemName: string) {
     const afterConfirm: Subject<any> = new Subject();
 
+    const itemNameTranslated = this.translator.instant(`MAIN-TABS.delete-item-name.${itemName.toLowerCase()}`);
     const alert = await this.alert.create({
-      header: "Confirm Delete",
-      message: `Are you sure you want to delete this ${itemName}? This action cannot be undone.`,
+      header: this.translator.instant('MAIN-TABS.delete-header'),
+      message: this.translator.instant('MAIN-TABS.delete-message', {itemName: itemNameTranslated}),
       buttons: [
-        "Cancel",
+        this.translator.instant('MAIN.cancel'),
         {
-          text: "Delete",
+          text: this.translator.instant('MAIN.delete'),
           handler: () => {
             afterConfirm.next();
           },
@@ -157,7 +159,7 @@ export class HiveTabsService {
   async loadOptions(): Promise<any> {
     const options: any[] = [
       {
-        text: "Delete",
+        text: this.translator.instant('MAIN.delete'),
         role: "destructive",
         icon: "trash",
         handler: () => {
@@ -165,21 +167,21 @@ export class HiveTabsService {
         },
       },
       {
-        text: "New Inspection",
+        text: this.translator.instant('MAIN-TABS.new-inspection'),
         icon: "eye-outline",
         handler: () => {
           this.addNote();
         },
       },
       {
-        text: "Take Photo",
-        icon: "camera-outline",
+        text: this.translator.instant('MAIN-TABS.take-photo'),
+        icon: 'camera-outline',
         handler: () => {
           this.takePhoto(true);
         },
       },
       {
-        text: "Cancel",
+        text: this.translator.instant('MAIN.cancel'),
         icon: "close",
         role: "cancel",
         handler: () => {},
@@ -189,14 +191,14 @@ export class HiveTabsService {
     if (this.currentHive && !this.currentBox && !this.currentFrame) {
       options.push(
         {
-          text: "Set Hive Photo",
+          text: this.translator.instant('MAIN-TABS.set-hive-photo'),
           icon: "image-outline",
           handler: async () => {
             this.hiveService.setHivePhoto(this.currentHive.id);
           },
         },
         {
-          text: "Add Box",
+          text: this.translator.instant('MAIN-TABS.add-box'),
           icon: "cube-outline",
           handler: async () => {
             const modal = await this.modal.create({
@@ -217,7 +219,7 @@ export class HiveTabsService {
           },
         },
         {
-          text: "Nearby Plants",
+          text: this.translator.instant('MAIN-TABS.nearby-plants'),
           icon: "leaf-outline",
           handler: async () => {
             const modal = await this.modal.create({
@@ -242,7 +244,7 @@ export class HiveTabsService {
     }
 
     const actionSheet = await this.actionSheet.create({
-      header: "Options",
+      header: this.translator.instant('MAIN-TABS.options'),
       buttons: options,
     });
 

@@ -5,7 +5,7 @@
         <ion-buttons slot="end">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Hives</ion-title>
+        <ion-title>{{'APP-ROOT.title' | translate}}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -17,14 +17,14 @@
   <ion-menu side="end" content-id="main-content">
     <ion-header>
       <ion-toolbar translucent>
-        <ion-title>Menu</ion-title>
+        <ion-title>{{'APP-ROOT.menu-header' | translate}}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
       <ion-list>
         <ion-item button (click)="showSettings()">
           <ion-icon name="settings-outline" slot="start"></ion-icon>
-          <ion-label>Settings</ion-label>
+          <ion-label>{{'APP-ROOT.menu-option.settings' | translate}}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>

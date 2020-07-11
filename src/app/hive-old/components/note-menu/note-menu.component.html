@@ -1,20 +1,20 @@
 <ion-list>
-  <ion-list-header>Note Options</ion-list-header>
+  <ion-list-header>{{'NOTE-OPTIONS.header' | translate}}</ion-list-header>
   <ion-item button (click)="editNote()">
     <ion-icon slot="end" name="create-outline"></ion-icon>
-    Edit
+    {{'MAIN.edit' | translate}}
   </ion-item>
   <ion-item button (click)="confirmDelete()">
     <ion-icon slot="end" name="trash-outline"></ion-icon>
-    Delete
+    {{'MAIN.delete' | translate}}
   </ion-item>
   <ion-item button *ngIf="note.photo" (click)="shareImage()">
     <ion-icon slot="end" name="share-social-outline"></ion-icon>
-    Share
+    {{'MAIN.share' | translate}}
   </ion-item>
   <ion-item button *ngIf="note.photo" (click)="setHivePhoto()">
     <ion-icon slot="end" name="image-outline"></ion-icon>
-    Set Hive Photo
+    {{'MAIN.set-hive-photo' | translate}}
   </ion-item>
-  <ion-item lines="none" detail="false" button (click)="dismiss()">Cancel</ion-item>
+  <ion-item lines="none" detail="false" button (click)="dismiss()">{{'MAIN.cancel' | translate}}</ion-item>
 </ion-list>

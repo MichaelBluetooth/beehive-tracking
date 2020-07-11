@@ -5,6 +5,7 @@ import { HiveComponent } from './components/hive/hive.component';
 import { AddHiveComponent } from './components/add-hive/add-hive.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
 import { HiveRoutingModule } from './hive-routing.module';
 import { HivePageComponent } from './hive-page.component';
 import { AddNoteComponent } from './components/add-note/add-note.component';
@@ -19,7 +20,6 @@ import { LastInspectedPipe } from './pipes/last-inspected.pipe';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { FrameLastInspectedPipe } from './pipes/frame-last-inspected.pipe';
 import { NoteMenuComponent } from './components/note-menu/note-menu.component';
-import { OptionsComponent } from './components/options/options.component';
 
 
 @NgModule({
@@ -42,6 +42,7 @@ import { OptionsComponent } from './components/options/options.component';
     // OptionsComponent
   ],
   imports: [
+    TranslateModule,
     IonicModule,
     CommonModule,
     FormsModule,

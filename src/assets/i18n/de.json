@@ -1,33 +1,93 @@
 {
-    "MAIN": {
-      "cancel": "Stornieren",
-      "close": "Schließen"
+  "APP-ROOT": {
+    "title": "Bienenstöcke", 
+    "menu-header": "Optionen", 
+    "menu-option": {
+      "settings": "Einstellungen"
+    }
+  },
+  "MAIN": {
+    "cancel": "Stornieren",
+    "close": "Schließen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "share": "Aktie"
+  },
+  "MAIN-TABS": {
+    "options": "Optionen",
+    "take-photo": "Foto Machen",
+    "inspection": "Inspektion",
+    "delete-header": "Löschung Bestätigen",
+    "delete-message": "Sind Sie sicher, dass Sie dieses {{itemName}} löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "delete-item-name": {
+      "frame": "Rahmen",
+      "box": "Box",
+      "hive": "Bienenstock"
     },
-    "HIVE-PROPERTIES": {
-      "last-inspected": "Last Inspected",
-      "nearby-plants": "Nearby Plants",
-      "queen-last-seen": "Queen Last Seen"
+    "new-inspection": "Neue Inspektion",
+    "set-hive-photo": "Bienenstockfoto Einstellen",
+    "add-box": "Box Hinzufügen",
+    "nearby-plants": "Pflanzen in der Nähe"
+  },
+  "OPTIONS": {
+    "header": "Optionen",
+    "language": "Sprache",
+    "languageOptions": {
+      "english": "Englisch",
+      "german": "Deutsche",
+      "french": "Französisch",
+      "spanish": "Spanisch"
+    }
+  },
+  "HIVE-PROPERTIES": {
+    "last-inspected": "Zuletzt überprüft",
+    "nearby-plants": "Pflanzen in der Nähe",
+    "queen-last-seen": "Königin zuletzt gesehen"
+  },
+  "HIVE-LIST": {
+    "last-inspected": "Zuletzt überprüft"
+  },
+  "ADD-HIVE": {
+    "title": "Neuen Bienenstock hinzufügen",
+    "label-field": "Bienenstocketikett"
+  },
+  "INSPECTIONS": {
+    "header": "Inspektionen",
+    "activity-level": "Aktivitätslevel",
+    "activity-level-values": {
+      "Low": "Niedrig",
+      "Medium": "Mittel",
+      "High": "Hoch",
+      "N/A": "Keiner"
     },
-    "HIVE-LIST": {
-      "title": "Hives"
-    },
-    "ADD-HIVE": {
-      "title": "Add New Hive",
-      "label-field": "Hive Label"
-    },
-    "HIVE": {
-      "last-inspected": "Last Inspected",
-      "nearby-plants": "Nearby Plants",
-      "queen-last-seen": "Queen Last Seen",
-      "parts-header": "Parts",
-      "inspections-header": "Inspections"
-    },
-  
-    "HIVE-PROPERTY-VALUES": {
-      "type": {
-        "super": "Super",
-        "hive-body": "Hive Body"
-      }
+    "queen-spotted": "Königin entdeckt",
+    "brood-spotted": "Brut entdeckt",
+    "larva-spotted": "Larve entdeckt",
+    "eggs-spotted": "Eier entdeckt",
+    "queen-cells-spotted": "Königinzellen entdeckt",
+    "swarm-cells-spotted": "Schwarmzellen entdeckt",
+    "supersedure-cells-spotted": "Ersetzungszellen entdeckt",
+    "pests": "Schädlinge"
+  },
+  "HIVE": {
+    "last-inspected": "Zuletzt überprüft",
+    "nearby-plants": "In der Nähe Pflanzen",
+    "queen-last-seen": "Königin zuletzt gesehen",
+    "parts-header": "Teile",
+    "inspections-header": "Inspektionen"
+  },
+  "BOX": {
+    "frames-header": "Rahmen",
+    "last-inspected": "Zuletzt überprüft"
+  },
+  "NOTE-OPTIONS": {
+    "header": "Hinweis Optionen",
+    "set-hive-photo": "Stellen Sie Bienenstockfoto ein"
+  },
+  "BOX-PROPERTY-VALUES": {
+    "type": {
+      "Super": "Bienenstock Super",
+      "Hive Body": "Bienenstock Körper"
     }
   }
-  
+}

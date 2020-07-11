@@ -1,8 +1,8 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>Add New Hive</ion-title>
+    <ion-title>{{'ADD-HIVE.title' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Cancel</ion-button>
+      <ion-button (click)="dismiss()">{{'MAIN.cancel' | translate}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,7 @@
 <ion-content>
   <form [formGroup]="hive">
     <ion-item>
-      <ion-label position="stacked">Hive Label</ion-label>
+      <ion-label position="stacked">{{'ADD-HIVE.label-field' | translate}}</ion-label>
       <ion-input #labelField formControlName="label"></ion-input>
     </ion-item>    
   </form>

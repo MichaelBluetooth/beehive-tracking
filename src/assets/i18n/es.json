@@ -1,0 +1,94 @@
+{
+    "APP-ROOT": {
+      "title": "Colmenas", 
+      "menu-header": "Opciones", 
+      "menu-option": {
+        "settings": "Configuraciones"
+      }
+    },
+    "MAIN": {
+      "cancel": "Cancelar",
+      "close": "Cerca",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "share": "Compartir"
+    },
+    "MAIN-TABS": {
+      "options": "Opciones",
+      "take-photo": "Tomar la foto",
+      "inspection": "Inspección",
+      "delete-header": "Confirmar eliminación",
+      "delete-message": "¿Estás seguro de que deseas eliminar este {{itemName}}?? Esta acción no se puede deshacer.",
+      "delete-item-name": {
+        "frame": "Cuadro",
+        "box": "Caja",
+        "hive": "Colmena"
+      },
+      "new-inspection": "Nueva inspección",
+      "set-hive-photo": "Establecer foto de colmena",
+      "add-box": "Agregar caja",
+      "nearby-plants": "Plantas cercanas"
+    },
+    "OPTIONS": {
+      "header": "Opciones",
+      "language": "Idioma",
+      "languageOptions": {
+        "english": "Inglés",
+        "german": "Alemán",
+        "french": "Francés",
+        "spanish": "Español"
+      }
+    },
+    "HIVE-PROPERTIES": {
+      "last-inspected": "Última inspección",
+      "nearby-plants": "Plantas cercanas",
+      "queen-last-seen": "Reina vista por última vez"
+    },
+    "HIVE-LIST": {
+      "last-inspected": "Última inspección"
+    },
+    "ADD-HIVE": {
+      "title": "Agregar nueva colmena",
+      "label-field": "Etiqueta de colmena"
+    },
+    "INSPECTIONS": {
+      "header": "Inspecciones",
+      "activity-level": "Nivel de actividad",
+      "activity-level-values": {
+        "Low": "Bajo",
+        "Medium": "Medio",
+        "High": "Alto",
+        "N/A": "Ninguno"
+      },
+      "queen-spotted": "Queen ha sido vista",
+      "brood-spotted": "La cría ha sido vista",
+      "larva-spotted": "Larva ha sido vista",
+      "eggs-spotted": "Los huevos han sido vistos",
+      "queen-cells-spotted": "Reina Célula ha sido vista",
+      "swarm-cells-spotted": "Enjambre Célula ha sido vista",
+      "supersedure-cells-spotted": "Supersedura Célula ha sido vista",
+      "pests": "Plagas"
+    },
+    "HIVE": {
+      "last-inspected": "Última inspección",
+      "nearby-plants": "Plantas cercanas",
+      "queen-last-seen": "Reina vista por última vez",
+      "parts-header": "Partes",
+      "inspections-header": "Inspecciones"
+    },
+    "BOX": {
+      "frames-header": "Marcos",
+      "last-inspected": "Última inspección"
+    },
+    "NOTE-OPTIONS": {
+      "header": "Opciones de nota",
+      "set-hive-photo": "Establecer foto de colmena"
+    },
+    "BOX-PROPERTY-VALUES": {
+      "type": {
+        "Super": "Colmena Super",
+        "Hive Body": "Cuerpo de colmena"
+      }
+    }
+  }
+  

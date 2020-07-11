@@ -1,7 +1,33 @@
 {
+  "APP-ROOT": {
+    "title": "Hives", 
+    "menu-header": "Options", 
+    "menu-option": {
+      "settings": "Settings"
+    }
+  },
   "MAIN": {
-    "cancel": "cancel",
-    "close": "Close"
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "edit": "Edit",
+    "share": "Share"
+  },
+  "MAIN-TABS": {
+    "options": "Options",
+    "take-photo": "Take Picture",
+    "inspection": "Inspection",
+    "delete-header": "Confirm Delete",
+    "delete-message": "Are you sure you want to delete this {{itemName}}? This action cannot be undone.",
+    "delete-item-name": {
+      "frame": "Frame",
+      "box": "Box",
+      "hive": "Hive"
+    },
+    "new-inspection": "New Inspection",
+    "set-hive-photo": "Set Hive Photo",
+    "add-box": "Add Box",
+    "nearby-plants": "Nearby Plants"
   },
   "OPTIONS": {
     "header": "Options",
@@ -19,11 +45,29 @@
     "queen-last-seen": "Queen Last Seen"
   },
   "HIVE-LIST": {
-    "title": "Hives"
+    "last-inspected": "Last Inspected"
   },
   "ADD-HIVE": {
     "title": "Add New Hive",
     "label-field": "Hive Label"
+  },
+  "INSPECTIONS": {
+    "header": "Inspections",
+    "activity-level": "Activity Level",
+    "activity-level-values": {
+      "Low": "Low",
+      "Medium": "Medium",
+      "High": "High",
+      "N/A": "N/A"
+    },
+    "queen-spotted": "Queen Spotted",
+    "brood-spotted": "Brood Spotted",
+    "larva-spotted": "Larva Spotted",
+    "eggs-spotted": "Eggs Spotted",
+    "queen-cells-spotted": "Queen Cells Spotted",
+    "swarm-cells-spotted": "Swarm Cells Spotted",
+    "supersedure-cells-spotted": "Supersedure Cells Spotted",
+    "pests": "Pests"
   },
   "HIVE": {
     "last-inspected": "Last Inspected",
@@ -32,11 +76,18 @@
     "parts-header": "Parts",
     "inspections-header": "Inspections"
   },
-
-  "HIVE-PROPERTY-VALUES": {
+  "BOX": {
+    "frames-header": "Frames",
+    "last-inspected": "Last Inspected"
+  },
+  "NOTE-OPTIONS": {
+    "header": "Note Options",
+    "set-hive-photo": "Set Hive Photo"
+  },
+  "BOX-PROPERTY-VALUES": {
     "type": {
-      "super": "Super",
-      "hive-body": "Hive Body"
+      "Super": "Super",
+      "Hive Body": "Hive Body"
     }
   }
 }

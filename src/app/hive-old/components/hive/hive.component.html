@@ -10,7 +10,7 @@
       <ion-img *ngIf="hive.photo" src="{{ hive.photo.base64 ? hive.photo.base64 : hive.photo.webviewPath }}"></ion-img>
       <ion-item *ngIf="hive.plants && hive.plants.length > 0">
         <ion-label text-wrap>
-          <h3>Last Inspected</h3>
+          <h3>{{'HIVE.last-inspected' | translate}}</h3>
           <p>
             {{hive | lastInspected | date}}
           </p>
@@ -18,7 +18,7 @@
       </ion-item>
       <ion-item>
         <ion-label text-wrap>
-          <h3>Nearby Plants</h3>
+          <h3>{{'HIVE.nearby-plants' | translate}}</h3>
           <p>
             {{hive.plants | join}}
           </p>
@@ -26,7 +26,7 @@
       </ion-item>
       <ion-item>
         <ion-label text-wrap>
-          <h3>Queen Last Spotted</h3>
+          <h3>{{'HIVE.queen-last-seen' | translate}}</h3>
           <p>
             <ng-container *ngIf="!hive.queenLastSpotted">
               N/A
@@ -39,7 +39,7 @@
       </ion-item>
       <ion-list>
         <ion-list-header>
-          Parts
+          {{'HIVE.parts-header' | translate}}
         </ion-list-header>
         <ion-item button detail *ngFor="let part of hive.parts" (click)="navigateToBox(part)">
           <!-- <ion-thumbnail slot="start">
@@ -47,7 +47,7 @@
             </ion-thumbnail> -->
           <ion-label>
             <h3>{{part.label}}</h3>
-            <p>{{part.type}}</p>
+            <p>{{'BOX-PROPERTY-VALUES.type.' + part.type | translate}}</p>
           </ion-label>
         </ion-item>
       </ion-list>
