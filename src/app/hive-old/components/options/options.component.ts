@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { ModalController } from '@ionic/angular';
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: "app-options",
@@ -12,7 +13,8 @@ export class OptionsComponent implements OnInit {
 
   constructor(
     private modal: ModalController,
-    private translate: TranslateService) {}
+    private translate: TranslateService,
+    private storage: Storage) {}
 
   ngOnInit() {
     if (this.translate.currentLang) {
@@ -23,6 +25,7 @@ export class OptionsComponent implements OnInit {
   }
 
   setLanguage(): void {
+    this.storage.set("preferredLanguage", this.language);
     this.translate.use(this.language);
   }
 
