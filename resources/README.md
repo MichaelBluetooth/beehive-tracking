@@ -13,6 +13,7 @@ Track your beehives with this simple and intuitive app.
     - pests
 - Document nearby plants
 - Share photos
+- Multi language support
 
 ## Pending Features List
 - Sync across multiple devices
@@ -20,4 +21,3 @@ Track your beehives with this simple and intuitive app.
 - Take photo for specific note
 - Upload photo from gallery while taking notes
 - Edit box/frame/hive details (e.g. lables)
-- Multi language support
