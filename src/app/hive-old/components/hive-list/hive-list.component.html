@@ -1,17 +1,18 @@
 <ion-content>
-  <ion-item button detail *ngFor="let hive of hives" (click)="navigateToHive(hive)">
-    <ion-avatar *ngIf="hive.photo" slot="start">
+  <ion-card button *ngFor="let hive of hives" (click)="navigateToHive(hive)">
+    <ng-container *ngIf="hive.photo">
       <ion-img src="{{ hive.photo.base64 ? hive.photo.base64 : hive.photo.webviewPath }}"></ion-img>
-    </ion-avatar>
-    <ion-label>
-      <h2>
-        {{hive.label}}
-      </h2>
+    </ng-container>
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Destination</ion-card-subtitle> -->
+      <ion-card-title>{{hive.label}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
       <p>
         {{'HIVE-LIST.last-inspected' | translate}}: {{hive | lastInspected | date}}
       </p>
-    </ion-label>
-  </ion-item>
+    </ion-card-content>
+  </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addHive()">
