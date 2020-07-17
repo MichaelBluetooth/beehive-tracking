@@ -2,7 +2,7 @@
 
 Track your beehives with this simple and intuitive app.
 
-## Feature List
+## Mobile App Feature List
 - Take photos
 - Record inspections 
     - notes
@@ -21,3 +21,8 @@ Track your beehives with this simple and intuitive app.
 - Take photo for specific note
 - Upload photo from gallery while taking notes
 - Edit box/frame/hive details (e.g. lables)
+- Inspection reminders ("it's been X days since you last inspected Hive BlahBlah")
+
+## WebApp Feature List
+- Sync across multiple devices
+- Offline support
