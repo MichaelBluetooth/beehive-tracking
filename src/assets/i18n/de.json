@@ -11,7 +11,8 @@
     "close": "Schließen",
     "delete": "Löschen",
     "edit": "Bearbeiten",
-    "share": "Aktie"
+    "share": "Aktie",
+    "set-hive-photo": "Bienenstockfoto Einstellen",
   },
   "MAIN-TABS": {
     "options": "Optionen",
@@ -53,6 +54,7 @@
   },
   "INSPECTIONS": {
     "header": "Inspektionen",
+    "date-recorded": "Aufnahmedatum",
     "activity-level": "Aktivitätslevel",
     "activity-level-values": {
       "Low": "Niedrig",
@@ -67,7 +69,8 @@
     "queen-cells-spotted": "Königinzellen entdeckt",
     "swarm-cells-spotted": "Schwarmzellen entdeckt",
     "supersedure-cells-spotted": "Ersetzungszellen entdeckt",
-    "pests": "Schädlinge"
+    "pests": "Schädlinge",
+    "details": "Einzelheiten"
   },
   "HIVE": {
     "last-inspected": "Zuletzt überprüft",
@@ -89,5 +92,8 @@
       "Super": "Bienenstock Super",
       "Hive Body": "Bienenstock Körper"
     }
+  },
+  "NEW-INSPECTION": {
+    "header": "Neue Inspektion"
   }
 }

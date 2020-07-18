@@ -1,7 +1,7 @@
 {
   "APP-ROOT": {
-    "title": "Hives", 
-    "menu-header": "Options", 
+    "title": "Hives",
+    "menu-header": "Options",
     "menu-option": {
       "settings": "Settings"
     }
@@ -11,7 +11,8 @@
     "close": "Close",
     "delete": "Delete",
     "edit": "Edit",
-    "share": "Share"
+    "share": "Share",
+    "set-hive-photo": "Set Hive Photo"
   },
   "MAIN-TABS": {
     "options": "Options",
@@ -53,6 +54,7 @@
   },
   "INSPECTIONS": {
     "header": "Inspections",
+    "date-recorded": "Date Recorded",
     "activity-level": "Activity Level",
     "activity-level-values": {
       "Low": "Low",
@@ -67,7 +69,8 @@
     "queen-cells-spotted": "Queen Cells Spotted",
     "swarm-cells-spotted": "Swarm Cells Spotted",
     "supersedure-cells-spotted": "Supersedure Cells Spotted",
-    "pests": "Pests"
+    "pests": "Pests",
+    "details": "Details"
   },
   "HIVE": {
     "last-inspected": "Last Inspected",
@@ -89,5 +92,8 @@
       "Super": "Super",
       "Hive Body": "Hive Body"
     }
+  },
+  "NEW-INSPECTION": {
+    "header": "New Inspection"
   }
 }

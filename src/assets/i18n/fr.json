@@ -11,7 +11,8 @@
       "close": "Fermer",
       "delete": "Supprimer",
       "edit": "Éditer",
-      "share": "Partager"
+      "share": "Partager",
+      "set-hive-photo": "Définir la photo de la ruche"
     },
     "MAIN-TABS": {
       "options": "Les Options",
@@ -54,6 +55,7 @@
     "INSPECTIONS": {
       "header": "Inspections",
       "activity-level": "Niveau d'activité",
+      "date-recorded": "Date d'enregistrement",
       "activity-level-values": {
         "Low": "Faible",
         "Medium": "Moyen",
@@ -67,7 +69,8 @@
       "queen-cells-spotted": "Cellules royales été vus",
       "swarm-cells-spotted": "Cellules d'essaim été vus",
       "supersedure-cells-spotted": "Cellules de remplacement été vus",
-      "pests": "Ravageurs"
+      "pests": "Ravageurs",
+      "details": "Détails"
     },
     "HIVE": {
       "last-inspected": "Dernière inspection",
@@ -89,6 +92,9 @@
         "Super": "Super",
         "Hive Body": "Corps de ruche"
       }
+    },
+    "NEW-INSPECTION": {
+      "header": "Nouvelle inspection"
     }
   }
   

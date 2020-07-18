@@ -1,73 +1,73 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>New Inspection</ion-title>
+    <ion-title>{{'NEW-INSPECTION.header' | translate}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Cancel</ion-button>
+      <ion-button (click)="dismiss()">{{'MAIN.cancel' | translate}}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-item>
-    <ion-label>Date Recorded</ion-label>
+    <ion-label>{{'INSPECTIONS.date-recorded' | translate}}</ion-label>
     <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="note.date">
     </ion-datetime>
   </ion-item>
 
   <ion-item>
-    <ion-label>Queen</ion-label>
+    <ion-label>{{'INSPECTIONS.queen-spotted' | translate}}</ion-label>
     <ion-toggle [(ngModel)]="note.queenSpotted">
     </ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-label>Brood</ion-label>
+    <ion-label>{{'INSPECTIONS.brood-spotted' | translate}}</ion-label>
     <ion-toggle [(ngModel)]="note.brood">
     </ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-label>Eggs</ion-label>
+    <ion-label>{{'INSPECTIONS.eggs-spotted' | translate}}</ion-label>
     <ion-toggle [(ngModel)]="note.eggs">
     </ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-label>Larva</ion-label>
+    <ion-label>{{'INSPECTIONS.larva-spotted' | translate}}</ion-label>
     <ion-toggle [(ngModel)]="note.larva">
     </ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-label>Queen Cells</ion-label>
+    <ion-label>{{'INSPECTIONS.queen-cells-spotted' | translate}}</ion-label>
     <ion-toggle [(ngModel)]="note.queenCells">
     </ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-label>Supersedure Cells</ion-label>
+    <ion-label>{{'INSPECTIONS.supersedure-cells-spotted' | translate}}</ion-label>
     <ion-toggle [(ngModel)]="note.supersedureCells">
     </ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-label>Swarm Cells</ion-label>
+    <ion-label>{{'INSPECTIONS.swarm-cells-spotted' | translate}}</ion-label>
     <ion-toggle [(ngModel)]="note.swarmCells">
     </ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-label>Activity Level</ion-label>
+    <ion-label>{{'INSPECTIONS.activity-level' | translate}}</ion-label>
     <ion-select multiple="false" [(ngModel)]="note.activityLevel">
-      <ion-select-option value="N/A">N/A</ion-select-option>
-      <ion-select-option value="Low">Low</ion-select-option>
-      <ion-select-option value="Medium">Medium</ion-select-option>
-      <ion-select-option value="High">High</ion-select-option>      
+      <ion-select-option value="N/A">{{'INSPECTIONS.activity-level-values.N/A' | translate}}</ion-select-option>
+      <ion-select-option value="Low">{{'INSPECTIONS.activity-level-values.Low' | translate}}</ion-select-option>
+      <ion-select-option value="Medium">{{'INSPECTIONS.activity-level-values.Medium' | translate}}</ion-select-option>
+      <ion-select-option value="High">{{'INSPECTIONS.activity-level-values.High' | translate}}</ion-select-option>      
     </ion-select>
   </ion-item>
 
   <ion-item>
-    <ion-label>Pests</ion-label>
+    <ion-label>{{'INSPECTIONS.pets' | translate}}</ion-label>
     <ion-select multiple="true" [(ngModel)]="note.pests">
       <ion-select-option value="Mites">Mites</ion-select-option>
       <ion-select-option value="Hive Beetles">Hive Beetles</ion-select-option>
@@ -77,7 +77,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Notes</ion-label>
+    <ion-label>{{'INSPECTIONS.details' | translate}}</ion-label>
     <ion-textarea [(ngModel)]="note.details"></ion-textarea>
   </ion-item>
 
