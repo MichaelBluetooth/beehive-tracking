@@ -70,7 +70,8 @@
     "swarm-cells-spotted": "Swarm Cells Spotted",
     "supersedure-cells-spotted": "Supersedure Cells Spotted",
     "pests": "Pests",
-    "details": "Details"
+    "details": "Details",
+    "orientation-flights": "Orientation Flights"
   },
   "HIVE": {
     "last-inspected": "Last Inspected",

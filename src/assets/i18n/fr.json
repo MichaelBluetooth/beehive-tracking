@@ -70,7 +70,8 @@
       "swarm-cells-spotted": "Cellules d'essaim été vus",
       "supersedure-cells-spotted": "Cellules de remplacement été vus",
       "pests": "Ravageurs",
-      "details": "Détails"
+      "details": "Détails",
+      "orientation-flights": "Vols d'orientation"
     },
     "HIVE": {
       "last-inspected": "Dernière inspection",

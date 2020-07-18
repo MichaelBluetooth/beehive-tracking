@@ -10,6 +10,7 @@
   <p *ngIf="note.queenCells">{{'INSPECTIONS.queen-cells-spotted' | translate}}</p>
   <p *ngIf="note.swarmCells">{{'INSPECTIONS.swarm-cells-spotted' | translate}}</p>
   <p *ngIf="note.supersedureCells">{{'INSPECTIONS.supersedure-cells-spotted' | translate}}</p>
+  <p *ngIf="note.orientationFlights">{{'INSPECTIONS.orientation-flights' | translate}}</p>
   <p *ngIf="note.pests && note.pests.length > 0">{{'INSPECTIONS.pests' | translate}}: {{note.pests | join}}</p>
   <p>
     <ion-img *ngIf="note.photo" src="{{ note.photo.base64 ? note.photo.base64 : note.photo.webviewPath }}"></ion-img>

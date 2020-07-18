@@ -16,8 +16,9 @@ export class AddNoteComponent implements OnInit {
     eggs: false,
     queenCells: false,
     swarmCells: false,
-    supersedureCells: false,
+    supersedureCells: false,    
     pests: [],
+    orientationFlights: false
   };
 
   constructor(

@@ -57,6 +57,12 @@
   </ion-item>
 
   <ion-item>
+    <ion-label>{{'INSPECTIONS.orientation-flights' | translate}}</ion-label>
+    <ion-toggle [(ngModel)]="note.orientationFlights">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item>
     <ion-label>{{'INSPECTIONS.activity-level' | translate}}</ion-label>
     <ion-select multiple="false" [(ngModel)]="note.activityLevel">
       <ion-select-option value="N/A">{{'INSPECTIONS.activity-level-values.N/A' | translate}}</ion-select-option>

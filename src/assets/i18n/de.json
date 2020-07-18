@@ -12,7 +12,7 @@
     "delete": "Löschen",
     "edit": "Bearbeiten",
     "share": "Aktie",
-    "set-hive-photo": "Bienenstockfoto Einstellen",
+    "set-hive-photo": "Bienenstockfoto Einstellen"
   },
   "MAIN-TABS": {
     "options": "Optionen",
@@ -70,7 +70,8 @@
     "swarm-cells-spotted": "Schwarmzellen entdeckt",
     "supersedure-cells-spotted": "Ersetzungszellen entdeckt",
     "pests": "Schädlinge",
-    "details": "Einzelheiten"
+    "details": "Einzelheiten",
+    "orientation-flights": "Orientierungsflüge"
   },
   "HIVE": {
     "last-inspected": "Zuletzt überprüft",

@@ -14,4 +14,5 @@ export interface Note extends ModelBase {
     larva?: boolean;
     brood?: boolean;
     activityLevel?: 'Low' | 'Medium' | 'High' | 'N/A';
+    orientationFlights?: boolean;
 }

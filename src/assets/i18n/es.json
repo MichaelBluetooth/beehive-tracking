@@ -70,7 +70,8 @@
       "swarm-cells-spotted": "Enjambre Célula ha sido vista",
       "supersedure-cells-spotted": "Supersedura Célula ha sido vista",
       "pests": "Plagas",
-      "details": "Detalles"
+      "details": "Detalles",
+      "orientation-flights": "Vuelos de orientación"
     },
     "HIVE": {
       "last-inspected": "Última inspección",
