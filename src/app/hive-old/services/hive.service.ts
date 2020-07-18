@@ -147,11 +147,11 @@ export class HiveService {
   addBox(hiveId: any, box: HiveBody): Observable<Hive> {
     if (box.frames) {
       box.frames.forEach((f) => {
-        f.id = Math.floor(Math.random() * 10000) + 1;
+        f.id = this.newId();
       });
     }
 
-    box.id = Math.floor(Math.random() * 10000) + 1;
+    box.id = this.newId();
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
       this.hives[idx].parts = [box].concat(this.hives[idx].parts || []);
@@ -163,6 +163,7 @@ export class HiveService {
   }
 
   addHiveNote(hiveId: any, note: Note) {
+    note.id = this.newId();
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
       this.hives[idx].notes = [note].concat(this.hives[idx].notes || []);
@@ -234,6 +235,7 @@ export class HiveService {
   }
 
   addBoxNote(hiveId: any, boxId: any, note: Note): Observable<any> {
+    note.id = this.newId();
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
       const boxIdx = this.hives[idx].parts.findIndex((p) => p.id === boxId);
@@ -306,6 +308,7 @@ export class HiveService {
     frameId: any,
     note: Note
   ): Observable<any> {
+    note.id = this.newId();
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
       const boxIdx = this.hives[idx].parts.findIndex((p) => p.id === boxId);
@@ -367,6 +370,7 @@ export class HiveService {
     const idx = this.hives.findIndex((h) => h.id === hiveId);
     if (idx > -1) {
       const note: Note = {
+        id: this.newId(),
         date: new Date(),
         details: "Hive photograph taken",
         photo: {
@@ -389,6 +393,7 @@ export class HiveService {
       const boxIdx = this.hives[idx].parts.findIndex((p) => p.id === boxId);
       if (boxIdx > -1) {
         const note: Note = {
+          id: this.newId(),
           date: new Date(),
           details: "Box photograph taken",
           photo: {
@@ -420,6 +425,7 @@ export class HiveService {
         );
         if (frameIdx > -1) {
           const note: Note = {
+            id: this.newId(),
             date: new Date(),
             details: "Frame photograph taken",
             photo: {
