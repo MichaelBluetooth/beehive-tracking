@@ -48,6 +48,9 @@
           <ion-label>
             <h3>{{part.label}}</h3>
             <p>{{'BOX-PROPERTY-VALUES.type.' + part.type | translate}}</p>
+            <p *ngIf="part.dateAdded">
+              {{'BOX.date-added'| translate}}: {{part.dateAdded | date}}
+            </p>
           </ion-label>
         </ion-item>
       </ion-list>

@@ -8,18 +8,21 @@
 
     <ion-content>
       <ion-list>
+        <ion-item *ngIf="box.dateAdded">
+          <ion-label>
+            {{'BOX.date-added'| translate}}: {{box.dateAdded | date}}
+          </ion-label>
+        </ion-item>
+
         <ion-list-header>
           {{'BOX.frames-header'| translate}}
-        </ion-list-header>
+        </ion-list-header>        
         <ion-item button detail *ngFor="let frame of box.frames" (click)="navigateToFrame(frame)">
           <!-- <ion-thumbnail slot="start">
               <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
             </ion-thumbnail> -->
           <ion-label>
             <h3>{{frame.label}}</h3>
-            <p *ngIf="box.dateAdded">
-              {{'BOX.date-added'| translate}}: {{box.dateAdded | date}}
-            </p>
             <p>
               {{'BOX.last-inspected'| translate}}: {{frame | frameLastInspected | date}}
             </p>
