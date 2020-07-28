@@ -7,4 +7,5 @@ export interface HiveBody extends ModelBase {
     frames?: Frame[];
     type?: 'Hive Body' | 'Super';
     notes?: Note[];
+    dateAdded?: any;
 }

@@ -82,7 +82,8 @@
     },
     "BOX": {
       "frames-header": "Cadres",
-      "last-inspected": "Dernière inspection"
+      "last-inspected": "Dernière inspection",
+      "date-added": "date ajoutée"
     },
     "NOTE-OPTIONS": {
       "header": "Options de note",
@@ -96,6 +97,16 @@
     },
     "NEW-INSPECTION": {
       "header": "Nouvelle inspection"
+    },
+    "ADD-BOX": {
+      "header": "Ajouter une nouvelle boîte",
+      "label": "Étiquette",
+      "label-placeholder": "Entrez l'étiquette",
+      "type": "Type",
+      "type-placeholder": "Sélectionnez-en un",
+      "frames": "Cadres",
+      "frames-placeholder": "Entrez le nombre d'images",
+      "date-added": "date ajoutée"
     }
   }
   

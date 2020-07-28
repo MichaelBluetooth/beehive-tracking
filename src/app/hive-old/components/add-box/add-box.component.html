@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>Add New Box</ion-title>
+    <ion-title>{{'ADD-BOX.header' | translate}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismiss()">{{'MAIN.cancel' | translate}}</ion-button>
     </ion-buttons>
@@ -9,22 +9,28 @@
 
 <ion-content>
   <ion-item>
-    <ion-label position="stacked">Label</ion-label>
-    <ion-input #labelField placeholder="Enter label" (ionChange)="labelChange($event.target.value)"></ion-input>
+    <ion-label position="stacked">{{'ADD-BOX.label' | translate}}</ion-label>
+    <ion-input #labelField [placeholder]="'ADD-BOX.label-placeholder'| translate" (ionChange)="labelChange($event.target.value)"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Type</ion-label>
-    <ion-select placeholder="Select One" (ionChange)="typeChange($event.target.value)">
-      <ion-select-option value="Hive Body">Hive Body</ion-select-option>
-      <ion-select-option value="Super">Super</ion-select-option>
+    <ion-label position="stacked">{{'ADD-BOX.type' | translate}}</ion-label>
+    <ion-select [placeholder]="'ADD-BOX.type-placeholder'| translate" (ionChange)="typeChange($event.target.value)">
+      <ion-select-option value="Hive Body">{{'BOX-PROPERTY-VALUES.type.Hive Body' | translate}}</ion-select-option>
+      <ion-select-option value="Super">{{'BOX-PROPERTY-VALUES.type.Super' | translate}}</ion-select-option>
     </ion-select>
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Frames</ion-label>
-    <ion-input type="number" placeholder="Enter number of frames" (ionChange)="numChange($event.target.value)">
+    <ion-label position="stacked">{{'ADD-BOX.frames' | translate}}</ion-label>
+    <ion-input type="number" [placeholder]="'ADD-BOX.frames-placeholder'| translate" (ionChange)="numChange($event.target.value)">
     </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">{{'ADD-BOX.date-added' | translate}}</ion-label>
+    <ion-datetime display-format="MMM DD, YYYY HH:mm" picker-format="MMM DD, YYYY HH:mm" [(ngModel)]="box.dateAdded" (ionChange)="dateChange($event.target.value)">
+    </ion-datetime>
   </ion-item>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

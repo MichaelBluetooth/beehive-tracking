@@ -13,7 +13,8 @@ export class AddBoxComponent implements OnInit {
   box: HiveBody = {
     label: null,
     type: null,
-    frames: []
+    frames: [],
+    dateAdded: new Date().toISOString()
   };
 
   numFrames = null;
@@ -38,8 +39,12 @@ export class AddBoxComponent implements OnInit {
     this.box.type = type;
   }
 
-  numChange(num){
+  numChange(num) {
     this.numFrames = num;
+  }
+
+  dateChange(date) {
+    this.box.dateAdded = date;
   }
 
   isInvalid() {

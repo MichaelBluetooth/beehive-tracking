@@ -82,7 +82,8 @@
   },
   "BOX": {
     "frames-header": "Frames",
-    "last-inspected": "Last Inspected"
+    "last-inspected": "Last Inspected",
+    "date-added": "Date Added"
   },
   "NOTE-OPTIONS": {
     "header": "Note Options",
@@ -96,5 +97,15 @@
   },
   "NEW-INSPECTION": {
     "header": "New Inspection"
+  },
+  "ADD-BOX": {
+    "header": "Add New Box",
+    "label": "Label",
+    "label-placeholder": "Enter Label",
+    "type": "Type",
+    "type-placeholder": "Select One",
+    "frames": "Frames",
+    "frames-placeholder": "Enter number of frames",
+    "date-added": "Date Added"
   }
 }

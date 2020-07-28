@@ -82,7 +82,8 @@
   },
   "BOX": {
     "frames-header": "Rahmen",
-    "last-inspected": "Zuletzt überprüft"
+    "last-inspected": "Zuletzt überprüft",
+    "date-added": "Datum hinzugefügt"
   },
   "NOTE-OPTIONS": {
     "header": "Hinweis Optionen",
@@ -96,5 +97,15 @@
   },
   "NEW-INSPECTION": {
     "header": "Neue Inspektion"
+  },
+  "ADD-BOX": {
+    "header": "Neue Box hinzufügen",
+    "label": "Etikette",
+    "label-placeholder": "Geben Sie Label ein",
+    "type": "Art",
+    "type-placeholder": "Wähle eins",
+    "frames": "Rahmen",
+    "frames-placeholder": "Geben Sie die Anzahl der Frames ein",
+    "date-added": "Datum hinzugefügt"
   }
 }

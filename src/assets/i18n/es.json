@@ -82,7 +82,8 @@
     },
     "BOX": {
       "frames-header": "Marcos",
-      "last-inspected": "Última inspección"
+      "last-inspected": "Última inspección",
+      "date-added": "Fecha Agregada"
     },
     "NOTE-OPTIONS": {
       "header": "Opciones de nota",
@@ -96,6 +97,16 @@
     },
     "NEW-INSPECTION": {
       "header": "Nueva inspección"
+    },
+    "ADD-BOX": {
+      "header": "Agregar nueva caja",
+      "label": "Etiqueta",
+      "label-placeholder": "Introducir etiqueta",
+      "type": "Tipo",
+      "type-placeholder": "Seleccione uno",
+      "frames": "Marcos",
+      "frames-placeholder": "Ingrese el número de fotogramas",
+      "date-added": "Fecha Agregada"
     }
   }
   

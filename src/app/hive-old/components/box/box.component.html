@@ -17,6 +17,9 @@
             </ion-thumbnail> -->
           <ion-label>
             <h3>{{frame.label}}</h3>
+            <p *ngIf="box.dateAdded">
+              {{'BOX.date-added'| translate}}: {{box.dateAdded | date}}
+            </p>
             <p>
               {{'BOX.last-inspected'| translate}}: {{frame | frameLastInspected | date}}
             </p>
