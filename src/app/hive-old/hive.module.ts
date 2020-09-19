@@ -20,7 +20,7 @@ import { LastInspectedPipe } from './pipes/last-inspected.pipe';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { FrameLastInspectedPipe } from './pipes/frame-last-inspected.pipe';
 import { NoteMenuComponent } from './components/note-menu/note-menu.component';
-
+// import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 
 @NgModule({
   declarations: [
@@ -50,7 +50,8 @@ import { NoteMenuComponent } from './components/note-menu/note-menu.component';
     HiveRoutingModule
   ],
   providers: [
-    SocialSharing
+    SocialSharing,
+    // SpeechRecognition
   ]
 })
 export class HiveModule { }

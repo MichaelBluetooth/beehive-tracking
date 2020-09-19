@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HiveService } from "./hive.service";
-import { Observable, Subject } from "rxjs";
+import { Observable, Subject, BehaviorSubject } from "rxjs";
 import { AddNoteComponent } from "../components/add-note/add-note.component";
 import {
   ModalController,
@@ -12,15 +12,15 @@ import { HiveBody } from "src/app/models/hive-body";
 import { Frame } from "src/app/models/frame";
 import { Router } from "@angular/router";
 import { AddBoxComponent } from "../components/add-box/add-box.component";
-import { PlantsListComponent } from '../components/plants-list/plants-list.component';
-import { TranslateService } from '@ngx-translate/core';
+import { PlantsListComponent } from "../components/plants-list/plants-list.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable({
   providedIn: "root",
 })
 export class HiveTabsService {
   private currentHive: Hive;
-  private currentBox: HiveBody;
+  public currentBox: HiveBody;
   private currentFrame: Frame;
 
   constructor(
@@ -31,6 +31,10 @@ export class HiveTabsService {
     private router: Router,
     private translator: TranslateService
   ) {}
+
+  getCurrentHive(): Hive {
+    return this.currentHive;
+  }
 
   delete(): void {
     if (this.currentFrame) {
@@ -76,14 +80,18 @@ export class HiveTabsService {
   async confirmDelete(itemName: string) {
     const afterConfirm: Subject<any> = new Subject();
 
-    const itemNameTranslated = this.translator.instant(`MAIN-TABS.delete-item-name.${itemName.toLowerCase()}`);
+    const itemNameTranslated = this.translator.instant(
+      `MAIN-TABS.delete-item-name.${itemName.toLowerCase()}`
+    );
     const alert = await this.alert.create({
-      header: this.translator.instant('MAIN-TABS.delete-header'),
-      message: this.translator.instant('MAIN-TABS.delete-message', {itemName: itemNameTranslated}),
+      header: this.translator.instant("MAIN-TABS.delete-header"),
+      message: this.translator.instant("MAIN-TABS.delete-message", {
+        itemName: itemNameTranslated,
+      }),
       buttons: [
-        this.translator.instant('MAIN.cancel'),
+        this.translator.instant("MAIN.cancel"),
         {
-          text: this.translator.instant('MAIN.delete'),
+          text: this.translator.instant("MAIN.delete"),
           handler: () => {
             afterConfirm.next();
           },
@@ -159,7 +167,7 @@ export class HiveTabsService {
   async loadOptions(): Promise<any> {
     const options: any[] = [
       {
-        text: this.translator.instant('MAIN.delete'),
+        text: this.translator.instant("MAIN.delete"),
         role: "destructive",
         icon: "trash",
         handler: () => {
@@ -167,21 +175,21 @@ export class HiveTabsService {
         },
       },
       {
-        text: this.translator.instant('MAIN-TABS.new-inspection'),
+        text: this.translator.instant("MAIN-TABS.new-inspection"),
         icon: "eye-outline",
         handler: () => {
           this.addNote();
         },
       },
       {
-        text: this.translator.instant('MAIN-TABS.take-photo'),
-        icon: 'camera-outline',
+        text: this.translator.instant("MAIN-TABS.take-photo"),
+        icon: "camera-outline",
         handler: () => {
           this.takePhoto(true);
         },
       },
       {
-        text: this.translator.instant('MAIN.cancel'),
+        text: this.translator.instant("MAIN.cancel"),
         icon: "close",
         role: "cancel",
         handler: () => {},
@@ -191,14 +199,14 @@ export class HiveTabsService {
     if (this.currentHive && !this.currentBox && !this.currentFrame) {
       options.push(
         {
-          text: this.translator.instant('MAIN-TABS.set-hive-photo'),
+          text: this.translator.instant("MAIN-TABS.set-hive-photo"),
           icon: "image-outline",
           handler: async () => {
             this.hiveService.setHivePhoto(this.currentHive.id);
           },
         },
         {
-          text: this.translator.instant('MAIN-TABS.add-box'),
+          text: this.translator.instant("MAIN-TABS.add-box"),
           icon: "cube-outline",
           handler: async () => {
             const modal = await this.modal.create({
@@ -219,21 +227,23 @@ export class HiveTabsService {
           },
         },
         {
-          text: this.translator.instant('MAIN-TABS.nearby-plants'),
+          text: this.translator.instant("MAIN-TABS.nearby-plants"),
           icon: "leaf-outline",
           handler: async () => {
             const modal = await this.modal.create({
               component: PlantsListComponent,
               componentProps: {
-                selectedPlants: this.currentHive.plants
-              }
+                selectedPlants: this.currentHive.plants,
+              },
             });
 
             modal.onDidDismiss().then((modalResponse) => {
               if (modalResponse.data) {
-                this.hiveService.setHivePlants(this.currentHive.id, modalResponse.data).subscribe(updatedHive => {
-                  this.currentHive = updatedHive;
-                });
+                this.hiveService
+                  .setHivePlants(this.currentHive.id, modalResponse.data)
+                  .subscribe((updatedHive) => {
+                    this.currentHive = updatedHive;
+                  });
               }
             });
 
@@ -244,7 +254,7 @@ export class HiveTabsService {
     }
 
     const actionSheet = await this.actionSheet.create({
-      header: this.translator.instant('MAIN-TABS.options'),
+      header: this.translator.instant("MAIN-TABS.options"),
       buttons: options,
     });
 

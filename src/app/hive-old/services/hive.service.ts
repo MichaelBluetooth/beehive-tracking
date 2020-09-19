@@ -125,6 +125,14 @@ export class HiveService {
     return of(this.hives);
   }
 
+  getHiveByIdx(idx: number): Observable<Hive> {
+    if (this.hives.length >= idx) {
+      return of(this.hives[idx]);
+    } else {
+      return of(null);
+    }
+  }
+
   addHive(newHive: Hive): Observable<Hive> {
     newHive.id = Math.floor(Math.random() * 10000) + 1;
     this.hives.push(newHive);

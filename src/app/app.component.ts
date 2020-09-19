@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 
-import { Platform, ModalController } from "@ionic/angular";
+import { Platform, ModalController, MenuController } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { OptionsComponent } from "./hive-old/components/options/options.component";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
+import { HiveSpeechService } from "./hive-old/services/hive-speech.service";
 
 @Component({
   selector: "app-root",
@@ -19,7 +20,9 @@ export class AppComponent {
     private statusBar: StatusBar,
     private modal: ModalController,
     private translate: TranslateService,
-    private storage: Storage
+    private storage: Storage,
+    private speech: HiveSpeechService,
+    private menu: MenuController
   ) {
     const language = this.translate.getBrowserLang();
     this.translate.setDefaultLang(language);
@@ -51,5 +54,10 @@ export class AppComponent {
     });
 
     return await modal.present();
+  }
+
+  startListening(): void {
+    this.menu.close();
+    this.speech.startListening();
   }
 }
