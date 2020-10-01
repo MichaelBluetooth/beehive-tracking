@@ -50,17 +50,11 @@ export class HiveSpeechService {
 
   processSpeechLoop() {
     this.processSpeech();
-    this.timer = setTimeout(() => {
-      this.speechRecognition.stopListening();
-      setTimeout(() => {
-        this.processSpeechLoop();
-      }, 500);
-    }, 4000);
   }
 
   processSpeech() {
     this.speechRecognition
-      .startListening({ prompt: "Speak a command!" })
+      .startListening({ prompt: "Speak a command!", showPopup: false })
       .subscribe(
         (matches: string[]) => {
           this.matches = this.matches.concat(matches);
@@ -69,7 +63,7 @@ export class HiveSpeechService {
           ) {
             this.speechRecognition.stopListening();
             this.showMatches(this.matches);
-            clearTimeout(this.timer);
+            this.processSpeech();
           } else {
             if (this.loadHiveSpeechService.isMatch(matches)) {
               this.loadHiveSpeechService.execute(matches);
@@ -77,16 +71,14 @@ export class HiveSpeechService {
               this.loadBoxSpeechService.execute(matches);
             }
 
-            clearTimeout(this.timer);
-            this.processSpeechLoop();
+            this.processSpeech();
           }
         },
         (error) => {
-          if (error !== 0) {
+          if (error === "No match") {
+            this.processSpeech();
+          } else if (error !== 0) {
             this.showError(error);
-          } else {
-            clearTimeout(this.timer);
-            this.processSpeechLoop();
           }
         }
       );
