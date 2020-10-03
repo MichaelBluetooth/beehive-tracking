@@ -1,6 +1,6 @@
 import { LastInspectedPipe } from "./last-inspected.pipe";
 
-fdescribe("LastInspectedPipe", () => {
+describe("LastInspectedPipe", () => {
   const pipe = new LastInspectedPipe();
 
   it("handles null", () => {

@@ -1,6 +1,6 @@
 import { FrameLastInspectedPipe } from './frame-last-inspected.pipe';
 
-fdescribe("FrameLastInspectedPipe", () => {
+describe("FrameLastInspectedPipe", () => {
   const pipe = new FrameLastInspectedPipe();
 
   it("handles null", () => {

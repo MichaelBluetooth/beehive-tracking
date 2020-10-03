@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { of } from 'rxjs';
 import { HiveService } from '../services/hive.service';
 
-fdescribe("LoadHiveSpeechService", () => {
+describe("LoadHiveSpeechService", () => {
   let service: LoadHiveSpeechService;
   const mockRouterService = jasmine.createSpyObj("router", ["navigate"]);
   const mockHiveService = jasmine.createSpyObj("hiveService", ["getHiveByIdx"]);
