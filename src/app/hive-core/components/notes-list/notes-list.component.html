@@ -1,0 +1,25 @@
+<ion-list>
+  <ion-list-header>
+    {{'INSPECTIONS.header' | translate}}
+  </ion-list-header>
+
+  <ng-container *ngFor="let note of notes; let idx = index">
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <app-note (click)="setSelected(idx)" [note]="note"></app-note>
+        </ion-row>
+        <ion-row *ngIf="selected === idx" class="ion-float-right">
+          <ion-item lines="none">
+            <ion-button *ngIf="note.photo" slot="end" fill="clear" (click)="shareImage(note)">
+              <ion-icon slot="icon-only" name="share-social"></ion-icon>
+            </ion-button>
+            <ion-button slot="end" fill="clear" (click)="showNoteMenu(note)">
+              <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ng-container>
+</ion-list>

@@ -1,0 +1,40 @@
+<ng-container *ngIf="box$ | async; let box">
+  <ng-container *ngIf="hive$ | async; let hive">
+    <div class="ion-page" id="main-box-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{hive.label}} > {{box.label}}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-item *ngIf="box.dateAdded">
+            <ion-label>
+              {{'BOX.date-added'| translate}}: {{box.dateAdded | date}}
+            </ion-label>
+          </ion-item>
+
+          <ion-list-header>
+            {{'BOX.frames-header'| translate}}
+          </ion-list-header>
+          <ion-item button detail *ngFor="let frame of box.frames" (click)="navigateToFrame(frame)">
+            <!-- <ion-thumbnail slot="start">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+            </ion-thumbnail> -->
+            <ion-label>
+              <h3>{{frame.label}}</h3>
+              <p>
+                {{'BOX.last-inspected'| translate}}: {{frame | frameLastInspected | date}}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+
+        <app-notes-list *ngIf="box" [notes]="box.notes" [hive]="hive"></app-notes-list>
+
+      </ion-content>
+    </div>
+  </ng-container>
+</ng-container>

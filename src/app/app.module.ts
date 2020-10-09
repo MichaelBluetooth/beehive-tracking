@@ -1,32 +1,37 @@
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { IonicStorageModule } from "@ionic/storage";
-
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HTTP } from "@ionic-native/http/ngx";
+import { IonicStorageModule, Storage } from "@ionic/storage";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { FormsModule } from '@angular/forms';
-import { OptionsComponent } from './hive-old/components/options/options.component';
-import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
+
+import { InitService } from "./hive-core/services/init/init.service";
 
 export function LanguageLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, "assets/i18n/", ".json");
+}
+
+export function initializeApp(appInitService: InitService) {
+  return (): Promise<any> => {
+    return appInitService.init();
+  };
 }
 
 @NgModule({
-  declarations: [AppComponent, OptionsComponent],
-  entryComponents: [],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    FormsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
@@ -34,18 +39,24 @@ export function LanguageLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (LanguageLoader),
-        deps: [HttpClient]
-      }
-    })
+        useFactory: LanguageLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    SpeechRecognition
+    HTTP,
+    SocialSharing,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [InitService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {  
-}
+export class AppModule {}

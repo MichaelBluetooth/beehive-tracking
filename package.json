@@ -22,6 +22,7 @@
     "@capacitor/android": "^2.1.2",
     "@capacitor/core": "2.1.2",
     "@ionic-native/core": "^5.0.7",
+    "@ionic-native/http": "^5.28.0",
     "@ionic-native/social-sharing": "^5.27.0",
     "@ionic-native/speech-recognition": "^5.28.0",
     "@ionic-native/splash-screen": "^5.0.0",
@@ -36,6 +37,7 @@
     "es6-promise-plugin": "^4.2.2",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
+    "uuid": "^8.3.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -50,6 +52,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "cordova-plugin-advanced-http": "^3.0.1",
     "cordova-plugin-speechrecognition": "^1.2.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -68,6 +71,7 @@
     "plugins": {
       "cordova-sqlite-storage": {},
       "cordova-plugin-x-socialsharing": {},
+      "cordova-plugin-advanced-http": {},
       "cordova-plugin-speechrecognition": {}
     }
   }
