@@ -1,7 +1,7 @@
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { of, Subject } from "rxjs";
-import { Hive } from "src/app/models/hive";
+import { Hive } from '../../models/hive';
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
 import { AppStateService } from "./app-state.service";
 
@@ -36,7 +36,7 @@ fdescribe("AppStateService", () => {
       const mockLocalHive: Hive = { id: "12345" };
       mockLocalService.getHive.and.returnValue(of(mockLocalHive));
       spyOn(service.currentHive$, "next");
-      service.loadHive("12345");
+      service.loadHive("12345", true);
       expect(service.currentHive$.next).toHaveBeenCalledWith(mockLocalHive);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['hives', '12345']);
     });
@@ -45,7 +45,7 @@ fdescribe("AppStateService", () => {
       const mockLocalHive: Hive = { clientId: "834324" };
       mockLocalService.getHive.and.returnValue(of(mockLocalHive));
       spyOn(service.currentHive$, "next");
-      service.loadHive("834324");
+      service.loadHive("834324", true);
       expect(service.currentHive$.next).toHaveBeenCalledWith(mockLocalHive);
       expect(mockRouter.navigate).toHaveBeenCalledWith(['hives', '834324']);
     });
