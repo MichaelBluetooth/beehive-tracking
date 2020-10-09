@@ -8,7 +8,7 @@ export abstract class BasicIntent implements Intent {
   isMatch(matches: string[]) {
     return matches.some((m) =>
       this.getPhrases().some(
-        () => m.toLowerCase().indexOf(m.toLowerCase()) > -1
+        p => m.toLowerCase().indexOf(p.toLowerCase()) > -1
       )
     );
   }

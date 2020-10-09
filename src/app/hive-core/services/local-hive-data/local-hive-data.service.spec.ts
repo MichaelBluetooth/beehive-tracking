@@ -5,7 +5,7 @@ import { Note } from "../../models/note";
 
 import { LocalHiveDataService } from "./local-hive-data.service";
 
-fdescribe("LocalHiveDataService", () => {
+describe("LocalHiveDataService", () => {
   let service: LocalHiveDataService;
   const mockStorage = jasmine.createSpyObj("storage", ["set"]);
 
