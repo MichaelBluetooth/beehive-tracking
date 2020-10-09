@@ -1,54 +1,11 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-import { BoxComponent } from "./components/box/box.component";
-import { FrameComponent } from "./components/frame/frame.component";
-import { HiveListComponent } from "./components/hive-list/hive-list.component";
-import { HivePageComponent } from "./components/hive-page/hive-page.component";
-import { HiveComponent } from "./components/hive/hive.component";
-import { BodyResolver } from './resolvers/body.resolver';
-import { FrameResolver } from "./resolvers/frame.resolver";
-import { HiveListResolver } from "./resolvers/hive-list.resolver";
-import { HiveResolver } from "./resolvers/hive.resolver";
 
 const routes: Routes = [
   {
-    path: "hives",
-    component: HiveListComponent,
-    resolve: {
-      hives: HiveListResolver,
-    },
-  },
-  {
-    path: "hives/:id",
-    component: HivePageComponent,
-    children: [
-      {
-        path: "",
-        component: HiveComponent,
-        resolve: {
-          hive: HiveResolver,
-        },
-      },
-      {
-        path: "boxes/:boxId",
-        component: BoxComponent,
-        resolve: {
-          box: BodyResolver,
-        },
-      },
-      {
-        path: "boxes/:boxId/frames/:frameId",
-        component: FrameComponent,
-        resolve: {
-          frame: FrameResolver,
-        },
-      },
-    ],
-  },
-  {
     path: "",
-    pathMatch: "full",
-    redirectTo: "hives",
+    loadChildren: () =>
+      import("./hive-core/hive-core.module").then((m) => m.HiveCoreModule),
   },
 ];
 

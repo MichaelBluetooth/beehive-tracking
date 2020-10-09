@@ -5,8 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
-import { OptionsComponent } from './components/options/options.component';
-import { InitService } from './services/init/init.service';
+import { OptionsComponent } from './hive-core/components/options/options.component';
 
 @Component({
   selector: "app-root",
