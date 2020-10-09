@@ -1,21 +1,23 @@
 import { TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
-import { of } from "rxjs";
-import { HiveTabsService } from "src/app/hive-old/services/hive-tabs.service";
-import { Hive } from "src/app/models/hive";
+import { BehaviorSubject } from "rxjs";
+import { Hive } from "src/app/hive-core/models/hive";
+import { AppStateService } from "src/app/hive-core/services/app-state/app-state.service";
 import { LoadBoxIntentService } from "./load-box-intent.service";
 
 fdescribe("LoadHiveIntentService", () => {
   let service: LoadBoxIntentService;
   const mockRouterService = jasmine.createSpyObj("router", ["navigate"]);
-  const mockHiveTabsService = jasmine.createSpyObj("hiveTabs", [
-    "getCurrentHive",
-  ]);
+  const mockState = jasmine.createSpyObj("hiveTabs", ["loadHive"]);
+
+  beforeEach(() => {
+    mockState.currentHive$ = new BehaviorSubject<Hive>(null);
+  });
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: HiveTabsService, useValue: mockHiveTabsService },
+        { provide: AppStateService, useValue: mockState },
         { provide: Router, useValue: mockRouterService },
       ],
     });
@@ -41,14 +43,15 @@ fdescribe("LoadHiveIntentService", () => {
         },
       ],
     };
+    mockState.currentHive$.next(mockHive);
     spyOn(service, "getBoxNumber").and.returnValue(1);
-    mockHiveTabsService.getCurrentHive.and.returnValue(mockHive);
+
     service.execute(["view box 1"]);
     expect(mockRouterService.navigate).toHaveBeenCalledWith([
       "hives",
       mockHive.id,
       "boxes",
-      mockHive.parts[0].id
+      mockHive.parts[0].id,
     ]);
   });
 });

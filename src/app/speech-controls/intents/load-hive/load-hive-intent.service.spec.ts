@@ -2,17 +2,17 @@ import { TestBed } from "@angular/core/testing";
 import { LoadHiveIntentService } from "./load-hive-intent.service";
 import { Router } from "@angular/router";
 import { of } from "rxjs";
-import { HiveService } from "src/app/hive-old/services/hive.service";
+import { LocalHiveDataService } from 'src/app/hive-core/services/local-hive-data/local-hive-data.service';
 
 fdescribe("LoadHiveIntentService", () => {
   let service: LoadHiveIntentService;
   const mockRouterService = jasmine.createSpyObj("router", ["navigate"]);
-  const mockHiveService = jasmine.createSpyObj("hiveService", ["getHiveByIdx"]);
+  const mockHiveService = jasmine.createSpyObj("hiveService", ["getHives"]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: HiveService, useValue: mockHiveService },
+        { provide: LocalHiveDataService, useValue: mockHiveService },
         { provide: Router, useValue: mockRouterService },
       ],
     });
@@ -30,15 +30,18 @@ fdescribe("LoadHiveIntentService", () => {
   });
 
   it("should navigate to the expected hive", () => {
-    const mockHive = {
+    const mockHive0 = {
+      id: "123456",
+    };
+    const mockHive1 = {
       id: "123456",
     };
     spyOn(service, "getHiveNumber").and.returnValue(1);
-    mockHiveService.getHiveByIdx.and.returnValue(of(mockHive));
+    mockHiveService.getHives.and.returnValue(of([mockHive0, mockHive1]));
     service.execute(["view hive 1"]);
     expect(mockRouterService.navigate).toHaveBeenCalledWith([
       "hives",
-      mockHive.id,
+      mockHive0.id,
     ]);
   });
 });
