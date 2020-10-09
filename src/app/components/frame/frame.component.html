@@ -1,0 +1,17 @@
+<ng-container *ngIf="frame$ | async; let frame">
+  <ng-container *ngIf="box$ | async; let box">
+    <ng-container *ngIf="hive$ | async; let hive">
+      <div class="ion-page" id="main-frame-content">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>{{hive.label}} > {{box.label}} > {{frame.label}}</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+          <app-notes-list *ngIf="frame" [notes]="frame.notes" [hive]="hive"></app-notes-list>
+        </ion-content>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

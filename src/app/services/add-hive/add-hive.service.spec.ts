@@ -21,11 +21,10 @@ fdescribe('AddHiveService', () => {
     service = TestBed.inject(AddHiveService);
   });
 
-  it('should add the hive to the local store and set an id', () => {
+  it('should add the hive to the local store', () => {
     const mockHive = {label: 'test'};
     mockLocalData.createHive.and.callFake(d => of(d));
     service.addHive(mockHive).subscribe(created => {
-      expect(created.clientId).toBeDefined();
       expect(mockLocalData.createHive).toHaveBeenCalledWith(jasmine.objectContaining(mockHive));
     });
   });

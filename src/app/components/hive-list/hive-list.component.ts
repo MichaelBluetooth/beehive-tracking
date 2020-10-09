@@ -29,6 +29,6 @@ export class HiveListComponent implements OnInit {
   }
 
   navigateToHive(hive: Hive) {
-    this.router.navigate(["hives", hive.id]);
+    this.appState.loadHive(hive.clientId || hive.id, true);
   }
 }

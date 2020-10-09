@@ -1,0 +1,19 @@
+<ion-router-outlet></ion-router-outlet>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button (click)="openOptions()">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>{{'MAIN-TABS.options' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="takePhoto()">
+      <ion-icon name="camera"></ion-icon>
+      <ion-label>{{'MAIN-TABS.take-photo' | translate}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="addNote()">
+      <ion-icon name="eye-outline"></ion-icon>
+      <ion-label>{{'MAIN-TABS.inspection' | translate}}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

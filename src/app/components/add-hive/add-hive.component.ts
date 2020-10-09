@@ -32,7 +32,8 @@ export class AddHiveComponent implements OnInit {
 
   addHive(): void {
     this.addHiveService.addHive(this.hive.value).subscribe((added) => {
-      this.appState.loadHive(added.clientId);
+      this.appState.loadHive(added.clientId || added.id, true);
+      this.dismiss();
     });
   }
 

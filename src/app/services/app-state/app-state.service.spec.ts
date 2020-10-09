@@ -1,19 +1,18 @@
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { Router } from "@angular/router";
 import { of, Subject } from "rxjs";
 import { Hive } from "src/app/models/hive";
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
-import { RemoteHiveDataService } from "../remote-hive-data/remote-hive-data.service";
-
 import { AppStateService } from "./app-state.service";
 
 fdescribe("AppStateService", () => {
   let service: AppStateService;
   let mockLocalService: any;
-  let mockRemoteService: any;
+  let mockRouter: any;
 
   beforeEach(() => {
     mockLocalService = jasmine.createSpyObj("local", ["getHive"]);
-    mockRemoteService = jasmine.createSpyObj("local", ["getHive"]);
+    mockRouter = jasmine.createSpyObj("router", ["navigate"]);
   });
 
   beforeEach(() => {
@@ -24,8 +23,8 @@ fdescribe("AppStateService", () => {
           useValue: mockLocalService,
         },
         {
-          provide: RemoteHiveDataService,
-          useValue: mockRemoteService,
+          provide: Router,
+          useValue: mockRouter,
         },
       ],
     });
@@ -33,38 +32,22 @@ fdescribe("AppStateService", () => {
   });
 
   describe("loading a hive", () => {
-    it("should emit the local instance and then remote", fakeAsync(() => {
+    it("should emit the local instance (by id)", () => {
       const mockLocalHive: Hive = { id: "12345" };
-      const mockRemoteHive: Hive = { id: "12345" };
       mockLocalService.getHive.and.returnValue(of(mockLocalHive));
-      mockRemoteService.getHive.and.callFake(() => {
-        const ret = new Subject<Hive>();
-        setTimeout(() => ret.next(mockRemoteHive), 100);
-        return ret;
-      });
       spyOn(service.currentHive$, "next");
       service.loadHive("12345");
-      tick(500);
-      expect(service.currentHive$.next).toHaveBeenCalledTimes(2);
-      expect(service.currentHive$.next).toHaveBeenCalledWith(mockLocalHive); // loaded the local instance
-      expect(service.currentHive$.next).toHaveBeenCalledWith(mockRemoteHive); // loaded the data from the remote service
-    }));
+      expect(service.currentHive$.next).toHaveBeenCalledWith(mockLocalHive);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['hives', '12345']);
+    });
 
-    it("should not emit the local instance if the remote completed first", fakeAsync(() => {
-      const mockLocalHive: Hive = { id: "12345" };
-      const mockRemoteHive: Hive = { id: "12345" };
-      mockRemoteService.getHive.and.returnValue(of(mockRemoteHive));
-      mockLocalService.getHive.and.callFake(() => {
-        // the local service happened to take longer than the remote!
-        const ret = new Subject<Hive>();
-        setTimeout(() => ret.next(mockLocalHive), 100);
-        return ret;
-      });
+    it("should emit the local instance (by clientId)", () => {
+      const mockLocalHive: Hive = { clientId: "834324" };
+      mockLocalService.getHive.and.returnValue(of(mockLocalHive));
       spyOn(service.currentHive$, "next");
-      service.loadHive("12345");
-      tick(500);
-      expect(service.currentHive$.next).toHaveBeenCalledTimes(1);
-      expect(service.currentHive$.next).toHaveBeenCalledWith(mockRemoteHive);
-    }));
+      service.loadHive("834324");
+      expect(service.currentHive$.next).toHaveBeenCalledWith(mockLocalHive);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['hives', '834324']);
+    });
   });
 });

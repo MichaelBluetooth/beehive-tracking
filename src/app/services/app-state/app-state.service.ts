@@ -1,83 +1,79 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Router } from "@angular/router";
+import { BehaviorSubject, Subject } from "rxjs";
 import { Frame } from "src/app/models/frame";
 import { Hive } from "src/app/models/hive";
 import { HiveBody } from "src/app/models/hive-body";
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
-import { RemoteHiveDataService } from "../remote-hive-data/remote-hive-data.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class AppStateService {
-  currentHiveCollection$ = new Subject<Hive[]>();
-  currentHive$ = new Subject<Hive>();
-  currentBody$ = new Subject<HiveBody>();
-  currentFrame$ = new Subject<Frame>();
+  currentHiveCollection$ = new BehaviorSubject<Hive[]>([]);
+  currentHive$ = new BehaviorSubject<Hive>(null);
+  currentBody$ = new BehaviorSubject<HiveBody>(null);
+  currentFrame$ = new BehaviorSubject<Frame>(null);
 
-  constructor(
-    private local: LocalHiveDataService,
-    private remote: RemoteHiveDataService
-  ) {}
+  constructor(private router: Router, private local: LocalHiveDataService) {}
 
-  loadHives(): void {
-    let remoteFinished = false;
-    this.remote.getHives().subscribe((hives) => {
-      remoteFinished = true;
-      this.currentHiveCollection$.next(hives);
-      // TODO: update the local store
-    });
-
+  loadHives(navigate: boolean): void {
     this.local.getHives().subscribe((hives) => {
-      if (!remoteFinished) {
-        // do not emit the local hive if the remote one happened to finish first
-        this.currentHiveCollection$.next(hives);
+      this.currentFrame$.next(null);
+      this.currentBody$.next(null);
+      this.currentHive$.next(null);
+      this.currentHiveCollection$.next(hives);
+
+      if (navigate) {
+        this.router.navigate(["hives"]);
       }
     });
   }
 
-  loadHive(id: string): void {
-    let remoteFinished = false;
-    this.remote.getHive(id).subscribe((hive) => {
-      remoteFinished = true;
-      this.currentHive$.next(hive);
-      // TODO: update the local store
-    });
-
+  loadHive(id: string, navigate: boolean): void {
     this.local.getHive(id).subscribe((hive) => {
-      if (!remoteFinished) {
-        // do not emit the local hive if the remote one happened to finish first
-        this.currentHive$.next(hive);
+      this.currentFrame$.next(null);
+      this.currentBody$.next(null);
+      this.currentHive$.next(hive);
+
+      if (navigate) {
+        this.router.navigate(["hives", hive.id || hive.clientId]);
       }
     });
   }
 
-  loadBody(id: string): void {
-    let remoteFinished = false;
-    this.remote.getBody(id).subscribe((body) => {
-      remoteFinished = true;
-      this.currentBody$.next(body);
-      // TODO: update the local store
-    });
-
+  loadBody(id: string, navigate: boolean): void {
     this.local.getBody(id).subscribe((body) => {
-      if (!remoteFinished) {
-        this.currentBody$.next(body);
+      this.currentFrame$.next(null);
+      this.currentBody$.next(body);
+      this.currentHive$.next(body.hive);
+
+      if (navigate) {
+        this.router.navigate([
+          "hives",
+          this.currentHive$.value.id || this.currentHive$.value.clientId,
+          "boxes",
+          body.id || body.clientId,
+        ]);
       }
     });
   }
 
-  loadFrame(id: string): void {
-    let remoteFinished = false;
-    this.remote.getFrame(id).subscribe((frame) => {
-      remoteFinished = true;
-      this.currentFrame$.next(frame);
-      // TODO: update the local store
-    });
-
+  loadFrame(id: string, navigate: boolean): void {
     this.local.getFrame(id).subscribe((frame) => {
-      if (!remoteFinished) {
-        this.currentFrame$.next(frame);
+      this.currentFrame$.next(frame);
+      this.currentBody$.next(frame.body);
+      this.currentHive$.next(frame.body.hive);
+
+      if (navigate) {
+        this.router.navigate([
+          "hives",
+          this.currentHive$.value.id || this.currentHive$.value.clientId,
+          "boxes",
+          this.currentBody$.value.id || this.currentBody$.value.clientId,
+          "frames",
+          frame.id || frame.clientId,
+        ]);
       }
     });
   }

@@ -3,9 +3,10 @@ import { Component } from "@angular/core";
 import { Platform, ModalController } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { OptionsComponent } from "./hive-old/components/options/options.component";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
+import { OptionsComponent } from './components/options/options.component';
+import { InitService } from './services/init/init.service';
 
 @Component({
   selector: "app-root",
