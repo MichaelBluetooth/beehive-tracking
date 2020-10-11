@@ -47,10 +47,11 @@ export class SpeechInterpreterService {
   }
 
   checkAndExecuteMatch(matches: string[]): void {
-    this.intents.forEach((intent) => {
-      if (intent.isMatch(matches)) {
-        intent.execute(matches);
-      }
-    });
+    const firstMatchingIntent: Intent = this.intents.find((i) =>
+      i.isMatch(matches)
+    );
+    if (firstMatchingIntent) {
+      firstMatchingIntent.execute(matches);
+    }
   }
 }
