@@ -51,7 +51,7 @@ export class HiveSpeechRecognitionService {
     });
   }
 
-  async checkSpeechAvailability(): Promise<boolean> {
+  checkSpeechAvailability(): Promise<boolean> {
     return this.speechRecognition.isRecognitionAvailable().then((available) => {
       if (!available) {
         this.showNotAvailableMessage();
@@ -61,6 +61,7 @@ export class HiveSpeechRecognitionService {
       }
     });
   }
+
   async checkPermission(): Promise<boolean> {
     let granted;
     const permissionPromise = new Promise<boolean>((resolve) => {
@@ -68,15 +69,15 @@ export class HiveSpeechRecognitionService {
     });
     this.speechRecognition.hasPermission().then((hasPermission: boolean) => {
       if (hasPermission) {
-        granted.next(true);
+        granted(true);
       } else {
         this.speechRecognition.requestPermission().then(
           () => {
-            granted.next(true);
+            granted(true);
           },
           () => {
             this.showPermissionNotGranted();
-            granted.next(false);
+            granted(false);
           }
         );
       }
