@@ -12,6 +12,7 @@ import { IonicStorageModule, Storage } from "@ionic/storage";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { SocialSharing } from "@ionic-native/social-sharing/ngx";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -50,6 +51,7 @@ export function initializeApp(appInitService: InitService) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     HTTP,
     SocialSharing,
+    SpeechRecognition,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,

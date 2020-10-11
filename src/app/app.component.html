@@ -5,7 +5,9 @@
         <ion-buttons slot="end">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{'APP-ROOT.title' | translate}}</ion-title>
+        <ion-title slot="start">{{'APP-ROOT.title' | translate}}
+          <ion-icon name="ear-outline" *ngIf="listening$ | async"></ion-icon>
+        </ion-title>
       </ion-toolbar>
     </ion-header>
 

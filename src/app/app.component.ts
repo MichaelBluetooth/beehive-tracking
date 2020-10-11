@@ -6,6 +6,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
 import { OptionsComponent } from './hive-core/components/options/options.component';
+import { HiveSpeechRecognitionService } from './speech-controls/services/hive-speech-recognition.service';
 
 @Component({
   selector: "app-root",
@@ -13,13 +14,17 @@ import { OptionsComponent } from './hive-core/components/options/options.compone
   styleUrls: ["app.component.scss"],
 })
 export class AppComponent {
+
+  listening$ = this.hiveSpeech.listening$;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private modal: ModalController,
     private translate: TranslateService,
-    private storage: Storage
+    private storage: Storage,
+    private hiveSpeech: HiveSpeechRecognitionService
   ) {
     const language = this.translate.getBrowserLang();
     this.translate.setDefaultLang(language);
@@ -51,5 +56,9 @@ export class AppComponent {
     });
 
     return await modal.present();
+  }
+
+  startListening(){
+    this.hiveSpeech.listen();
   }
 }
