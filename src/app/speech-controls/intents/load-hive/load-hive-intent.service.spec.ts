@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { of } from "rxjs";
 import { LocalHiveDataService } from 'src/app/hive-core/services/local-hive-data/local-hive-data.service';
 
-fdescribe("LoadHiveIntentService", () => {
+describe("LoadHiveIntentService", () => {
   let service: LoadHiveIntentService;
   const mockRouterService = jasmine.createSpyObj("router", ["navigate"]);
   const mockHiveService = jasmine.createSpyObj("hiveService", ["getHives"]);

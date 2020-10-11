@@ -8,7 +8,7 @@ import { AppStateService } from "src/app/hive-core/services/app-state/app-state.
 
 import { NextFrameIntentService } from "./next-frame-intent.service";
 
-fdescribe("NextFrameIntentService", () => {
+describe("NextFrameIntentService", () => {
   let service: NextFrameIntentService;
   let mockState: any;
   const mockRouter = jasmine.createSpyObj("router", ["navigate"]);

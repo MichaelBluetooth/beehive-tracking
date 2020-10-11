@@ -8,7 +8,7 @@ const mockSuccessResponse = (responseData) => {
   });
 };
 
-fdescribe("RemoteHiveDataService", () => {
+describe("RemoteHiveDataService", () => {
   let service: RemoteHiveDataService;
   let mockHttp: any;
 

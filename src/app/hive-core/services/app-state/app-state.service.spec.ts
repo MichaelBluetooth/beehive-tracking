@@ -5,7 +5,7 @@ import { Hive } from '../../models/hive';
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
 import { AppStateService } from "./app-state.service";
 
-fdescribe("AppStateService", () => {
+describe("AppStateService", () => {
   let service: AppStateService;
   let mockLocalService: any;
   let mockRouter: any;

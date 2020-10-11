@@ -5,7 +5,7 @@ import { Hive } from "src/app/hive-core/models/hive";
 import { AppStateService } from "src/app/hive-core/services/app-state/app-state.service";
 import { LoadBoxIntentService } from "./load-box-intent.service";
 
-fdescribe("LoadHiveIntentService", () => {
+describe("LoadHiveIntentService", () => {
   let service: LoadBoxIntentService;
   const mockRouterService = jasmine.createSpyObj("router", ["navigate"]);
   const mockState = jasmine.createSpyObj("hiveTabs", ["loadHive"]);

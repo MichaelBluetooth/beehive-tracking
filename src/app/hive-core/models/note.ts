@@ -10,6 +10,7 @@ export interface Note extends ModelBase {
     swarmCells?: boolean;
     queenCells?: boolean;
     supersedureCells?: boolean;
+    cappedHoney?: boolean;
     eggs?: boolean;
     larva?: boolean;
     brood?: boolean;

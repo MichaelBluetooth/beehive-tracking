@@ -1,6 +1,6 @@
 import { JoinPipe } from "./join.pipe";
 
-fdescribe("JoinPipe", () => {
+describe("JoinPipe", () => {
   const pipe = new JoinPipe();
 
   it("joins the array", () => {

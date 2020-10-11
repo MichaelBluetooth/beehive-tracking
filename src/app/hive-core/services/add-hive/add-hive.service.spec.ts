@@ -4,7 +4,7 @@ import { LocalHiveDataService } from '../local-hive-data/local-hive-data.service
 
 import { AddHiveService } from './add-hive.service';
 
-fdescribe('AddHiveService', () => {
+describe('AddHiveService', () => {
   let service: AddHiveService;
   let mockLocalData: any;
 
