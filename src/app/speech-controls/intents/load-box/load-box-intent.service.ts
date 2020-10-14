@@ -35,9 +35,10 @@ export class LoadBoxIntentService extends BasicIntent implements OnDestroy {
       if (idx && this.currentHive && this.currentHive.parts.length >= idx - 1) {
         this.router.navigate([
           "hives",
-          this.currentHive.id,
+          this.currentHive.clientId || this.currentHive.id,
           "boxes",
-          this.currentHive.parts[idx - 1].id,
+          this.currentHive.parts[idx - 1].clientId ||
+            this.currentHive.parts[idx - 1].id,
         ]);
       }
     }

@@ -59,11 +59,11 @@ export class LoadFrameIntentService extends BasicIntent implements OnDestroy {
       const targetFrame: Frame = this.currentBox.frames[frameIdx];
       this.router.navigate([
         "hives",
-        this.currentHive.id || this.currentHive.clientId,
+        this.currentHive.clientId || this.currentHive.id,
         "boxes",
-        this.currentBox.id || this.currentBox.clientId,
+        this.currentBox.clientId || this.currentBox.id,
         "frames",
-        targetFrame.id || targetFrame.clientId,
+        targetFrame.clientId || targetFrame.id,
       ]);
     }
   }

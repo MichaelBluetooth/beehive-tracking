@@ -23,7 +23,7 @@ export class LoadHiveIntentService extends BasicIntent {
     if (idx) {
       this.hiveService.getHives().subscribe((hives) => {
         if (hives[idx - 1]) {
-          this.router.navigate(["hives", hives[idx - 1].id]);
+          this.router.navigate(["hives", hives[idx - 1].clientId || hives[idx - 1].id]);
         }
       });
     }
