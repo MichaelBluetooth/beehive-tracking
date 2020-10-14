@@ -24,8 +24,11 @@ export class HiveSpeechRecognitionService {
   ) {}
 
   async stopListening() {
-    this.speechRecognition.stopListening().then(() => {
-      this._listening$.next(false);
+    // Run the following inside a zone to make sure change detection triggers
+    this.ngZone.run(() => {
+      this.speechRecognition.stopListening().then(() => {
+        this._listening$.next(false);
+      });
     });
   }
 
@@ -76,7 +79,7 @@ export class HiveSpeechRecognitionService {
     });
   }
 
-  async checkPermission(): Promise<boolean> {
+  checkPermission(): Promise<boolean> {
     let granted;
     const permissionPromise = new Promise<boolean>((resolve) => {
       granted = resolve;
