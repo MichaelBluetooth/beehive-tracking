@@ -1,6 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Logger } from "src/app/logger/logger";
-import { LoggerService } from "src/app/logger/logger.service";
 
 import { BroodIntentService } from "../intents/brood/brood-intent.service";
 import { CappedHoneyIntentService } from "../intents/capped-honey/capped-honey-intent.service";
@@ -11,7 +9,9 @@ import { LoadBoxIntentService } from "../intents/load-box/load-box-intent.servic
 import { LoadFrameIntentService } from "../intents/load-frame/load-frame-intent.service";
 import { LoadHiveIntentService } from "../intents/load-hive/load-hive-intent.service";
 import { NextFrameIntentService } from "../intents/next-frame/next-frame-intent.service";
+import { PreviousFrameIntentService } from '../intents/previous-frame/previous-frame-intent.service';
 import { QueenCellsIntentService } from "../intents/queen-cells/queen-cells-intent.service";
+import { StopListeningIntentService } from '../intents/stop-listening/stop-listening-intent.service';
 import { SupersedureCellsIntentService } from "../intents/supersedure-cells/supersedure-cells-intent.service";
 import { SwarmCellsIntentService } from "../intents/swarm-cells/swarm-cells-intent.service";
 
@@ -32,7 +32,9 @@ export class SpeechInterpreterService {
     nextFrameIntent: NextFrameIntentService,
     queenCellsIntent: QueenCellsIntentService,
     supercedureCellsIntent: SupersedureCellsIntentService,
-    swarmCellsIntent: SwarmCellsIntentService
+    swarmCellsIntent: SwarmCellsIntentService,
+    previousFrameIntent: PreviousFrameIntentService,
+    stopListeningIntent: StopListeningIntentService
   ) {
     this.intents.push(
       broodIntent,
@@ -45,7 +47,9 @@ export class SpeechInterpreterService {
       nextFrameIntent,
       queenCellsIntent,
       supercedureCellsIntent,
-      swarmCellsIntent
+      swarmCellsIntent,
+      previousFrameIntent,
+      stopListeningIntent
     );
   }
 
