@@ -1,53 +1,67 @@
-import { Injectable } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { AlertController } from "@ionic/angular";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Logger } from "src/app/logger/logger";
+import { LoggerService } from "src/app/logger/logger.service";
 import { SpeechInterpreterService } from "./speech-interpreter.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class HiveSpeechRecognitionService {
-  listening$ = new BehaviorSubject<boolean>(false);
+  private _listening$ = new BehaviorSubject<boolean>(false);
+
+  get listening$(): Observable<boolean> {
+    return this._listening$.asObservable();
+  }
 
   constructor(
     private speechRecognition: SpeechRecognition,
     private speechInterpreter: SpeechInterpreterService,
-    private alert: AlertController
+    private alert: AlertController,
+    private ngZone: NgZone
   ) {}
 
   async stopListening() {
     this.speechRecognition.stopListening().then(() => {
-      this.listening$.next(false);
+      this._listening$.next(false);
     });
   }
 
   async listen() {
-    this.checkSpeechAvailability().then((avail) => {
-      if (avail) {
-        this.checkPermission().then((granted) => {
-          if (granted) {
-            this.listening$.next(true);
-            this.speechRecognition
-              .startListening({ showPopup: false })
-              .subscribe(
-                (matches: string[]) => {
-                  this.speechInterpreter.checkAndExecuteMatch(matches);
-                  this.listen();
-                },
-                (error) => {
-                  if (error !== 0) {
-                    // some error?
-                    this.listening$.next(false);
-                  } else {
-                    // I think a "0" means the Ionic Speech recognition plugin didn't hear anything and sort of "times out"
-                    this.listening$.next(false);
-                  }
-                }
-              );
-          }
-        });
-      }
+    // Run the following inside a zone to make sure change detection triggers
+    this.ngZone.run(() => {
+      this.checkSpeechAvailability().then((avail) => {
+        if (avail) {
+          this.checkPermission().then((granted) => {
+            if (granted) {
+              this._listening$.next(true);
+              try {
+                this.speechRecognition
+                  .startListening({ showPopup: false, matches: 15 })
+                  .subscribe(
+                    (matches: string[]) => {
+                      this.speechInterpreter.checkAndExecuteMatch(matches);
+                      this.listen();
+                    },
+                    (error) => {
+                      if (error === "No match") {
+                        this.listen();
+                      } else {
+                        // I think a "0" means the Ionic Speech recognition plugin didn't hear anything and sort of "times out"
+                        this._listening$.next(false);
+                      }
+                    }
+                  );
+              } catch {
+                // some kind of fatal exception?
+                this._listening$.next(false);
+              }
+            }
+          });
+        }
+      });
     });
   }
 

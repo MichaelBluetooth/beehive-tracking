@@ -51,28 +51,19 @@ export abstract class BasicObservationIntent
       this.localHiveData
         .addFrameNote(this.currentFrame.id || this.currentFrame.clientId, note)
         .subscribe(() => {
-          this.appState.loadFrame(
-            this.currentFrame.id || this.currentFrame.clientId,
-            false
-          );
+          this.appState.loadFrame(this.currentFrame.clientId || this.currentFrame.id, true);
         });
     } else if (this.currentBody) {
       this.localHiveData
         .addBodyNote(this.currentBody.id || this.currentBody.clientId, note)
         .subscribe(() => {
-          this.appState.loadBody(
-            this.currentBody.id || this.currentBody.clientId,
-            false
-          );
+          this.appState.loadBody(this.currentBody.clientId || this.currentBody.id, true);
         });
     } else {
       this.localHiveData
         .addHiveNote(this.currentHive.id || this.currentHive.clientId, note)
         .subscribe(() => {
-          this.appState.loadHive(
-            this.currentHive.id || this.currentHive.clientId,
-            false
-          );
+          this.appState.loadHive(this.currentHive.clientId || this.currentHive.id, true);
         });
     }
   }

@@ -1,12 +1,13 @@
 import { Component } from "@angular/core";
-
-import { Platform, ModalController } from "@ionic/angular";
+import { Router } from "@angular/router";
+import { Platform, ModalController, MenuController } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
-import { OptionsComponent } from './hive-core/components/options/options.component';
-import { HiveSpeechRecognitionService } from './speech-controls/services/hive-speech-recognition.service';
+import { TranslateService } from "@ngx-translate/core";
+
+import { OptionsComponent } from "./hive-core/components/options/options.component";
+import { HiveSpeechRecognitionService } from "./speech-controls/services/hive-speech-recognition.service";
 
 @Component({
   selector: "app-root",
@@ -14,7 +15,6 @@ import { HiveSpeechRecognitionService } from './speech-controls/services/hive-sp
   styleUrls: ["app.component.scss"],
 })
 export class AppComponent {
-
   listening$ = this.hiveSpeech.listening$;
 
   constructor(
@@ -24,7 +24,8 @@ export class AppComponent {
     private modal: ModalController,
     private translate: TranslateService,
     private storage: Storage,
-    private hiveSpeech: HiveSpeechRecognitionService
+    private hiveSpeech: HiveSpeechRecognitionService,
+    private menu: MenuController
   ) {
     const language = this.translate.getBrowserLang();
     this.translate.setDefaultLang(language);
@@ -45,6 +46,7 @@ export class AppComponent {
   }
 
   async showSettings() {
+    this.menu.close();
     const modal = await this.modal.create({
       component: OptionsComponent,
       componentProps: {},
@@ -58,7 +60,8 @@ export class AppComponent {
     return await modal.present();
   }
 
-  startListening(){
+  startListening() {
+    this.menu.close();
     this.hiveSpeech.listen();
   }
 }
