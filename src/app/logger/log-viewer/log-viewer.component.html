@@ -1,0 +1,38 @@
+<ion-segment [(ngModel)]="logLevelFilter" (ionChange)="logLevelChanged($event)">
+  <ion-segment-button value="all">
+    <ion-label>All</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="debug">
+    <ion-label>Debug</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="error">
+    <ion-label>Error</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="info">
+    <ion-label>Info</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="logs$ | async; let logs">
+      <ng-container *ngFor="let log of logs">
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-label text-wrap>
+                <h3>{{log.date | date:'long'}} {{log.level}}</h3>
+                <p>
+                  {{log.classPath}}
+                </p>
+                <p *ngFor="let logData of log.data">
+                  {{logData}}
+                </p>
+              </ion-label>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ng-container>
+    </ng-container>
+  </ion-list>
+</ion-content>
