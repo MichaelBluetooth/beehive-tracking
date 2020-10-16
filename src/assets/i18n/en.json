@@ -23,7 +23,8 @@
     "delete-item-name": {
       "frame": "Frame",
       "box": "Box",
-      "hive": "Hive"
+      "hive": "Hive",
+      "note": "Inspection"
     },
     "new-inspection": "New Inspection",
     "set-hive-photo": "Set Hive Photo",

@@ -23,7 +23,8 @@
       "delete-item-name": {
         "frame": "Cuadro",
         "box": "Caja",
-        "hive": "Colmena"
+        "hive": "Colmena",
+        "note": "Inspección"
       },
       "new-inspection": "Nueva inspección",
       "set-hive-photo": "Establecer foto de colmena",

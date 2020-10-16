@@ -23,7 +23,8 @@
     "delete-item-name": {
       "frame": "Rahmen",
       "box": "Box",
-      "hive": "Bienenstock"
+      "hive": "Bienenstock",
+      "note": "Inspektion"
     },
     "new-inspection": "Neue Inspektion",
     "set-hive-photo": "Bienenstockfoto Einstellen",

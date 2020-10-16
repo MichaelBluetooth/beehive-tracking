@@ -23,7 +23,8 @@
     "delete-item-name": {
       "frame": "Cadre",
       "box": "Boîte",
-      "hive": "Ruche"
+      "hive": "Ruche",
+      "note": "Inspection"
     },
     "new-inspection": "Nouvelle inspection",
     "set-hive-photo": "Définir la photo de la ruche",
