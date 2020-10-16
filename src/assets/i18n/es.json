@@ -23,7 +23,8 @@
     "delete-item-name": {
       "frame": "Cuadro",
       "box": "Caja",
-      "hive": "Colmena"
+      "hive": "Colmena",
+      "note": "Inspección"
     },
     "new-inspection": "Nueva inspección",
     "set-hive-photo": "Establecer foto de colmena",
@@ -108,11 +109,5 @@
     "frames": "Marcos",
     "frames-placeholder": "Ingrese el número de fotogramas",
     "date-added": "Fecha Agregada"
-  },
-  "NOTES": {
-    "delete": {
-      "header": "Confirmar eliminación",
-      "message": "¿Estás seguro que quieres eliminar esta nota? Esta acción no se puede deshacer."
-    }
   }
 }

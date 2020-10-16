@@ -23,7 +23,8 @@
     "delete-item-name": {
       "frame": "Rahmen",
       "box": "Box",
-      "hive": "Bienenstock"
+      "hive": "Bienenstock",
+      "note": "Inspektion"
     },
     "new-inspection": "Neue Inspektion",
     "set-hive-photo": "Bienenstockfoto Einstellen",
@@ -108,11 +109,5 @@
     "frames": "Rahmen",
     "frames-placeholder": "Geben Sie die Anzahl der Frames ein",
     "date-added": "Datum hinzugefügt"
-  },
-  "NOTES": {
-    "delete": {
-      "header": "Löschen bestätigen",
-      "message": "Möchten Sie diesen Hinweis wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
-    }
   }
 }
