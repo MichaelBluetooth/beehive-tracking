@@ -38,6 +38,16 @@
         "german": "Alemán",
         "french": "Francés",
         "spanish": "Español"
+      },
+      "logLevel": "Nivel de registro",
+      "logLevelOptions": {
+        "off": "Apagado",
+        "fatal": "Fatal",
+        "error": "Error",
+        "warn": "Advertencia",
+        "info": "Información",
+        "debug": "Depurar",
+        "all": "Todos"
       }
     },
     "HIVE-PROPERTIES": {

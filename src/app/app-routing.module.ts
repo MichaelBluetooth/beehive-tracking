@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { LogViewerComponent } from './logger/log-viewer/log-viewer.component';
 
 const routes: Routes = [
   {
@@ -7,6 +8,10 @@ const routes: Routes = [
     loadChildren: () =>
       import("./hive-core/hive-core.module").then((m) => m.HiveCoreModule),
   },
+  {
+    path: "log",
+    component: LogViewerComponent
+  }
 ];
 
 @NgModule({

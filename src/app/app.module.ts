@@ -18,6 +18,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 import { InitService } from "./hive-core/services/init/init.service";
+import { LoggerModule } from './logger/logger.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -44,6 +45,7 @@ export function initializeApp(appInitService: InitService) {
         deps: [HttpClient],
       },
     }),
+    LoggerModule
   ],
   providers: [
     StatusBar,

@@ -1,33 +1,33 @@
 import { Injectable, NgZone } from "@angular/core";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { AlertController } from "@ionic/angular";
-import { BehaviorSubject, Observable } from "rxjs";
 import { Logger } from "src/app/logger/logger";
 import { LoggerService } from "src/app/logger/logger.service";
 import { SpeechInterpreterService } from "./speech-interpreter.service";
+import { SpeechListeningService } from "./speech-listening.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class HiveSpeechRecognitionService {
-  private _listening$ = new BehaviorSubject<boolean>(false);
-
-  get listening$(): Observable<boolean> {
-    return this._listening$.asObservable();
-  }
+  logger: Logger;
 
   constructor(
     private speechRecognition: SpeechRecognition,
     private speechInterpreter: SpeechInterpreterService,
     private alert: AlertController,
-    private ngZone: NgZone
-  ) {}
+    private listeningSvc: SpeechListeningService,
+    private ngZone: NgZone,
+    loggerSvc: LoggerService
+  ) {
+    this.logger = loggerSvc.getLogger("HiveSpeechRecognitionService");
+  }
 
   async stopListening() {
     // Run the following inside a zone to make sure change detection triggers
     this.ngZone.run(() => {
       this.speechRecognition.stopListening().then(() => {
-        this._listening$.next(false);
+        this.listeningSvc.stopListening();
       });
     });
   }
@@ -39,7 +39,7 @@ export class HiveSpeechRecognitionService {
         if (avail) {
           this.checkPermission().then((granted) => {
             if (granted) {
-              this._listening$.next(true);
+              this.listeningSvc.setListening();
               try {
                 this.speechRecognition
                   .startListening({ showPopup: false, matches: 15 })
@@ -50,16 +50,26 @@ export class HiveSpeechRecognitionService {
                     },
                     (error) => {
                       if (error === "No match") {
+                        this.logger.debug('listen', 'no speech detected, restarting speech recognition');
                         this.listen();
                       } else {
-                        // I think a "0" means the Ionic Speech recognition plugin didn't hear anything and sort of "times out"
-                        this._listening$.next(false);
+                        this.logger.error(
+                          "listen",
+                          "unknown speech recognition error",
+                          error
+                        );
+                        this.listeningSvc.stopListening();
                       }
                     }
                   );
-              } catch {
+              } catch (error) {
                 // some kind of fatal exception?
-                this._listening$.next(false);
+                this.logger.error(
+                  "listen",
+                  "exception thrown when starting speech recognition",
+                  error
+                );
+                this.listeningSvc.stopListening();
               }
             }
           });

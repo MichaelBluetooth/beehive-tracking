@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+import { Logger } from 'src/app/logger/logger';
+import { LoggerService } from 'src/app/logger/logger.service';
 
 import { BroodIntentService } from "../intents/brood/brood-intent.service";
 import { CappedHoneyIntentService } from "../intents/capped-honey/capped-honey-intent.service";
@@ -20,8 +22,10 @@ import { SwarmCellsIntentService } from "../intents/swarm-cells/swarm-cells-inte
 })
 export class SpeechInterpreterService {
   intents: Intent[] = [];
+  logger: Logger;
 
   constructor(
+    loggerSvc: LoggerService,
     broodIntent: BroodIntentService,
     cappedHoneyIntent: CappedHoneyIntentService,
     eggsIntent: EggsIntentService,
@@ -36,6 +40,7 @@ export class SpeechInterpreterService {
     previousFrameIntent: PreviousFrameIntentService,
     stopListeningIntent: StopListeningIntentService
   ) {
+    this.logger = loggerSvc.getLogger('SpeechInterpreterService');
     this.intents.push(
       broodIntent,
       cappedHoneyIntent,
@@ -54,10 +59,12 @@ export class SpeechInterpreterService {
   }
 
   checkAndExecuteMatch(matches: string[]): void {
+    this.logger.debug('checkAndExecuteMatch', 'checking matches', matches);
     const firstMatchingIntent: Intent = this.intents.find((i) =>
       i.isMatch(matches)
     );
     if (firstMatchingIntent) {
+      this.logger.info('checkAndExecuteMatch', 'match found', firstMatchingIntent.constructor.name);
       firstMatchingIntent.execute(matches);
     }
   }

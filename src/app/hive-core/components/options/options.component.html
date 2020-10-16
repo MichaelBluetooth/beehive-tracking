@@ -17,4 +17,17 @@
       <ion-select-option value="fr">{{'OPTIONS.languageOptions.french' | translate}}</ion-select-option>
     </ion-select>
   </ion-item>
+
+  <ion-item>
+    <ion-label>{{'OPTIONS.logLevel' | translate}}</ion-label>
+    <ion-select multiple="false" [(ngModel)]="logLevel" (ionChange)="setLogLevel()">
+      <ion-select-option [value]="logLevelOff">{{'OPTIONS.logLevelOptions.off' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelFatal">{{'OPTIONS.logLevelOptions.fatal' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelError">{{'OPTIONS.logLevelOptions.error' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelWarn">{{'OPTIONS.logLevelOptions.warn' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelInfo">{{'OPTIONS.logLevelOptions.info' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelDebug">{{'OPTIONS.logLevelOptions.debug' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelAll">{{'OPTIONS.logLevelOptions.all' | translate}}</ion-select-option>
+    </ion-select>
+  </ion-item>
 </ion-content>

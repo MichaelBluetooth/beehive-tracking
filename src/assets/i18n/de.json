@@ -38,6 +38,16 @@
       "german": "Deutsche",
       "french": "Französisch",
       "spanish": "Spanisch"
+    },
+    "logLevel": "Protokollstufe",
+    "logLevelOptions": {
+      "off": "Aus",
+      "fatal": "Tödlich",
+      "error": "Error",
+      "warn": "Warnen",
+      "info": "Information",
+      "debug": "Debuggen",
+      "all": "Alle"
     }
   },
   "HIVE-PROPERTIES": {

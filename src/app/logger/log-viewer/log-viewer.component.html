@@ -1,22 +1,20 @@
-<ion-segment [(ngModel)]="logLevelFilter" (ionChange)="logLevelChanged($event)">
-  <ion-segment-button value="all">
-    <ion-label>All</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="debug">
-    <ion-label>Debug</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="error">
-    <ion-label>Error</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="info">
-    <ion-label>Info</ion-label>
-  </ion-segment-button>
-</ion-segment>
-
 <ion-content>
+  <ion-item>
+    <ion-label>{{'OPTIONS.logLevel' | translate}}</ion-label>
+    <ion-select multiple="false" [(ngModel)]="logLevelFilter">
+      <ion-select-option [value]="logLevelAll">{{'OPTIONS.logLevelOptions.all' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelDebug">{{'OPTIONS.logLevelOptions.debug' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelInfo">{{'OPTIONS.logLevelOptions.info' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelWarn">{{'OPTIONS.logLevelOptions.warn' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelError">{{'OPTIONS.logLevelOptions.error' | translate}}</ion-select-option>
+      <ion-select-option [value]="logLevelFatal">{{'OPTIONS.logLevelOptions.fatal' | translate}}</ion-select-option>
+
+    </ion-select>
+  </ion-item>
+
   <ion-list>
     <ng-container *ngIf="logs$ | async; let logs">
-      <ng-container *ngFor="let log of logs">
+      <ng-container *ngFor="let log of logs | logFilter:logLevelFilter">
         <ion-item>
           <ion-grid>
             <ion-row>

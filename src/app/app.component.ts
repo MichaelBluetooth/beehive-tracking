@@ -8,6 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 import { OptionsComponent } from "./hive-core/components/options/options.component";
 import { HiveSpeechRecognitionService } from "./speech-controls/services/hive-speech-recognition.service";
+import { SpeechListeningService } from './speech-controls/services/speech-listening.service';
 
 @Component({
   selector: "app-root",
@@ -15,7 +16,7 @@ import { HiveSpeechRecognitionService } from "./speech-controls/services/hive-sp
   styleUrls: ["app.component.scss"],
 })
 export class AppComponent {
-  listening$ = this.hiveSpeech.listening$;
+  listening$ = this.speechListening.listening$;
 
   constructor(
     private platform: Platform,
@@ -25,7 +26,9 @@ export class AppComponent {
     private translate: TranslateService,
     private storage: Storage,
     private hiveSpeech: HiveSpeechRecognitionService,
-    private menu: MenuController
+    private speechListening: SpeechListeningService,
+    private menu: MenuController,
+    private router: Router
   ) {
     const language = this.translate.getBrowserLang();
     this.translate.setDefaultLang(language);
@@ -63,5 +66,10 @@ export class AppComponent {
   startListening() {
     this.menu.close();
     this.hiveSpeech.listen();
+  }
+
+  goToLog(){
+    this.menu.close();
+    this.router.navigate(['/log']);
   }
 }

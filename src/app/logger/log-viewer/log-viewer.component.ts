@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { map, scan } from "rxjs/operators";
+import { LogLevel } from '../log-level';
 import { LoggerService } from "../logger.service";
 
 @Component({
@@ -18,11 +19,16 @@ export class LogViewerComponent implements OnInit {
         return JSON.parse(JSON.stringify(sorted));
       })
     );
-  logLevelFilter = "all";
+  logLevelFilter: LogLevel = LogLevel.ALL;
+
+  logLevelAll = LogLevel.ALL;
+  logLevelDebug = LogLevel.DEBUG;
+  logLevelInfo = LogLevel.INFO;
+  logLevelWarn = LogLevel.WARN;
+  logLevelError = LogLevel.ERROR;
+  logLevelFatal = LogLevel.FATAL;
 
   constructor(private logService: LoggerService) {}
 
   ngOnInit() {}
-
-  logLevelChanged(): void {}
 }
