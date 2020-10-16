@@ -1,113 +1,118 @@
 {
-    "APP-ROOT": {
-      "title": "Ruches", 
-      "menu-header": "Les Options", 
-      "menu-option": {
-        "settings": "Paramètres"
-      }
+  "APP-ROOT": {
+    "title": "Ruches",
+    "menu-header": "Les Options",
+    "menu-option": {
+      "settings": "Paramètres"
+    }
+  },
+  "MAIN": {
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "delete": "Supprimer",
+    "edit": "Éditer",
+    "share": "Partager",
+    "set-hive-photo": "Définir la photo de la ruche"
+  },
+  "MAIN-TABS": {
+    "options": "Les Options",
+    "take-photo": "Prendre une photo",
+    "inspection": "Inspection",
+    "delete-header": "Confirmation de la suppression",
+    "delete-message": "Voulez-vous vraiment supprimer cette {{itemName}}? Cette action ne peut pas être annulée.",
+    "delete-item-name": {
+      "frame": "Cadre",
+      "box": "Boîte",
+      "hive": "Ruche"
     },
-    "MAIN": {
-      "cancel": "Annuler",
-      "close": "Fermer",
-      "delete": "Supprimer",
-      "edit": "Éditer",
-      "share": "Partager",
-      "set-hive-photo": "Définir la photo de la ruche"
+    "new-inspection": "Nouvelle inspection",
+    "set-hive-photo": "Définir la photo de la ruche",
+    "add-box": "Ajouter une boîte",
+    "nearby-plants": "Plantes à proximité"
+  },
+  "OPTIONS": {
+    "header": "Les Options",
+    "language": "Langue",
+    "languageOptions": {
+      "english": "Anglais",
+      "german": "Allemand",
+      "french": "Français",
+      "spanish": "Espagnol"
+    }
+  },
+  "HIVE-PROPERTIES": {
+    "last-inspected": "Dernière inspection",
+    "nearby-plants": "Plantes à proximité",
+    "queen-last-seen": "Dernière reine vue"
+  },
+  "HIVE-LIST": {
+    "last-inspected": "Dernière inspection"
+  },
+  "ADD-HIVE": {
+    "title": "Ajouter une nouvelle ruche",
+    "label-field": "Étiquette de la ruche"
+  },
+  "INSPECTIONS": {
+    "header": "Inspections",
+    "activity-level": "Niveau d'activité",
+    "date-recorded": "Date d'enregistrement",
+    "activity-level-values": {
+      "Low": "Faible",
+      "Medium": "Moyen",
+      "High": "Haut",
+      "N/A": "Aucun"
     },
-    "MAIN-TABS": {
-      "options": "Les Options",
-      "take-photo": "Prendre une photo",
-      "inspection": "Inspection",
-      "delete-header": "Confirmation de la suppression",
-      "delete-message": "Voulez-vous vraiment supprimer cette {{itemName}}? Cette action ne peut pas être annulée.",
-      "delete-item-name": {
-        "frame": "Cadre",
-        "box": "Boîte",
-        "hive": "Ruche"
-      },
-      "new-inspection": "Nouvelle inspection",
-      "set-hive-photo": "Définir la photo de la ruche",
-      "add-box": "Ajouter une boîte",
-      "nearby-plants": "Plantes à proximité"
-    },
-    "OPTIONS": {
-      "header": "Les Options",
-      "language": "Langue",
-      "languageOptions": {
-        "english": "Anglais",
-        "german": "Allemand",
-        "french": "Français",
-        "spanish": "Espagnol"
-      }
-    },
-    "HIVE-PROPERTIES": {
-      "last-inspected": "Dernière inspection",
-      "nearby-plants": "Plantes à proximité",
-      "queen-last-seen": "Dernière reine vue"
-    },
-    "HIVE-LIST": {
-      "last-inspected": "Dernière inspection"
-    },
-    "ADD-HIVE": {
-      "title": "Ajouter une nouvelle ruche",
-      "label-field": "Étiquette de la ruche"
-    },
-    "INSPECTIONS": {
-      "header": "Inspections",
-      "activity-level": "Niveau d'activité",
-      "date-recorded": "Date d'enregistrement",
-      "activity-level-values": {
-        "Low": "Faible",
-        "Medium": "Moyen",
-        "High": "Haut",
-        "N/A": "Aucun"
-      },
-      "queen-spotted": "La reine a été vue",
-      "brood-spotted": "Brood a été vu",
-      "larva-spotted": "Larve a été vue",
-      "eggs-spotted": "Des œufs ont été vus",
-      "queen-cells-spotted": "Cellules royales été vus",
-      "swarm-cells-spotted": "Cellules d'essaim été vus",
-      "supersedure-cells-spotted": "Cellules de remplacement été vus",
-      "capped-honey-spotted": "Miel tacheté",
-      "pests": "Ravageurs",
-      "details": "Détails",
-      "orientation-flights": "Vols d'orientation"
-    },
-    "HIVE": {
-      "last-inspected": "Dernière inspection",
-      "nearby-plants": "Plantes à proximité",
-      "queen-last-seen": "Dernière reine vue",
-      "parts-header": "les pièces",
-      "inspections-header": "Inspections"
-    },
-    "BOX": {
-      "frames-header": "Cadres",
-      "last-inspected": "Dernière inspection",
-      "date-added": "date ajoutée"
-    },
-    "NOTE-OPTIONS": {
-      "header": "Options de note",
-      "set-hive-photo": "Définir la photo de la ruche"
-    },
-    "BOX-PROPERTY-VALUES": {
-      "type": {
-        "Super": "Super",
-        "Hive Body": "Corps de ruche"
-      }
-    },
-    "NEW-INSPECTION": {
-      "header": "Nouvelle inspection"
-    },
-    "ADD-BOX": {
-      "header": "Ajouter une nouvelle boîte",
-      "label": "Étiquette",
-      "label-placeholder": "Entrez l'étiquette",
-      "type": "Type",
-      "type-placeholder": "Sélectionnez-en un",
-      "frames": "Cadres",
-      "frames-placeholder": "Entrez le nombre d'images",
-      "date-added": "date ajoutée"
+    "queen-spotted": "La reine a été vue",
+    "brood-spotted": "Brood a été vu",
+    "larva-spotted": "Larve a été vue",
+    "eggs-spotted": "Des œufs ont été vus",
+    "queen-cells-spotted": "Cellules royales été vus",
+    "swarm-cells-spotted": "Cellules d'essaim été vus",
+    "supersedure-cells-spotted": "Cellules de remplacement été vus",
+    "capped-honey-spotted": "Miel tacheté",
+    "pests": "Ravageurs",
+    "details": "Détails",
+    "orientation-flights": "Vols d'orientation"
+  },
+  "HIVE": {
+    "last-inspected": "Dernière inspection",
+    "nearby-plants": "Plantes à proximité",
+    "queen-last-seen": "Dernière reine vue",
+    "parts-header": "les pièces",
+    "inspections-header": "Inspections"
+  },
+  "BOX": {
+    "frames-header": "Cadres",
+    "last-inspected": "Dernière inspection",
+    "date-added": "date ajoutée"
+  },
+  "NOTE-OPTIONS": {
+    "header": "Options de note",
+    "set-hive-photo": "Définir la photo de la ruche"
+  },
+  "BOX-PROPERTY-VALUES": {
+    "type": {
+      "Super": "Super",
+      "Hive Body": "Corps de ruche"
+    }
+  },
+  "NEW-INSPECTION": {
+    "header": "Nouvelle inspection"
+  },
+  "ADD-BOX": {
+    "header": "Ajouter une nouvelle boîte",
+    "label": "Étiquette",
+    "label-placeholder": "Entrez l'étiquette",
+    "type": "Type",
+    "type-placeholder": "Sélectionnez-en un",
+    "frames": "Cadres",
+    "frames-placeholder": "Entrez le nombre d'images",
+    "date-added": "date ajoutée"
+  },
+  "NOTES": {
+    "delete": {
+      "header": "Confirmation de la suppression",
+      "message": "Voulez-vous vraiment supprimer cette note? Cette action ne peut pas être annulée."
     }
   }
-  
+}

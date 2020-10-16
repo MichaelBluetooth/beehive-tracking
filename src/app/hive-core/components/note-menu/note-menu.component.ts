@@ -9,6 +9,7 @@ import { SocialSharing } from "@ionic-native/social-sharing/ngx";
 import { Hive } from '../../models/hive';
 import { Note } from '../../models/note';
 import { AddNoteComponent } from '../add-note/add-note.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-note-menu",
@@ -26,7 +27,8 @@ export class NoteMenuComponent implements OnInit {
     private popOver: PopoverController,
     private alert: AlertController,
     private share: SocialSharing,
-    private modal: ModalController
+    private modal: ModalController,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -54,13 +56,12 @@ export class NoteMenuComponent implements OnInit {
 
   async confirmDelete() {
     const alert = await this.alert.create({
-      header: "Confirm Delete",
-      message:
-        "Are you sure you want to delete this Note? This action cannot be undone.",
+      header: this.translate.instant("NOTES.delete.header"),
+      message: this.translate.instant("NOTES.delete.message"),
       buttons: [
-        "Cancel",
+        this.translate.instant("MAIN.cancel"),
         {
-          text: "Delete",
+          text: this.translate.instant("MAIN.delete"),
           handler: () => {
             // this.hiveService.deleteNote(this.note.id).subscribe(() => {
             //   this.popOver.dismiss({ deleted: true });
