@@ -39,16 +39,6 @@
       "german": "Allemand",
       "french": "Français",
       "spanish": "Espagnol"
-    },
-    "logLevel": "Niveau de journal",
-    "logLevelOptions": {
-      "off": "De",
-      "fatal": "Fatal",
-      "error": "Erreur",
-      "warn": "Prévenir",
-      "info": "information",
-      "debug": "Déboguer",
-      "all": "Tout"
     }
   },
   "HIVE-PROPERTIES": {

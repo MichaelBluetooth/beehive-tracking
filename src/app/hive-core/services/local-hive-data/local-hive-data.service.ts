@@ -14,7 +14,7 @@ import { IHiveDataService } from "../interfaces/hive-data.service";
 export class LocalHiveDataService implements IHiveDataService {
   private hives: Hive[] = [];
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage) { }
 
   private save(): void {
     this.storage.set("hives", JSON.stringify(this.hives));
@@ -110,6 +110,30 @@ export class LocalHiveDataService implements IHiveDataService {
           deleted = true;
           part.frames.splice(idx, 1);
         }
+      });
+    });
+    this.save();
+    return of(deleted);
+  }
+
+  deleteNote(id: string): Observable<boolean> {
+    let deleted = false;
+    const check = (thingWithNotes) => {
+      (thingWithNotes.notes || []).forEach((n, idx) => {
+        if (n.clientId === id || n.id === id) {
+          thingWithNotes.notes.splice(idx, 1);
+          deleted = true;
+        }
+      });
+    };
+
+    this.hives.forEach((hive) => {
+      check(hive);
+      (hive.parts || []).forEach(part => {
+        check(part);
+        (part.frames || []).forEach(frame => {
+          check(frame);
+        });
       });
     });
     this.save();

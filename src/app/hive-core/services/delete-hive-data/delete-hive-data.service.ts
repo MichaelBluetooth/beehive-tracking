@@ -55,6 +55,34 @@ export class DeleteHiveDataService implements OnDestroy {
     return this.localHiveData.deleteFrame(id);
   }
 
+  deleteNote(id: string): Observable<any> {
+    const ret = new Subject<any>();
+    this.confirmDelete("Note").then(afterConfirm => {
+      afterConfirm.subscribe(() => {
+        this.localHiveData.deleteNote(id).subscribe(deleted => {
+          ret.next(deleted);
+          if (this.currentFrame) {
+            this.appState.loadFrame(
+              this.currentFrame.id || this.currentFrame.clientId,
+              false
+            );
+          } else if (this.currentBox) {
+            this.appState.loadBody(
+              this.currentBox.id || this.currentBox.clientId,
+              false
+            );
+          } else if (this.currentHive) {
+            this.appState.loadHive(
+              this.currentHive.id || this.currentHive.clientId,
+              false
+            );
+          }
+        });
+      });
+    });
+    return ret;
+  }
+
   delete(): void {
     if (this.currentFrame) {
       this.confirmDelete("Frame").then((afterConfirm) => {
