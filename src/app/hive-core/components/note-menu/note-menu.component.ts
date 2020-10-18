@@ -57,7 +57,7 @@ export class NoteMenuComponent implements OnInit {
   }
 
   async delete() {
-    this.deleteSvc.deleteNote(this.note.id).subscribe((didDelete) => {
+    this.deleteSvc.deleteNote(this.note.clientId).subscribe((didDelete) => {
       this.popOver.dismiss({ deleted: didDelete });
     });
   }
