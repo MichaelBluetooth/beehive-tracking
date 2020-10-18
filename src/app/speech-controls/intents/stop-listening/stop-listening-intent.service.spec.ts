@@ -1,18 +1,18 @@
 import { TestBed } from "@angular/core/testing";
-import { HiveSpeechRecognitionService } from "../../services/hive-speech-recognition.service";
+import { SpeechListeningService } from '../../services/speech-listening.service';
 
 import { StopListeningIntentService } from "./stop-listening-intent.service";
 
 describe("StopListeningIntentService", () => {
   let service: StopListeningIntentService;
-  const mockSpeechSvc = jasmine.createSpyObj("speechRecognitionService", [
+  const mockSpeechSvc = jasmine.createSpyObj("listeningSvc", [
     "stopListening",
   ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: HiveSpeechRecognitionService, useValue: mockSpeechSvc },
+        { provide: SpeechListeningService, useValue: mockSpeechSvc },
       ],
     });
     service = TestBed.inject(StopListeningIntentService);
