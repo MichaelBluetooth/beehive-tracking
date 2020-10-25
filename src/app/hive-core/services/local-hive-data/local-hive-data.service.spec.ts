@@ -40,7 +40,9 @@ describe("LocalHiveDataService", () => {
 
   it("should find frames by id", () => {
     service.getFrame("hive_2_body_2_frame_1").subscribe((frame) => {
-      expect(frame).toEqual(jasmine.objectContaining(mockData[1].parts[1].frames[0]));
+      expect(frame).toEqual(
+        jasmine.objectContaining(mockData[1].parts[1].frames[0])
+      );
     });
   });
 
@@ -111,6 +113,49 @@ describe("LocalHiveDataService", () => {
         service.getFrame("hive1_body_1_frame_2").subscribe((f) => {
           expect(f.notes[0]).toEqual(jasmine.objectContaining(note));
         });
+      });
+    });
+  });
+
+  describe("Updating existing hives", () => {
+    it("should set the hive id", () => {
+      const id = "654321";
+      service.setLocalData([{ clientId: "12345" }]);
+      service.setHiveId("12345", id);
+      service.getHive(id).subscribe((hive) => {
+        expect(hive).not.toBeNull();
+      });
+    });
+
+    it("should update an existing hive", () => {
+      const existingHive: Hive = {
+        label: "original label",
+        lastModified: new Date(2020, 11, 2),
+        queenLastSpotted: new Date(2020, 11, 2),
+        id: "123",
+        clientId: "321",
+        parts: [
+          {
+            id: "1234",
+            clientId: "4321",
+          },
+        ],
+      };
+
+      const modifiedHive: Hive = {
+        label: "new label",
+        lastModified: new Date(2021, 11, 2),
+        queenLastSpotted: new Date(2021, 11, 2),
+        id: "123",
+        clientId: "321",
+      };
+      service.setLocalData([existingHive]);
+      service.updateHive(modifiedHive);
+      service.getHive("123").subscribe((hive) => {
+        expect(hive.label).toEqual(modifiedHive.label);
+        expect(hive.queenLastSpotted).toEqual(modifiedHive.queenLastSpotted);
+        expect(hive.lastModified).toEqual(modifiedHive.lastModified);
+        expect(hive.parts.length).toEqual(existingHive.parts.length);
       });
     });
   });

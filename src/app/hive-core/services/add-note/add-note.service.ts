@@ -21,7 +21,6 @@ export class AddNoteService implements OnDestroy {
   constructor(
     private appState: AppStateService,
     private localHiveData: LocalHiveDataService,
-    private translator: TranslateService,
     private modal: ModalController
   ) {
     this.subs = [

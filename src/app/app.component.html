@@ -6,12 +6,17 @@
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title slot="start">{{'APP-ROOT.title' | translate}}
-          <ion-icon name="ear-outline" *ngIf="listening$ | async"></ion-icon>
         </ion-title>
+        <ion-icon name="ear-outline" *ngIf="listening$ | async"></ion-icon>
+        <ion-spinner name="crescent" *ngIf="syncing$ | async"></ion-spinner>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
+      <ion-refresher slot="fixed" (ionRefresh)="doSync($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
       <ion-router-outlet></ion-router-outlet>
     </ion-content>
   </div>

@@ -46,6 +46,17 @@ export class RemoteHiveDataService implements IHiveDataService {
     return ret;
   }
 
+  updateHive(hive: Hive): Observable<Hive>{
+    const ret = new Subject<Hive>();
+    this.http.put(`hives/${hive.id}`, hive, {}).then((response: any) => {
+      ret.next(response.data);
+    }).catch(errResponse => {
+      // TODO: error handling? maybe log this somewhere
+    });
+
+    return ret;
+  }
+
   getBody(id: string): Observable<HiveBody> {
     const ret = new Subject<HiveBody>();
     this.http.get(`hiveparts/${id}`, {}, {}).then((response: any) => {

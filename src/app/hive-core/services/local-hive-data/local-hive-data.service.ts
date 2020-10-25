@@ -1,11 +1,12 @@
+import { BoundDirectivePropertyAst } from "@angular/compiler";
 import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
 import { EMPTY, Observable, of } from "rxjs";
 import { v4 as uuidv4 } from "uuid";
-import { Frame } from '../../models/frame';
-import { Hive } from '../../models/hive';
-import { HiveBody } from '../../models/hive-body';
-import { Note } from '../../models/note';
+import { Frame } from "../../models/frame";
+import { Hive } from "../../models/hive";
+import { HiveBody } from "../../models/hive-body";
+import { Note } from "../../models/note";
 import { IHiveDataService } from "../interfaces/hive-data.service";
 
 @Injectable({
@@ -14,7 +15,7 @@ import { IHiveDataService } from "../interfaces/hive-data.service";
 export class LocalHiveDataService implements IHiveDataService {
   private hives: Hive[] = [];
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) {}
 
   private save(): void {
     this.storage.set("hives", JSON.stringify(this.hives));
@@ -67,7 +68,7 @@ export class LocalHiveDataService implements IHiveDataService {
             delete thisBox.frames;
             delete thisHive.parts;
             thisBox.hive = thisHive;
-            ret.body = thisBox;
+            ret.hivePart = thisBox;
           }
         });
       });
@@ -129,9 +130,9 @@ export class LocalHiveDataService implements IHiveDataService {
 
     this.hives.forEach((hive) => {
       check(hive);
-      (hive.parts || []).forEach(part => {
+      (hive.parts || []).forEach((part) => {
         check(part);
-        (part.frames || []).forEach(frame => {
+        (part.frames || []).forEach((frame) => {
           check(frame);
         });
       });
@@ -160,7 +161,9 @@ export class LocalHiveDataService implements IHiveDataService {
 
   addHiveNote(hiveId: string, note: Note): Observable<Note> {
     note.clientId = uuidv4();
-    const idx = this.hives.findIndex((h) => h.id === hiveId || h.clientId === hiveId);
+    const idx = this.hives.findIndex(
+      (h) => h.id === hiveId || h.clientId === hiveId
+    );
     if (idx > -1) {
       this.hives[idx].notes = [note].concat(this.hives[idx].notes || []);
     }
@@ -210,5 +213,92 @@ export class LocalHiveDataService implements IHiveDataService {
 
       this.save();
     }
+  }
+
+  setHiveId(clientId: string, id: string): void {
+    const idx = this.hives.findIndex((h) => h.clientId === clientId);
+    if (idx > -1) {
+      this.hives[idx].id = id;
+      this.save();
+    }
+  }
+
+  updateHive(hive: Hive): void {
+    const idx = this.hives.findIndex(
+      (h) => h.id === hive.id || h.clientId === hive.clientId
+    );
+    if (idx > -1) {
+      this.hives[idx].id = hive.id;
+      this.hives[idx].label = hive.label;
+      this.hives[idx].lastModified = hive.lastModified;
+      this.hives[idx].queenLastSpotted = hive.queenLastSpotted;
+      this.save();
+    }
+  }
+
+  updateBody(body: HiveBody): void {
+    this.hives.forEach((h) => {
+      const idx = h.parts.findIndex(
+        (p) => p.id === body.id || p.clientId === body.clientId
+      );
+      if (idx > -1) {
+        h.parts[idx].id = body.id;
+        h.parts[idx].dateAdded = body.id;
+        h.parts[idx].lastModified = body.lastModified;
+        h.parts[idx].type = body.type;
+        this.save();
+      }
+    });
+  }
+
+  updateFrame(frame: Frame): void {
+    this.hives.forEach((hive) => {
+      hive.parts?.forEach((part) => {
+        const idx = hive.parts?.findIndex(
+          (f) => f.id === frame.id || f.clientId === f.clientId
+        );
+        if (idx > -1) {
+          part.frames[idx].id = frame.id;
+          part.frames[idx].label = frame.label;
+          part.frames[idx].lastModified = frame.lastModified;
+          this.save();
+        }
+      });
+    });
+  }
+
+  updateInspection(inspection: Note): void {
+    const check = (thingWithNotes) => {
+      const idx = (thingWithNotes.notes || []).findIndex(
+        (n) => n.clientId === inspection.id || n.id === inspection.id
+      );
+      if (idx > -1) {
+        thingWithNotes.notes[idx].id = inspection.id;
+        thingWithNotes.notes[idx].lastModified = inspection.lastModified;
+        thingWithNotes.notes[idx].details = inspection.details;
+        thingWithNotes.notes[idx].eggs = inspection.eggs;
+        thingWithNotes.notes[idx].larva = inspection.larva;
+        thingWithNotes.notes[idx].orientationFlights = inspection.orientationFlights;
+        thingWithNotes.notes[idx].pests = inspection.pests;
+        thingWithNotes.notes[idx].queenCells = inspection.queenCells;
+        thingWithNotes.notes[idx].queenSpotted = inspection.queenSpotted;
+        thingWithNotes.notes[idx].supersedureCells = inspection.supersedureCells;
+        thingWithNotes.notes[idx].swarmCells = inspection.swarmCells;
+        thingWithNotes.notes[idx].activityLevel = inspection.activityLevel;
+        thingWithNotes.notes[idx].brood = inspection.brood;
+        thingWithNotes.notes[idx].cappedHoney = inspection.cappedHoney;
+        this.save();
+      }
+    };
+
+    this.hives.forEach((hive) => {
+      check(hive);
+      (hive.parts || []).forEach((part) => {
+        check(part);
+        (part.frames || []).forEach((frame) => {
+          check(frame);
+        });
+      });
+    });
   }
 }

@@ -6,6 +6,6 @@ export interface Frame extends ModelBase {
     label?: string;
     notes?: Note[];
 
-    bodyId?: string;
-    body?: HiveBody;
+    hivePartId?: string;
+    hivePart?: HiveBody;
 }

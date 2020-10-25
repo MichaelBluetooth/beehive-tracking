@@ -26,7 +26,7 @@ export class PhotoService {
     const capturedPhoto = await Camera.getPhoto({
       correctOrientation: true,
       resultType: CameraResultType.Uri,
-      source: prompt ? CameraSource.Prompt : CameraSource.Camera,
+      source: CameraSource.Camera, //prompt ? CameraSource.Prompt : CameraSource.Camera,
       quality: 100,
     });
 
@@ -93,17 +93,14 @@ export class PhotoService {
     });
 
   public async loadSaved(photo) {
-    // Easiest way to detect when running on the web:
-    // “when the platform is NOT hybrid, do this”
     if (!this.platform.is("hybrid")) {
-      // Display the photo by reading into base64 format
       const readFile = await Filesystem.readFile({
         path: photo.filepath,
         directory: FilesystemDirectory.Data,
       });
 
-      // Web platform only: Save the photo into the base64 field
-      return (photo.base64 = `data:image/jpeg;base64,${readFile.data}`);
+      // Web platform only: Load the photo as base64 data
+      return `data:image/jpeg;base64,${readFile.data}`;
     } else {
       return null;
     }

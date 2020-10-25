@@ -8,7 +8,8 @@ import { TranslateService } from "@ngx-translate/core";
 
 import { OptionsComponent } from "./hive-core/components/options/options.component";
 import { HiveSpeechRecognitionService } from "./speech-controls/services/hive-speech-recognition.service";
-import { SpeechListeningService } from './speech-controls/services/speech-listening.service';
+import { SpeechListeningService } from "./speech-controls/services/speech-listening.service";
+import { SyncService } from "./hive-core/services/sync/sync.service";
 
 @Component({
   selector: "app-root",
@@ -17,6 +18,7 @@ import { SpeechListeningService } from './speech-controls/services/speech-listen
 })
 export class AppComponent {
   listening$ = this.speechListening.listening$;
+  syncing$ = this.syncService.syncing$;
 
   constructor(
     private platform: Platform,
@@ -28,7 +30,8 @@ export class AppComponent {
     private hiveSpeech: HiveSpeechRecognitionService,
     private speechListening: SpeechListeningService,
     private menu: MenuController,
-    private router: Router
+    private router: Router,
+    private syncService: SyncService
   ) {
     const language = this.translate.getBrowserLang();
     this.translate.setDefaultLang(language);
@@ -68,8 +71,13 @@ export class AppComponent {
     this.hiveSpeech.listen();
   }
 
-  goToLog(){
+  goToLog() {
     this.menu.close();
-    this.router.navigate(['/log']);
+    this.router.navigate(["/log"]);
+  }
+
+  doSync(event) {
+    this.syncService.syncAll();
+    event.target.complete(); // immediately complete the event because we're doing sync in the background
   }
 }

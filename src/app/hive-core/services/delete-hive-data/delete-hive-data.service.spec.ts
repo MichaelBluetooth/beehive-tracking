@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { DeleteHiveDataService } from './delete-hive-data.service';
 
-describe('DeleteHiveService', () => {
+xdescribe('DeleteHiveService', () => {
   let service: DeleteHiveDataService;
 
   beforeEach(() => {

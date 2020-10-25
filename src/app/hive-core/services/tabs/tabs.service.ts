@@ -56,8 +56,8 @@ export class TabsService implements OnDestroy {
     this.deleteService.delete();
   }
 
-  takePhoto(): void {
-    this.addPhotoService.addPhoto();
+  async takePhoto() {
+    await this.addPhotoService.addPhoto();
   }
 
   async addNote() {

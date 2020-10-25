@@ -62,8 +62,8 @@ export class AppStateService {
   loadFrame(id: string, navigate: boolean): void {
     this.local.getFrame(id).subscribe((frame) => {
       this.currentFrame$.next(frame);
-      this.currentBody$.next(frame.body);
-      this.currentHive$.next(frame.body.hive);
+      this.currentBody$.next(frame.hivePart);
+      this.currentHive$.next(frame.hivePart.hive);
 
       if (navigate) {
         this.router.navigate([

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Storage } from "@ionic/storage";
-import { LocalHiveDataService } from '../local-hive-data/local-hive-data.service';
+import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
 import { PhotoService } from "../photo/photo.service";
 
 @Injectable({
@@ -19,13 +19,15 @@ export class InitService {
         const hives = JSON.parse(hiveJSON);
         hives.forEach(async (hive) => {
           if (hive.photo) {
-            hive.photo.base64 = await this.photoService.loadSaved(hive.photo);
+            hive.photo.webviewPath = await this.photoService.loadSaved(
+              hive.photo
+            );
           }
 
           if (hive.notes) {
             hive.notes.forEach(async (note) => {
               if (note.photo) {
-                note.photo.base64 = await this.photoService.loadSaved(
+                note.photo.webviewPath = await this.photoService.loadSaved(
                   note.photo
                 );
               }
@@ -37,7 +39,7 @@ export class InitService {
               if (part.notes) {
                 part.notes.forEach(async (note) => {
                   if (note.photo) {
-                    note.photo.base64 = await this.photoService.loadSaved(
+                    note.photo.webviewPath = await this.photoService.loadSaved(
                       note.photo
                     );
                   }
@@ -49,7 +51,7 @@ export class InitService {
                   if (frame.notes) {
                     frame.notes.forEach(async (note) => {
                       if (note.photo) {
-                        note.photo.base64 = await this.photoService.loadSaved(
+                        note.photo.webviewPath = await this.photoService.loadSaved(
                           note.photo
                         );
                       }
