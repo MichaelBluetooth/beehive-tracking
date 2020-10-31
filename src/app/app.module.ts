@@ -19,6 +19,7 @@ import { AppComponent } from "./app.component";
 
 import { InitService } from "./hive-core/services/init/init.service";
 import { LoggerModule } from './logger/logger.module';
+import { AuthenticationService } from './hive-core/services/authentication/authentication.service';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -27,6 +28,13 @@ export function LanguageLoader(http: HttpClient) {
 export function initializeApp(appInitService: InitService) {
   return (): Promise<any> => {
     return appInitService.init();
+  };
+}
+
+export function initializeLogin(auth: AuthenticationService) {
+  return (): Promise<any> => {
+    auth.initializeAuth();
+    return Promise.resolve();
   };
 }
 
@@ -60,7 +68,13 @@ export function initializeApp(appInitService: InitService) {
       deps: [InitService],
       multi: true,
     },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeLogin,
+      deps: [AuthenticationService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

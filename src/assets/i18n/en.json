@@ -3,7 +3,9 @@
     "title": "Hives",
     "menu-header": "Options",
     "menu-option": {
-      "settings": "Settings"
+      "settings": "Settings", 
+      "login": "Log In",
+      "logout": "Log Out"
     }
   },
   "MAIN": {
@@ -119,5 +121,14 @@
     "frames": "Frames",
     "frames-placeholder": "Enter number of frames",
     "date-added": "Date Added"
+  },
+  "LOGIN": {
+    "header": "Log In",
+    "username": "Username",
+    "username-placeholder": "username",
+    "password": "Password",
+    "password-placeholder": "password",
+    "login-error": "Invalid login",
+    "submit": "Submit"
   }
 }

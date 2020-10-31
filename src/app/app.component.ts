@@ -10,6 +10,8 @@ import { OptionsComponent } from "./hive-core/components/options/options.compone
 import { HiveSpeechRecognitionService } from "./speech-controls/services/hive-speech-recognition.service";
 import { SpeechListeningService } from "./speech-controls/services/speech-listening.service";
 import { SyncService } from "./hive-core/services/sync/sync.service";
+import { AuthenticationService } from './hive-core/services/authentication/authentication.service';
+import { LoginComponent } from './hive-core/components/login/login.component';
 
 @Component({
   selector: "app-root",
@@ -19,6 +21,7 @@ import { SyncService } from "./hive-core/services/sync/sync.service";
 export class AppComponent {
   listening$ = this.speechListening.listening$;
   syncing$ = this.syncService.syncing$;
+  authenticated$ = this.auth.authenticated$;
 
   constructor(
     private platform: Platform,
@@ -31,7 +34,8 @@ export class AppComponent {
     private speechListening: SpeechListeningService,
     private menu: MenuController,
     private router: Router,
-    private syncService: SyncService
+    private syncService: SyncService,
+    private auth: AuthenticationService
   ) {
     const language = this.translate.getBrowserLang();
     this.translate.setDefaultLang(language);
@@ -79,5 +83,20 @@ export class AppComponent {
   doSync(event) {
     this.syncService.syncAll();
     event.target.complete(); // immediately complete the event because we're doing sync in the background
+  }
+
+  async showLogin() {
+    this.menu.close();
+    const modal = await this.modal.create({
+      component: LoginComponent,
+      componentProps: {},
+    });
+
+    modal.onDidDismiss().then((modalResponse) => {
+      if (modalResponse.data) {
+      }
+    });
+
+    return await modal.present();
   }
 }

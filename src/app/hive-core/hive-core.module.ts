@@ -22,6 +22,7 @@ import { LastInspectedPipe } from "./pipes/last-inspected.pipe";
 import { JoinPipe } from "./pipes/join.pipe";
 import { HiveCoreRoutingModule } from "./hive-core-routing.module";
 import { IonicModule } from '@ionic/angular';
+import { LoginComponent } from './components/login/login.component';
 
 const declarationsAndExports = [
   OptionsComponent,
@@ -39,6 +40,7 @@ const declarationsAndExports = [
   FrameLastInspectedPipe,
   LastInspectedPipe,
   JoinPipe,
+  LoginComponent
 ];
 
 @NgModule({

@@ -1,0 +1,34 @@
+<ion-content>
+  <ion-header translucent>
+    <ion-toolbar>
+      <ion-title>{{'LOGIN.header' | translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()">{{ 'MAIN.cancel' | translate }}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-label position="stacked">{{'LOGIN.username' | translate}}</ion-label>
+    <ion-input type="text" [placeholder]="'LOGIN.username-placeholder'| translate"
+      (ionChange)="usernameChange($event.target.value)"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">{{'LOGIN.password' | translate}}</ion-label>
+    <ion-input type="password" [placeholder]="'LOGIN.password-placeholder'| translate"
+      (ionChange)="passwordChange($event.target.value)"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="loginError" color="danger">
+    <ion-label>
+      {{'LOGIN.login-error' | translate}}
+    </ion-label>
+  </ion-item>
+
+  <ion-button expand="block" fill="solid" (click)="login()" [disabled]="!(username && password)">
+    {{'LOGIN.submit' | translate}}
+  </ion-button>
+
+
+</ion-content>

@@ -3,7 +3,9 @@
     "title": "Colmenas",
     "menu-header": "Opciones",
     "menu-option": {
-      "settings": "Configuraciones"
+      "settings": "Configuraciones",
+      "login": "Iniciar sesión",
+      "logout": "Cerrar sesión"
     }
   },
   "MAIN": {
@@ -109,5 +111,14 @@
     "frames": "Marcos",
     "frames-placeholder": "Ingrese el número de fotogramas",
     "date-added": "Fecha Agregada"
+  },
+  "LOGIN": {
+    "header": "Iniciar sesión",
+    "username": "UsernameNombre de usuario",
+    "username-placeholder": "nombre de usuario",
+    "password": "Contraseña",
+    "password-placeholder": "contraseña",
+    "login-error": "Ingreso invalido",
+    "submit": "Enviar"
   }
 }

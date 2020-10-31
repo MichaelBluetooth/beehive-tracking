@@ -3,7 +3,9 @@
     "title": "Bienenstöcke", 
     "menu-header": "Optionen", 
     "menu-option": {
-      "settings": "Einstellungen"
+      "settings": "Einstellungen",
+      "login": "Einloggen",
+      "logout": "Ausloggen"      
     }
   },
   "MAIN": {
@@ -119,5 +121,14 @@
     "frames": "Rahmen",
     "frames-placeholder": "Geben Sie die Anzahl der Frames ein",
     "date-added": "Datum hinzugefügt"
+  },
+  "LOGIN": {
+    "header": "Einloggen",
+    "username": "Nutzername",
+    "username-placeholder": "nutzername",
+    "password": "Passwort",
+    "password-placeholder": "passwort",
+    "login-error": "Ungültiger Login",
+    "submit": "einreichen"
   }
 }

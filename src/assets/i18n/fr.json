@@ -3,7 +3,9 @@
     "title": "Ruches",
     "menu-header": "Les Options",
     "menu-option": {
-      "settings": "Paramètres"
+      "settings": "Paramètres", 
+      "login": "S'identifier",
+      "logout": "Se déconnecter"
     }
   },
   "MAIN": {
@@ -109,5 +111,14 @@
     "frames": "Cadres",
     "frames-placeholder": "Entrez le nombre d'images",
     "date-added": "date ajoutée"
+  },
+  "LOGIN": {
+    "header": "S'identifier",
+    "username": "Nom d'utilisateur",
+    "username-placeholder": "nom d'utilisateur",
+    "password": "Mot de passe",
+    "password-placeholder": "mot de passe",
+    "login-error": "Identifiant invalide",
+    "submit": "Soumettre"
   }
 }
