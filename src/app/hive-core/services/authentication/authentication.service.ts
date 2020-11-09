@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Logger } from 'src/app/logger/logger';
-import { LoggerService } from 'src/app/logger/logger.service';
-import { Credentials } from '../../models/credentials';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
+import { Logger } from "src/app/logger/logger";
+import { LoggerService } from "src/app/logger/logger.service";
+import { Credentials } from "../../models/credentials";
 import { Storage } from "@ionic/storage";
+import { HttpClient } from "@angular/common/http";
+import { catchError, map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthenticationService {
-  static CREDENTIALS_KEY = 'credentials';
+  static CREDENTIALS_KEY = "credentials";
 
   private logger: Logger;
   private authenticated = new BehaviorSubject<boolean>(false);
@@ -21,53 +22,76 @@ export class AuthenticationService {
   }
 
   constructor(
-    private http: HTTP,
+    private http: HttpClient,
     private storage: Storage,
-    loggerSvc: LoggerService) {
-    this.logger = loggerSvc.getLogger('AuthenticationService');
+    loggerSvc: LoggerService
+  ) {
+    this.logger = loggerSvc.getLogger("AuthenticationService");
   }
 
-  authenticate(username: string, password: string, retry?: boolean): Observable<boolean> {
-    const ret = new Subject<boolean>();
-    this.http.post('', {}, {}).then((resp: HTTPResponse) => {
-      this.logger.info('authenticate', 'successfully authenticated');
-      this.saveCredentials(resp.data.accessToken, resp.data.refreshToken);
-      this.authenticated.next(true);
-      this.logger.info('authenticate', 'succesfully logged in');
-      ret.next(true);
-    }).catch((error: HTTPResponse) => {
-      this.logger.warn('authenticate', `error authenticating: ${error.status}`, error.data);
-      ret.next(false);
-    });
-    return ret;
+  authenticate(username: string, password: string): Observable<boolean> {
+    return this.http
+      .post("api/accounts/login", { username, password })
+      .pipe(
+        map((resp: Credentials) => {
+          this.logger.info("authenticate", "successfully authenticated");
+          this.saveCredentials(resp.accessToken, resp.refreshToken);
+          this.authenticated.next(true);
+          this.logger.info("authenticate", "succesfully logged in");
+          return true;
+        })
+      )
+      .pipe(
+        catchError((error) => {
+          this.logger.warn("authenticate", error);
+          this.authenticated.next(false);
+          return of(error);
+        })
+      );
   }
 
   refresh(): Observable<boolean> {
     const creds = this.getCredentials();
-    const response = new Subject<boolean>();
-    if (creds) {
-      this.http.post('', { refreshToken: creds.refreshToken }, { Authorization: `Bearer ${creds.accessToken}` }).then((resp: HTTPResponse) => {
-        this.logger.info('refresh', 'token refreshed');
-        this.saveCredentials(resp.data.accessToken, resp.data.refreshToken);
-        response.next(true);
-      }).catch((resp: HTTPResponse) => {
-        this.logger.info('refresh', `token refresh failed with status ${resp.status}`, resp.data);
-        this.clearCredentials();
-        response.next(false);
-      });
+
+    if (creds && creds.accessToken) {
+      return this.http
+        .post("api/accounts/refresh-token", {
+          refreshToken: creds.refreshToken,
+        })
+        .pipe(
+          map((resp: Credentials) => {
+            this.logger.info("refresh", "token refreshed");
+            this.authenticated.next(true);
+            this.saveCredentials(resp.accessToken, resp.refreshToken);
+            return true;
+          })
+        )
+        .pipe(
+          catchError((error) => {
+            this.logger.warn("refresh", "token refresh failed", error);
+            this.logout();
+            this.authenticated.next(false);
+            return throwError(error);
+          })
+        );
+    } else {
+      return of(false);
     }
-    return response;
   }
 
   saveCredentials(accessToken: string, refreshToken: string): void {
     this.credentials = {
       accessToken,
-      refreshToken
+      refreshToken,
     };
-    this.storage.set(AuthenticationService.CREDENTIALS_KEY, JSON.stringify(this.credentials));
+    this.storage.set(
+      AuthenticationService.CREDENTIALS_KEY,
+      JSON.stringify(this.credentials)
+    );
   }
 
-  clearCredentials(): void {
+  logout(): void {
+    this.authenticated.next(false);
     this.credentials = null;
     this.storage.remove(AuthenticationService.CREDENTIALS_KEY);
   }
@@ -77,9 +101,21 @@ export class AuthenticationService {
   }
 
   initializeAuth(): void {
-    this.storage.get(AuthenticationService.CREDENTIALS_KEY).then(creds => {
+    this.storage.get(AuthenticationService.CREDENTIALS_KEY).then((creds) => {
       this.credentials = JSON.parse(creds);
-      this.refresh();
+      this.refresh().subscribe((refreshed) => {
+        if (refreshed) {
+          this.logger.info(
+            "initializeAuth",
+            "successfully refreshed token on initialize"
+          );
+        } else {
+          this.logger.info(
+            "initializeAuth",
+            "could not refresh token on initialize"
+          );
+        }
+      });
     });
   }
 }

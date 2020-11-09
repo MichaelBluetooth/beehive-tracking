@@ -1,9 +1,9 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from "@ngx-translate/core";
 
 import { AddBoxComponent } from "./components/add-box/add-box.component";
 import { AddHiveComponent } from "./components/add-hive/add-hive.component";
@@ -21,8 +21,9 @@ import { FrameLastInspectedPipe } from "./pipes/frame-last-inspected.pipe";
 import { LastInspectedPipe } from "./pipes/last-inspected.pipe";
 import { JoinPipe } from "./pipes/join.pipe";
 import { HiveCoreRoutingModule } from "./hive-core-routing.module";
-import { IonicModule } from '@ionic/angular';
-import { LoginComponent } from './components/login/login.component';
+import { IonicModule } from "@ionic/angular";
+import { LoginComponent } from "./components/login/login.component";
+import { AuthInterceptorService } from "./services/auth-interceptor/auth-interceptor.service";
 
 const declarationsAndExports = [
   OptionsComponent,
@@ -40,7 +41,7 @@ const declarationsAndExports = [
   FrameLastInspectedPipe,
   LastInspectedPipe,
   JoinPipe,
-  LoginComponent
+  LoginComponent,
 ];
 
 @NgModule({
@@ -55,6 +56,7 @@ const declarationsAndExports = [
     HiveCoreRoutingModule,
     TranslateModule,
   ],
+  providers: [],
 })
 export class HiveCoreModule {
   static forRoot(): ModuleWithProviders {

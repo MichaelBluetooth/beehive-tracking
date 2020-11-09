@@ -10,8 +10,8 @@ import { OptionsComponent } from "./hive-core/components/options/options.compone
 import { HiveSpeechRecognitionService } from "./speech-controls/services/hive-speech-recognition.service";
 import { SpeechListeningService } from "./speech-controls/services/speech-listening.service";
 import { SyncService } from "./hive-core/services/sync/sync.service";
-import { AuthenticationService } from './hive-core/services/authentication/authentication.service';
-import { LoginComponent } from './hive-core/components/login/login.component';
+import { AuthenticationService } from "./hive-core/services/authentication/authentication.service";
+import { LoginComponent } from "./hive-core/components/login/login.component";
 
 @Component({
   selector: "app-root",
@@ -83,6 +83,11 @@ export class AppComponent {
   doSync(event) {
     this.syncService.syncAll();
     event.target.complete(); // immediately complete the event because we're doing sync in the background
+  }
+
+  logout() {
+    this.auth.logout();
+    this.menu.close();
   }
 
   async showLogin() {

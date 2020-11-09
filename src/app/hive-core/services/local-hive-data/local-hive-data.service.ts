@@ -243,7 +243,7 @@ export class LocalHiveDataService implements IHiveDataService {
       );
       if (idx > -1) {
         h.parts[idx].id = body.id;
-        h.parts[idx].dateAdded = body.id;
+        h.parts[idx].dateAdded = body.dateAdded;
         h.parts[idx].lastModified = body.lastModified;
         h.parts[idx].type = body.type;
         this.save();
@@ -254,8 +254,8 @@ export class LocalHiveDataService implements IHiveDataService {
   updateFrame(frame: Frame): void {
     this.hives.forEach((hive) => {
       hive.parts?.forEach((part) => {
-        const idx = hive.parts?.findIndex(
-          (f) => f.id === frame.id || f.clientId === f.clientId
+        const idx = part.frames?.findIndex(
+          (f) => f.id === frame.id || f.clientId === frame.clientId
         );
         if (idx > -1) {
           part.frames[idx].id = frame.id;

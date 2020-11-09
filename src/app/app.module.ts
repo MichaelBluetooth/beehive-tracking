@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
@@ -20,6 +20,7 @@ import { AppComponent } from "./app.component";
 import { InitService } from "./hive-core/services/init/init.service";
 import { LoggerModule } from './logger/logger.module';
 import { AuthenticationService } from './hive-core/services/authentication/authentication.service';
+import { AuthInterceptorService } from './hive-core/services/auth-interceptor/auth-interceptor.service';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -72,6 +73,11 @@ export function initializeLogin(auth: AuthenticationService) {
       provide: APP_INITIALIZER,
       useFactory: initializeLogin,
       deps: [AuthenticationService],
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
       multi: true,
     },
   ],
