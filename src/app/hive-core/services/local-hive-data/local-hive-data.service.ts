@@ -17,7 +17,7 @@ export class LocalHiveDataService implements IHiveDataService {
 
   constructor(private storage: Storage) {}
 
-  private save(): void {
+  save(): void {
     this.storage.set("hives", JSON.stringify(this.hives));
   }
 
