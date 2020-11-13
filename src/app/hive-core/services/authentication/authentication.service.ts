@@ -31,7 +31,7 @@ export class AuthenticationService {
 
   authenticate(username: string, password: string): Observable<boolean> {
     return this.http
-      .post("api/accounts/login", { username, password })
+      .post("accounts/login", { username, password })
       .pipe(
         map((resp: Credentials) => {
           this.logger.info("authenticate", "successfully authenticated");
@@ -55,7 +55,7 @@ export class AuthenticationService {
 
     if (creds && creds.accessToken) {
       return this.http
-        .post("api/accounts/refresh-token", {
+        .post("accounts/refresh-token", {
           refreshToken: creds.refreshToken,
         })
         .pipe(

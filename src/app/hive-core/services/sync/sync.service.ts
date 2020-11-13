@@ -1,12 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, concat, Observable, Subject } from "rxjs";
 import { Logger } from "src/app/logger/logger";
 import { LoggerService } from "src/app/logger/logger.service";
-import { HivePageComponent } from "../../components/hive-page/hive-page.component";
 import { Frame } from "../../models/frame";
 import { Hive } from "../../models/hive";
 import { HiveBody } from "../../models/hive-body";
+import { Note } from "../../models/note";
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
 
 @Injectable({
@@ -32,149 +32,278 @@ export class SyncService {
     this.logger.info("syncAll", `sync started: ${new Date().toISOString()}`);
     this.syncing.next(true);
 
-    this.local.getHives().subscribe(async (hives) => {
-      (hives || []).forEach(async (hive) => {
+    this.local.getHives().subscribe((hives) => {
+      const hiveReqs = [];
+      hives.forEach((hive) => {
         const hivePostBody: Hive = JSON.parse(JSON.stringify(hive));
         delete hivePostBody.notes;
         delete hivePostBody.parts;
-        const syncHiveResp = await this.http
-          .post("sync/hive", hivePostBody)
-          .toPromise();
-        this.local.updateHive(syncHiveResp);
-        await this.syncHiveNotes(hive);
-        await this.syncHiveParts(hive);
-
-        this.syncing.next(false);
+        hiveReqs.push(this.http.post("sync/hive", hivePostBody));
       });
+
+      concat(...hiveReqs).subscribe(
+        (syncHiveResp) => {
+          this.logger.info("syncAll", "sync hive succeeded", syncHiveResp);
+          this.local.updateHive(syncHiveResp);
+        },
+        (syncHiveError) => {
+          this.syncing.next(false);
+          this.logger.warn("syncAll", "sync hive error", syncHiveError);
+        },
+        () => {
+          this.logger.info("syncAll", "successfully sync'd all hives");
+
+          this.syncHiveNotes(hives).subscribe(() => {
+            this.syncHiveParts(hives).subscribe(() => {
+              this.syncHivePartNotes(hives).subscribe(() => {
+                this.syncFrames(hives).subscribe(() => {
+                  this.syncFrameNotes(hives).subscribe(() => {
+                    this.syncing.next(false);
+                  });
+                });
+              });
+            });
+          });
+        }
+      );
     });
-
-    // this.local.getHives().subscribe((hives) => {
-    //   hives.forEach(async (hive) => {
-    //     const hivePostBody: Hive = JSON.parse(JSON.stringify(hive));
-    //     delete hivePostBody.notes;
-    //     delete hivePostBody.parts;
-    //     const syncHiveResp = this.api.post("sync/hive", hivePostBody);
-    //     this.local.updateHive(syncHiveResp.data);
-    //     this.syncHiveNotes(hive);
-    //     //if (hive.parts) {
-    //     //  hive.parts.forEach(async (part) => {
-    //     //    const partPostBody: HiveBody = JSON.parse(JSON.stringify(part));
-    //     //    delete partPostBody.notes;
-    //     //    delete partPostBody.frames;
-    //     //    partPostBody.hiveId = syncHiveResp.data.id;
-    //     //    const syncPartResp = await this.post("sync/body", partPostBody);
-    //     //    this.local.updateBody(syncPartResp.data);
-    //     //    this.syncBodyNotes(part);
-    //     //
-    //     //    part.frames.forEach(async (frame) => {
-    //     //      const framePostBody: Frame = JSON.parse(JSON.stringify(frame));
-    //     //      delete framePostBody.notes;
-    //     //      framePostBody.hivePartId = syncPartResp.data.id;
-    //     //      const syncFrameResp = await this.post(
-    //     //        "sync/frame",
-    //     //        framePostBody
-    //     //      );
-    //     //      this.local.updateFrame(syncFrameResp.data);
-    //     //      this.syncFrameNotes(frame);
-    //     //    });
-    //     //  });
-    //     //}
-    //   });
-
-    //   this.logger.info("syncAll", `sync finished: ${new Date().toISOString()}`);
-    //   this.syncing.next(false);
-    // });
   }
 
-  private syncHiveNotes(hive: Hive) {
-    (hive.notes || []).forEach(async (note) => {
-      try {
-        const noteReq = JSON.parse(JSON.stringify(note));
-        noteReq.photoBase64 = note.photo?.webviewPath;
-        noteReq.hiveId = hive.id;
-        const resp = await this.http
-          .post("sync/hiveinspection", noteReq)
-          .toPromise();
-        this.local.updateInspection(resp as any);
-      } catch (err) {
-        this.logger.error(
-          "syncHiveNotes",
-          "error syncing hive notes",
-          err.message
-        );
+  private syncHiveNotes(hives: Hive[]) {
+    const ret = new Subject();
+    const notesReqs = [];
+
+    hives.forEach((hive) => {
+      if (hive.notes) {
+        this.syncing.next(true);
+        hive.notes.forEach((note) => {
+          const noteReq = JSON.parse(JSON.stringify(note));
+          noteReq.photoBase64 = note.photo?.webviewPath;
+          noteReq.hiveId = hive.id;
+          notesReqs.push(this.http.post("sync/hiveinspection", noteReq));
+        });
       }
     });
+
+    if (notesReqs.length === 0) {
+      ret.next();
+    }
+
+    concat(...notesReqs).subscribe(
+      (syncdNote: Note) => {
+        this.logger.info("syncAll", "sync hive note succeeded", syncdNote);
+        this.local.updateInspection(syncdNote);
+      },
+      (syncNoteError) => {
+        this.syncing.next(false);
+        this.logger.warn("syncHiveNotes", "sync note error", syncNoteError);
+      },
+      () => {
+        this.syncing.next(false);
+        this.logger.info("syncHiveNotes", "finished syncing all hive notes");
+        ret.next();
+      }
+    );
+
+    return ret.asObservable();
   }
 
-  private syncHiveParts(hive: Hive) {
-    (hive.parts || []).forEach(async (part) => {
-      try {
-        const partReq: HiveBody = JSON.parse(JSON.stringify(part));
-        partReq.hiveId = hive.id;
-        delete partReq.frames;
-        delete partReq.notes;
-        const resp = await this.http.post("sync/body", partReq).toPromise();
-        this.local.updateBody(resp as any);
-        await this.syncBodyNotes(part);
-        await this.syncFrames(part);
-      } catch (err) {
-        this.logger.error(
+  private syncHiveParts(hives: Hive[]) {
+    const ret = new Subject();
+    const hivePartReqs = [];
+    hives.forEach((hive) => {
+      if (hive.parts) {
+        this.syncing.next(true);
+        hive.parts.forEach((part) => {
+          const partReq: HiveBody = JSON.parse(JSON.stringify(part));
+          partReq.hiveId = hive.id;
+          delete partReq.frames;
+          delete partReq.notes;
+          hivePartReqs.push(this.http.post("sync/body", partReq));
+        });
+      } else {
+        ret.next();
+      }
+    });
+
+    if (hivePartReqs.length === 0) {
+      ret.next();
+    }
+
+    concat(...hivePartReqs).subscribe(
+      (syncdHivePart) => {
+        this.logger.info(
           "syncHiveParts",
-          "error syncing hive parts",
-          err.message
+          "sync hive part succeeded",
+          syncdHivePart
         );
+        this.local.updateBody(syncdHivePart);
+      },
+      (syncPartError) => {
+        this.logger.warn(
+          "syncHiveParts",
+          "sync hive part failed",
+          syncPartError
+        );
+      },
+      () => {
+        this.syncing.next(false);
+        this.logger.info("syncHiveParts", "finished syncing all hive notes");
+        ret.next();
+      }
+    );
+
+    return ret.asObservable();
+  }
+
+  private syncHivePartNotes(hives: Hive[]) {
+    const ret = new Subject();
+    const notesReqs = [];
+
+    hives.forEach((hive) => {
+      if (hive.parts) {
+        hive.parts.forEach((part) => {
+          if (part.notes) {
+            this.syncing.next(true);
+            part.notes.forEach((note) => {
+              const noteReq = JSON.parse(JSON.stringify(note));
+              noteReq.photoBase64 = note.photo?.webviewPath;
+              noteReq.hivePartId = part.id;
+              notesReqs.push(this.http.post("sync/bodyinspection", noteReq));
+            });
+          }
+        });
       }
     });
+
+    if (notesReqs.length === 0) {
+      ret.next();
+    }
+
+    concat(...notesReqs).subscribe(
+      (syncdNote: Note) => {
+        this.logger.info(
+          "syncHivePartNotes",
+          "sync hive part note succeeded",
+          syncdNote
+        );
+        this.local.updateInspection(syncdNote);
+      },
+      (syncNoteError) => {
+        this.syncing.next(false);
+        this.logger.warn("syncHivePartNotes", "sync note error", syncNoteError);
+      },
+      () => {
+        this.syncing.next(false);
+        this.logger.info(
+          "syncHivePartNotes",
+          "finished syncing all hive part notes"
+        );
+        ret.next();
+      }
+    );
+
+    return ret.asObservable();
   }
 
-  private syncBodyNotes(body: HiveBody) {
-    (body.notes || []).forEach(async (note) => {
-      try {
-        const noteReq = JSON.parse(JSON.stringify(note));
-        noteReq.photoBase64 = note.photo?.webviewPath;
-        noteReq.hivePartId = body.id;
-        const resp = await this.http
-          .post("sync/bodyinspection", noteReq)
-          .toPromise();
-        this.local.updateInspection(resp as any);
-      } catch (err) {
-        this.logger.error(
-          "syncBodyNotes",
-          "error syning body notes",
-          err.message
-        );
+  private syncFrames(hives: Hive[]) {
+    const ret = new Subject();
+    const frameReqs = [];
+
+    hives.forEach((hive) => {
+      if (hive.parts) {
+        hive.parts.forEach((part) => {
+          if (part.frames) {
+            this.syncing.next(true);
+            part.frames.forEach((frame) => {
+              const frameReqPayload: Frame = JSON.parse(JSON.stringify(frame));
+              delete frameReqPayload.notes;
+              frameReqPayload.hivePartId = part.id;
+              frameReqs.push(this.http.post("sync/frame", frameReqPayload));
+            });
+          }
+        });
       }
     });
+
+    if (frameReqs.length === 0) {
+      ret.next();
+    }
+
+    concat(...frameReqs).subscribe(
+      (syncdFrame) => {
+        this.logger.info("syncFrames", "sync frame succeeded", syncdFrame);
+        this.local.updateFrame(syncdFrame);
+      },
+      (syncFrameError) => {
+        this.syncing.next(false);
+        this.logger.warn("syncFrames", "sync frame error", syncFrameError);
+      },
+      () => {
+        this.syncing.next(false);
+        this.logger.info("syncFrames", "finished syncing all frames");
+        ret.next();
+      }
+    );
+
+    return ret.asObservable();
   }
 
-  private syncFrames(part: HiveBody) {
-    (part.frames || []).forEach(async (frame) => {
-      const frameReq: Frame = JSON.parse(JSON.stringify(frame));
-      frameReq.hivePartId = part.id;
-      delete frameReq.notes;
-      const resp = await this.http.post("sync/frame", frameReq).toPromise();
-      this.local.updateFrame(resp as any);
-      await this.syncFrameNotes(frame);
+  private syncFrameNotes(hives: Hive[]) {
+    const ret = new Subject();
+    const frameNoteReqs = [];
+
+    hives.forEach((hive) => {
+      if (hive.parts) {
+        hive.parts.forEach((part) => {
+          if (part.frames) {
+            part.frames.forEach((frame) => {
+              if (frame.notes) {
+                this.syncing.next(true);
+                frame.notes.forEach((note) => {
+                  const frameNoteReqPayload: any = JSON.parse(
+                    JSON.stringify(note)
+                  );
+                  frameNoteReqPayload.frameId = frame.id;
+                  frameNoteReqs.push(
+                    this.http.post("sync/frameinspection", frameNoteReqPayload)
+                  );
+                });
+              }
+            });
+          }
+        });
+      }
     });
-  }
 
-  private syncFrameNotes(frame: Frame) {
-    (frame.notes || []).forEach(async (note) => {
-      try {
-        const noteReq = JSON.parse(JSON.stringify(note));
-        noteReq.photoBase64 = note.photo?.webviewPath;
-        noteReq.frameId = frame.id;
-        const frameNoteResp = await this.http
-          .post("sync/frameinspection", noteReq)
-          .toPromise();
-        this.local.updateInspection(frameNoteResp as any);
-      } catch (err) {
-        this.logger.error(
+    if (frameNoteReqs.length === 0) {
+      ret.next();
+    }
+
+    concat(...frameNoteReqs).subscribe(
+      (syncdInspection: Note) => {
+        this.logger.info(
           "syncFrameNotes",
-          "error syncing frame notes",
-          err.message
+          "sync frame note succeeded",
+          syncdInspection
         );
+        this.local.updateInspection(syncdInspection);
+      },
+      (syncFrameNoteError) => {
+        this.syncing.next(false);
+        this.logger.warn(
+          "syncFrameNotes",
+          "sync frame error",
+          syncFrameNoteError
+        );
+      },
+      () => {
+        this.logger.info("syncFrameNotes", "finished syncing all frame notes");
+        this.syncing.next(false);
+        ret.next();
       }
-    });
+    );
+
+    return ret.asObservable();
   }
 }

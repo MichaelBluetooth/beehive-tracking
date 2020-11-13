@@ -270,7 +270,7 @@ export class LocalHiveDataService implements IHiveDataService {
   updateInspection(inspection: Note): void {
     const check = (thingWithNotes) => {
       const idx = (thingWithNotes.notes || []).findIndex(
-        (n) => n.clientId === inspection.id || n.id === inspection.id
+        (n) => n.clientId === inspection.clientId || n.id === inspection.id
       );
       if (idx > -1) {
         thingWithNotes.notes[idx].id = inspection.id;
