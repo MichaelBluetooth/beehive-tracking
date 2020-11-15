@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, concat, Observable, Subject } from "rxjs";
+import { BehaviorSubject, concat, from, Observable, Subject } from "rxjs";
 import { Logger } from "src/app/logger/logger";
 import { LoggerService } from "src/app/logger/logger.service";
 import { Frame } from "../../models/frame";
@@ -8,6 +8,7 @@ import { Hive } from "../../models/hive";
 import { HiveBody } from "../../models/hive-body";
 import { Note } from "../../models/note";
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
+import { PhotoService } from "../photo/photo.service";
 
 @Injectable({
   providedIn: "root",
@@ -23,6 +24,7 @@ export class SyncService {
   constructor(
     private http: HttpClient,
     private local: LocalHiveDataService,
+    private photoService: PhotoService,
     loggerSvc: LoggerService
   ) {
     this.logger = loggerSvc.getLogger("SyncService");
@@ -53,9 +55,9 @@ export class SyncService {
         () => {
           this.logger.info("syncAll", "successfully sync'd all hives");
 
-          this.syncHiveNotes(hives).subscribe(() => {
+          this.syncHiveNotes(hives).then(() => {
             this.syncHiveParts(hives).subscribe(() => {
-              this.syncHivePartNotes(hives).subscribe(() => {
+              this.syncHivePartNotes(hives).then(() => {
                 this.syncFrames(hives).subscribe(() => {
                   this.syncFrameNotes(hives).subscribe(() => {
                     this.syncing.next(false);
@@ -69,24 +71,30 @@ export class SyncService {
     });
   }
 
-  private syncHiveNotes(hives: Hive[]) {
-    const ret = new Subject();
+  private async syncHiveNotes(hives: Hive[]) {
+    let next;
+    const ret = new Promise((r) => {
+      next = r;
+    });
     const notesReqs = [];
 
-    hives.forEach((hive) => {
+    for (const hive of hives) {
       if (hive.notes) {
         this.syncing.next(true);
-        hive.notes.forEach((note) => {
+        for (const note of hive.notes) {
           const noteReq = JSON.parse(JSON.stringify(note));
-          noteReq.photoBase64 = note.photo?.webviewPath;
+          if (note.photo && !note.photo.base64) {
+            note.photo.base64 = await this.photoService.loadSaved(note.photo);
+          }
+          noteReq.photoBase64 = note.photo?.base64;
           noteReq.hiveId = hive.id;
           notesReqs.push(this.http.post("sync/hiveinspection", noteReq));
-        });
+        }
       }
-    });
+    }
 
     if (notesReqs.length === 0) {
-      ret.next();
+      next();
     }
 
     concat(...notesReqs).subscribe(
@@ -101,11 +109,11 @@ export class SyncService {
       () => {
         this.syncing.next(false);
         this.logger.info("syncHiveNotes", "finished syncing all hive notes");
-        ret.next();
+        next();
       }
     );
 
-    return ret.asObservable();
+    return ret;
   }
 
   private syncHiveParts(hives: Hive[]) {
@@ -121,8 +129,6 @@ export class SyncService {
           delete partReq.notes;
           hivePartReqs.push(this.http.post("sync/body", partReq));
         });
-      } else {
-        ret.next();
       }
     });
 
@@ -157,27 +163,30 @@ export class SyncService {
   }
 
   private syncHivePartNotes(hives: Hive[]) {
-    const ret = new Subject();
+    let next;
+    const ret = new Promise((r) => {
+      next = r;
+    });
     const notesReqs = [];
 
-    hives.forEach((hive) => {
+    for (const hive of hives) {
       if (hive.parts) {
-        hive.parts.forEach((part) => {
+        for (const part of hive.parts) {
           if (part.notes) {
             this.syncing.next(true);
-            part.notes.forEach((note) => {
+            for (const note of part.notes) {
               const noteReq = JSON.parse(JSON.stringify(note));
               noteReq.photoBase64 = note.photo?.webviewPath;
               noteReq.hivePartId = part.id;
               notesReqs.push(this.http.post("sync/bodyinspection", noteReq));
-            });
+            }
           }
-        });
+        }
       }
-    });
+    }
 
     if (notesReqs.length === 0) {
-      ret.next();
+      next();
     }
 
     concat(...notesReqs).subscribe(
@@ -199,11 +208,11 @@ export class SyncService {
           "syncHivePartNotes",
           "finished syncing all hive part notes"
         );
-        ret.next();
+        next();
       }
     );
 
-    return ret.asObservable();
+    return ret;
   }
 
   private syncFrames(hives: Hive[]) {
