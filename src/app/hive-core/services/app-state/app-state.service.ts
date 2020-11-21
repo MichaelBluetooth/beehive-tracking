@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Subject } from "rxjs";
-import { Frame } from '../../models/frame';
-import { Hive } from '../../models/hive';
-import { HiveBody } from '../../models/hive-body';
+import { Frame } from "../../models/frame";
+import { Hive } from "../../models/hive";
+import { HiveBody } from "../../models/hive-body";
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
 
 @Injectable({
@@ -16,6 +16,8 @@ export class AppStateService {
   currentFrame$ = new BehaviorSubject<Frame>(null);
 
   constructor(private router: Router, private local: LocalHiveDataService) {}
+
+  refresh(): void {}
 
   loadHives(navigate: boolean): void {
     this.local.getHives().subscribe((hives) => {
@@ -43,38 +45,61 @@ export class AppStateService {
   }
 
   loadBody(id: string, navigate: boolean): void {
-    this.local.getBody(id).subscribe((body) => {
-      this.currentFrame$.next(null);
-      this.currentBody$.next(body);
-      this.currentHive$.next(body.hive);
+    this.local.getHives().subscribe((hives) => {
+      hives.forEach((hive: Hive) => {
+        if (hive.parts) {
+          hive.parts.forEach((part: HiveBody) => {
+            if (part.id === id || part.clientId === id) {
+              this.currentFrame$.next(null);
+              this.currentBody$.next(part);
+              this.currentHive$.next(hive);
 
-      if (navigate) {
-        this.router.navigate([
-          "hives",
-          this.currentHive$.value.id || this.currentHive$.value.clientId,
-          "boxes",
-          body.id || body.clientId,
-        ]);
-      }
+              if (navigate) {
+                this.router.navigate([
+                  "hives",
+                  this.currentHive$.value.id ||
+                    this.currentHive$.value.clientId,
+                  "boxes",
+                  part.id || part.clientId,
+                ]);
+              }
+            }
+          });
+        }
+      });
     });
   }
 
   loadFrame(id: string, navigate: boolean): void {
-    this.local.getFrame(id).subscribe((frame) => {
-      this.currentFrame$.next(frame);
-      this.currentBody$.next(frame.hivePart);
-      this.currentHive$.next(frame.hivePart.hive);
+    this.local.getHives().subscribe((hives) => {
+      hives.forEach((hive: Hive) => {
+        if (hive.parts) {
+          hive.parts.forEach((part: HiveBody) => {
+            if (part.frames) {
+              part.frames.forEach((frame: Frame) => {
+                if (frame.id === id || frame.clientId === id) {
+                  this.currentFrame$.next(frame);
+                  this.currentBody$.next(part);
+                  this.currentHive$.next(hive);
 
-      if (navigate) {
-        this.router.navigate([
-          "hives",
-          this.currentHive$.value.id || this.currentHive$.value.clientId,
-          "boxes",
-          this.currentBody$.value.id || this.currentBody$.value.clientId,
-          "frames",
-          frame.id || frame.clientId,
-        ]);
-      }
+                  if (navigate) {
+                    this.router.navigate([
+                      "hives",
+                      this.currentHive$.value.id ||
+                        this.currentHive$.value.clientId,
+                      "boxes",
+                      this.currentBody$.value.id ||
+                        this.currentBody$.value.clientId,
+                      "frames",
+                      frame.id || frame.clientId,
+                    ]);
+                  }
+                }
+              });
+            }
+          });
+        }
+      });
     });
   }
 }

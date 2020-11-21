@@ -102,7 +102,7 @@ export class TabsService implements OnDestroy {
           text: this.translator.instant("MAIN-TABS.set-hive-photo"),
           icon: "image-outline",
           handler: async () => {
-            // this.hiveService.setHivePhoto(this.currentHive.id);
+            this.addPhotoService.setHivePhoto();
           },
         },
         {

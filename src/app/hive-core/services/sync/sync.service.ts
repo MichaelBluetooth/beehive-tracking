@@ -35,40 +35,62 @@ export class SyncService {
     this.syncing.next(true);
 
     this.local.getHives().subscribe((hives) => {
-      const hiveReqs = [];
-      hives.forEach((hive) => {
-        const hivePostBody: Hive = JSON.parse(JSON.stringify(hive));
-        delete hivePostBody.notes;
-        delete hivePostBody.parts;
-        hiveReqs.push(this.http.post("sync/hive", hivePostBody));
-      });
-
-      concat(...hiveReqs).subscribe(
-        (syncHiveResp) => {
-          this.logger.info("syncAll", "sync hive succeeded", syncHiveResp);
-          this.local.updateHive(syncHiveResp);
-        },
-        (syncHiveError) => {
-          this.syncing.next(false);
-          this.logger.warn("syncAll", "sync hive error", syncHiveError);
-        },
-        () => {
-          this.logger.info("syncAll", "successfully sync'd all hives");
-
-          this.syncHiveNotes(hives).then(() => {
-            this.syncHiveParts(hives).subscribe(() => {
-              this.syncHivePartNotes(hives).then(() => {
-                this.syncFrames(hives).subscribe(() => {
-                  this.syncFrameNotes(hives).subscribe(() => {
-                    this.syncing.next(false);
-                  });
+      this.syncHives(hives).then(() => {
+        this.syncHiveNotes(hives).then(() => {
+          this.syncHiveParts(hives).subscribe(() => {
+            this.syncHivePartNotes(hives).then(() => {
+              this.syncFrames(hives).subscribe(() => {
+                this.syncFrameNotes(hives).then(() => {
+                  this.syncing.next(false);
                 });
               });
             });
           });
-        }
-      );
+        });
+      });
     });
+  }
+
+  private async syncHives(hives: Hive[]) {
+    let next;
+    const ret = new Promise((r) => {
+      next = r;
+    });
+    const reqs = [];
+
+    for (const hive of hives) {
+      const hivePostBody = JSON.parse(JSON.stringify(hive));
+      delete hivePostBody.notes;
+      delete hivePostBody.parts;
+      if (hive.photo && !hive.photo.base64) {
+        hivePostBody.photoBase64 = await this.photoService.loadSaved(
+          hive.photo
+        );
+      }
+      reqs.push(this.http.post("sync/hive", hivePostBody));
+    }
+
+    if (reqs.length === 0) {
+      next();
+    }
+
+    concat(...reqs).subscribe(
+      (syncdHive) => {
+        this.logger.info("syncHives", "sync hive succeeded", syncdHive);
+        this.local.updateHive(syncdHive);
+      },
+      (syncError) => {
+        this.syncing.next(false);
+        this.logger.warn("syncHives", "sync hive error", syncError);
+      },
+      () => {
+        this.syncing.next(false);
+        this.logger.info("syncHives", "finished syncing all hives");
+        next();
+      }
+    );
+
+    return ret;
   }
 
   private async syncHiveNotes(hives: Hive[]) {
@@ -84,9 +106,9 @@ export class SyncService {
         for (const note of hive.notes) {
           const noteReq = JSON.parse(JSON.stringify(note));
           if (note.photo && !note.photo.base64) {
-            note.photo.base64 = await this.photoService.loadSaved(note.photo);
+            noteReq.photoBase64 = await this.photoService.loadSaved(note.photo);
+            delete noteReq.photo;
           }
-          noteReq.photoBase64 = note.photo?.base64;
           noteReq.hiveId = hive.id;
           notesReqs.push(this.http.post("sync/hiveinspection", noteReq));
         }
@@ -162,7 +184,7 @@ export class SyncService {
     return ret.asObservable();
   }
 
-  private syncHivePartNotes(hives: Hive[]) {
+  private async syncHivePartNotes(hives: Hive[]) {
     let next;
     const ret = new Promise((r) => {
       next = r;
@@ -176,7 +198,12 @@ export class SyncService {
             this.syncing.next(true);
             for (const note of part.notes) {
               const noteReq = JSON.parse(JSON.stringify(note));
-              noteReq.photoBase64 = note.photo?.webviewPath;
+              if (note.photo && !note.photo.base64) {
+                noteReq.photoBase64 = await this.photoService.loadSaved(
+                  note.photo
+                );
+                delete noteReq.photo;
+              }
               noteReq.hivePartId = part.id;
               notesReqs.push(this.http.post("sync/bodyinspection", noteReq));
             }
@@ -258,38 +285,45 @@ export class SyncService {
     return ret.asObservable();
   }
 
-  private syncFrameNotes(hives: Hive[]) {
-    const ret = new Subject();
-    const frameNoteReqs = [];
+  private async syncFrameNotes(hives: Hive[]) {
+    let next;
+    const ret = new Promise((r) => {
+      next = r;
+    });
+    const notesReqs = [];
 
-    hives.forEach((hive) => {
+    for (const hive of hives) {
       if (hive.parts) {
-        hive.parts.forEach((part) => {
+        for (const part of hive.parts) {
           if (part.frames) {
-            part.frames.forEach((frame) => {
+            for (const frame of part.frames) {
               if (frame.notes) {
                 this.syncing.next(true);
-                frame.notes.forEach((note) => {
-                  const frameNoteReqPayload: any = JSON.parse(
-                    JSON.stringify(note)
+                for (const note of frame.notes) {
+                  const noteReq: any = JSON.parse(JSON.stringify(note));
+                  noteReq.frameId = frame.id;
+                  if (note.photo && !note.photo.base64) {
+                    noteReq.photoBase64 = await this.photoService.loadSaved(
+                      note.photo
+                    );
+                    delete noteReq.photo;
+                  }
+                  notesReqs.push(
+                    this.http.post("sync/frameinspection", noteReq)
                   );
-                  frameNoteReqPayload.frameId = frame.id;
-                  frameNoteReqs.push(
-                    this.http.post("sync/frameinspection", frameNoteReqPayload)
-                  );
-                });
+                }
               }
-            });
+            }
           }
-        });
+        }
       }
-    });
-
-    if (frameNoteReqs.length === 0) {
-      ret.next();
     }
 
-    concat(...frameNoteReqs).subscribe(
+    if (notesReqs.length === 0) {
+      next();
+    }
+
+    concat(...notesReqs).subscribe(
       (syncdInspection: Note) => {
         this.logger.info(
           "syncFrameNotes",
@@ -309,10 +343,10 @@ export class SyncService {
       () => {
         this.logger.info("syncFrameNotes", "finished syncing all frame notes");
         this.syncing.next(false);
-        ret.next();
+        next();
       }
     );
 
-    return ret.asObservable();
+    return ret;
   }
 }
