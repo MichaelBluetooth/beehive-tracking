@@ -45,7 +45,7 @@ export class AuthenticationService {
         catchError((error) => {
           this.logger.warn("authenticate", error);
           this.authenticated.next(false);
-          return of(error);
+          return throwError(error);
         })
       );
   }
