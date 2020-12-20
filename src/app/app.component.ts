@@ -12,6 +12,9 @@ import { SpeechListeningService } from "./speech-controls/services/speech-listen
 import { SyncService } from "./hive-core/services/sync/sync.service";
 import { AuthenticationService } from "./hive-core/services/authentication/authentication.service";
 import { LoginComponent } from "./hive-core/components/login/login.component";
+import { tap } from 'rxjs/operators';
+import { LoggerService } from './logger/logger.service';
+import { Logger } from './logger/logger';
 
 @Component({
   selector: "app-root",
@@ -19,7 +22,10 @@ import { LoginComponent } from "./hive-core/components/login/login.component";
   styleUrls: ["app.component.scss"],
 })
 export class AppComponent {
-  listening$ = this.speechListening.listening$;
+  logger: Logger;
+  listening$ = this.speechListening.listening$.pipe(tap(doListen => {
+    this.logger.debug(`Listening: ${doListen}`);
+  }));
   syncing$ = this.syncService.syncing$;
   authenticated$ = this.auth.authenticated$;
 
@@ -35,7 +41,8 @@ export class AppComponent {
     private menu: MenuController,
     private router: Router,
     private syncService: SyncService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    logBuilder: LoggerService
   ) {
     const language = this.translate.getBrowserLang();
     this.translate.setDefaultLang(language);
@@ -46,6 +53,7 @@ export class AppComponent {
       }
     });
     this.initializeApp();
+    this.logger = logBuilder.getLogger('AppComponent');
   }
 
   initializeApp() {
