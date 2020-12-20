@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ModelBase } from "../../models/model-base";
 import { LocalHiveDataService } from "../local-hive-data/local-hive-data.service";
+import { v4 as uuidv4 } from "uuid";
 
 @Injectable({
   providedIn: "root",
@@ -49,7 +50,7 @@ export class SchemaUpdateService {
 
   ensureIds(model: ModelBase): void {
     if (!model.clientId) {
-      model.clientId = null;
+      model.clientId = uuidv4();
     }
 
     if (model.id) {

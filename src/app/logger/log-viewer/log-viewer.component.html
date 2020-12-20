@@ -23,10 +23,10 @@
                 <p>
                   {{log.classPath}}
                 </p>
-                <p *ngFor="let logData of log.data">
-                  {{logData}}
-                </p>
               </ion-label>
+              <ion-item *ngFor="let logData of log.data" class="wrapped">
+                {{logData}}
+              </ion-item>
             </ion-row>
           </ion-grid>
         </ion-item>

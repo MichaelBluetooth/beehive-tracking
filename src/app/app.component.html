@@ -14,7 +14,7 @@
     </ion-header>
 
     <ion-content>
-      <ion-refresher *ngIf="authenticated$ | async" slot="fixed" (ionRefresh)="doSync($event)">
+      <ion-refresher *ngIf="(authenticated$ | async) && !(syncing$ | async)" slot="fixed" (ionRefresh)="doSync($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 

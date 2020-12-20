@@ -8,6 +8,8 @@ import {
   CameraSource,
 } from "@capacitor/core";
 import { Platform } from "@ionic/angular";
+import { Logger } from "src/app/logger/logger";
+import { LoggerService } from "src/app/logger/logger.service";
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -16,9 +18,11 @@ const { Camera, Filesystem, Storage } = Plugins;
 })
 export class PhotoService {
   private platform: Platform;
+  private logger: Logger;
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform, loggerSvc: LoggerService) {
     this.platform = platform;
+    this.logger = loggerSvc.getLogger("PhotoService");
   }
 
   public async takePhoto(prompt?: boolean) {
@@ -92,15 +96,18 @@ export class PhotoService {
       reader.readAsDataURL(blob);
     });
 
-  public async loadSaved(photo) {
-    if (!this.platform.is("hybrid")) {
-      const readFile = await Filesystem.readFile({
-        path: photo.filepath,
-        directory: FilesystemDirectory.Data,
-      });
+  public async loadSaved(photo, force: boolean = false) {
+    if (!this.platform.is("hybrid") || force) {
+      try {
+        const readFile = await Filesystem.readFile({
+          path: photo.filepath,
+        });
 
-      // Web platform only: Load the photo as base64 data
-      return `data:image/jpeg;base64,${readFile.data}`;
+        // Web platform only: Load the photo as base64 data
+        return `data:image/jpeg;base64,${readFile.data}`;
+      } catch (e) {
+        this.logger.error("loadSaved", e);
+      }
     } else {
       return null;
     }

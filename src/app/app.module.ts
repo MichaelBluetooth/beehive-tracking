@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from "@angular/core";
+import { APP_INITIALIZER, ErrorHandler, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -21,6 +21,7 @@ import { InitService } from "./hive-core/services/init/init.service";
 import { LoggerModule } from './logger/logger.module';
 import { AuthenticationService } from './hive-core/services/authentication/authentication.service';
 import { AuthInterceptorService } from './hive-core/services/auth-interceptor/auth-interceptor.service';
+import { GlobalErrorHandlerService } from './hive-core/services/error-handler/global-error-handler.service';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -80,6 +81,7 @@ export function initializeLogin(auth: AuthenticationService) {
       useClass: AuthInterceptorService,
       multi: true,
     },
+    {provide: ErrorHandler, useClass: GlobalErrorHandlerService}
   ],
   bootstrap: [AppComponent],
 })
